@@ -1,4 +1,4 @@
-import crypto from "crypto";
+import { v4 as uuidv4 } from "uuid";
 import { Client, IMessage } from "../src/Client";
 import { KeyRing } from "../src/Keyring";
 import { Utils } from "../src/Utils";
@@ -11,20 +11,18 @@ setTimeout(() => {
 const keyring = new KeyRing(":memory:");
 
 keyring.on("ready", () => {
-  console.log("PUBLIC KEY:");
-  console.log(Utils.toHexString(keyring.getPub()));
+  console.log("PUBLIC KEY", Utils.toHexString(keyring.getPub()));
   // make sure you save your private key somewhere
-  console.log("PRIVATE KEY:");
-  console.log(Utils.toHexString(keyring.getPriv()));
+  console.log("PRIVATE KEY", Utils.toHexString(keyring.getPriv()));
 });
 
 const vexClient = new Client("us.vex.chat", keyring, true);
 
-const randomMessage = crypto.randomBytes(16).toString("hex");
+const testID = uuidv4();
+console.log("TEST ID", testID);
 
 vexClient.on("ready", async () => {
   // if you already have an account on the server
-
   // const account = {
   //   hostname: "localhost:8000",
   //   pubkey: "2a85171428cdd53cca062e5d75150bded69e6dd2dcbdbdb48013302c5c2fd2ed",
@@ -37,11 +35,10 @@ vexClient.on("ready", async () => {
 
   // tslint:disable-next-line: forin
   for (const key in account) {
-    console.log(key.toUpperCase() + " " + (account as any)[key])
+    console.log(key.toUpperCase(), (account as any)[key]);
   }
 
   // save the account info here, you need it to log in.
-
   // then log in with the account
   await vexClient.auth(account);
 
@@ -58,15 +55,15 @@ vexClient.on("ready", async () => {
       if (channelID === "fba2fb45-c8a3-42dd-89d2-0a5cc1588185") {
         // joining the channel. you can join as many as you want.
         vexClient.channels.join(channelID);
-        vexClient.messages.send(channelID, randomMessage);
+        vexClient.messages.send(channelID, testID);
       }
     }
   }
 });
 
 vexClient.on("message", async (message: IMessage) => {
-  if (message.message === randomMessage) {
-    console.log("Message test successful!");
+  if (message.message === testID) {
+    console.log("All tests successful!");
     process.exit(0);
   }
 });
