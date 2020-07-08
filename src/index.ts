@@ -1,7 +1,7 @@
-import { Client, IMessage } from "./Client";
+import { Client, IAccount, IClient, IMessage } from "./Client";
 import { KeyRing } from "./Keyring";
 import { Utils } from "./Utils";
 
 export { Client, KeyRing, Utils };
 
-export { IMessage };
+export { IMessage, IAccount, IClient };

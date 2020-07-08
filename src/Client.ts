@@ -11,14 +11,14 @@ interface ITrxSub {
   id: string;
 }
 
-interface IAccount {
+export interface IAccount {
   pubkey: string;
   serverPubkey: string;
   hostname: string;
   uuid: string;
 }
 
-interface IClient {
+export interface IClient {
   index: number;
   pubkey: string;
   username: string;
@@ -27,7 +27,7 @@ interface IClient {
   banned: boolean;
 }
 
-interface IChannel {
+export interface IChannel {
   index: number;
   channelID: string;
   admin: string;
@@ -394,7 +394,7 @@ export class Client extends EventEmitter {
           }
           break;
         case "clientInfo":
-          this.clientInfo = jsonMessage.client;
+          this.clientInfo = jsonMessage.Client;
           break;
         case "welcomeMessage":
           break;
