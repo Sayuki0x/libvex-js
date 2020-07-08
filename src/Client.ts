@@ -100,6 +100,7 @@ export class Client extends EventEmitter {
   private wsPrefix: string;
   private httpPrefix: string;
   private challengeID: string;
+  private reconnecting: boolean;
   private connectedChannelList: string[];
   private history: IMessage[];
   private requestingHistory: boolean;
@@ -117,6 +118,7 @@ export class Client extends EventEmitter {
     this.requestingHistory = false;
     this.serverAlive = true;
     this.authed = false;
+    this.reconnecting = false;
     this.history = [];
     this.channelList = [];
     this.connectedChannelList = [];
@@ -247,7 +249,11 @@ export class Client extends EventEmitter {
     }
   }
 
-  private sendMessage(channelID: string, data: string) {
+  private async sendMessage(channelID: string, data: string) {
+    while (this.reconnecting) {
+      await Utils.sleep(500);
+    }
+
     const chatMessage = {
       channelID,
       message: data,
@@ -405,13 +411,63 @@ export class Client extends EventEmitter {
     }
   }
 
-  private init() {
+  private async reconnect() {
+    this.reconnecting = true;
+    this.authed = false;
+    await Utils.sleep(5000);
+    await this.init();
+    if (this.account) {
+      await this.auth(this.account);
+
+      if (this.connectedChannelList.length > 0) {
+        for (const id of this.connectedChannelList) {
+          // i need to remove it as well
+          this.connectedChannelList.splice(
+            this.connectedChannelList.indexOf(id),
+            1
+          );
+          console.log("joining channel " + id);
+          this.joinChannel(id);
+        }
+      }
+    }
+    this.reconnecting = false;
+  }
+
+  private async init() {
     this.keyring.init();
     const endpoint = "/socket";
     this.ws = new WebSocket(this.getHost(true) + endpoint);
 
-    this.getWs()!.onopen = () => {
-      this.emit("ready");
+    this.getWs()!.onopen = (event: WebSocket.OpenEvent) => {
+      if (!this.reconnecting) {
+        this.emit("ready");
+      }
+    };
+
+    this.getWs()!.onclose = async (event: WebSocket.CloseEvent) => {
+      console.log("close code " + event.code);
+      this.getWs()!.close();
+      switch (event.code) {
+        case 1006:
+          console.log("reconnecting...");
+          this.reconnect();
+          break;
+        default:
+          console.log("reconnecting...");
+          this.reconnect();
+          break;
+      }
+    };
+
+    this.getWs()!.onerror = async (event: WebSocket.ErrorEvent) => {
+      if (this.pingInterval) {
+        clearInterval(this.pingInterval);
+      }
+      console.warn(event.error);
+
+      await Utils.sleep(5000);
+      this.reconnect();
     };
   }
 
@@ -435,6 +491,12 @@ export class Client extends EventEmitter {
       type: "channel",
     };
     this.getWs()?.send(JSON.stringify(leaveMsg));
+    if (this.connectedChannelList.includes(channelID)) {
+      this.connectedChannelList.splice(
+        this.connectedChannelList.indexOf(channelID),
+        1
+      );
+    }
   }
 
   private registerUUID(
@@ -498,39 +560,19 @@ export class Client extends EventEmitter {
       }
 
       switch (jsonMessage.type) {
-        case "historyReqRes":
-          this.requestingHistory = false;
-          break;
         case "history":
           this.history.push(jsonMessage);
           break;
-        case "channelLeaveMsgRes":
-          if (this.connectedChannelList.includes(jsonMessage.channelID)) {
-            this.connectedChannelList.splice(
-              this.connectedChannelList.indexOf(jsonMessage.channelID),
-              1
-            );
-          }
-          break;
-        case "channelJoinRes":
-          if (jsonMessage.status === "SUCCESS") {
-            this.connectedChannelList.push(jsonMessage.channelID);
-          }
-          break;
-        case "authResult":
-          if (jsonMessage.status === "SUCCESS") {
+        case "clientInfo":
+          if (!this.authed) {
             this.authed = true;
             if (!this.pingInterval) {
               this.startPing();
             }
+            this.clientInfo = jsonMessage.Client;
           }
           break;
-        case "clientInfo":
-          this.clientInfo = jsonMessage.Client;
-          break;
-        case "welcomeMessage":
-          break;
-        case "channelListResponse":
+        case "channelList":
           this.channelList = jsonMessage.channels;
           break;
         case "challenge":
@@ -579,10 +621,10 @@ export class Client extends EventEmitter {
       } else {
         failedCount = 0;
       }
-      if (failedCount > 6) {
+      if (failedCount > 2) {
         failedCount = 0;
         this.logout();
-        this.auth(this.account!);
+        this.reconnect();
         return;
       }
       this.serverAlive = false;
@@ -590,7 +632,9 @@ export class Client extends EventEmitter {
       this.subscribe(pongID, () => {
         this.serverAlive = true;
       });
-      this.ws?.send(JSON.stringify({ type: "ping", transmissionID: pongID }));
+      this.getWs()?.send(
+        JSON.stringify({ type: "ping", transmissionID: pongID })
+      );
     }, 10000);
   }
 }
