@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node ./dist/index.js",
-    "build": "node ./scripts/versionUpdate.js; node ./node_modules/typescript/bin/tsc; chmod +x ./dist/cli.js",
+    "build": "node ./scripts/versionUpdate.js; node ./node_modules/typescript/bin/tsc",
     "prepack": "yarn build",
     "docs": "npx typedoc --options typedoc.json",
     "prettier": "node ./node_modules/prettier/bin-prettier.js '**/*.{ts,tsx,json,md}' --trailing-comma es5 --ignore-path .gitignore --arrow-parens always --write",
