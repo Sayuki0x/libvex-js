@@ -6,7 +6,7 @@ import { KeyRing } from "./Keyring";
 import { sleep } from "./utils/sleep";
 import { fromHexString, toHexString } from "./utils/typeHelpers";
 
-interface ISubscription {
+interface ITrxSub {
   // tslint:disable-next-line: ban-types
   callback: Function;
   id: string;
@@ -20,10 +20,12 @@ interface IAccount {
 }
 
 interface IClient {
+  index: number;
   pubkey: string;
   username: string;
   powerLevel: number;
   userID: string;
+  banned: boolean;
 }
 
 interface IChannel {
@@ -34,66 +36,87 @@ interface IChannel {
   name: string;
 }
 
-interface IMessage {
-  method: string;
+export interface IMessage {
+  index?: number;
+  channelID?: string;
+  method?: string;
   type: string;
-  messageID: string;
+  message?: string;
+  messageID?: string;
   transmissionID: string;
-  uuid: string;
-  response: string;
-  status: string;
-  challenge: string;
+  uuid?: string;
+  response?: string;
+  status?: string;
+  challenge?: string;
+}
+
+interface IMessages {
+  retrieve: (
+    channelID: string,
+    lastKnownMessageID?: string
+  ) => Promise<IMessage[]>;
+  send: (channelID: string, data: string) => void;
+}
+
+interface IChannels {
+  retrieve: () => IChannel[];
+  join: (channelID: string) => void;
+  leave: (channelID: string) => void;
 }
 
 export class Client extends EventEmitter {
-  public handshakeStatus: boolean;
-  public connectedChannelId: string | null;
-  public authed: boolean;
-  public channelList: IChannel[];
-  public user: IClient | null;
-  public historyRetrieved: boolean;
+  public channels: IChannels;
+  public messages: IMessages;
+  private authed: boolean;
+  private channelList: IChannel[];
+  private clientInfo: IClient | null;
+  private account: IAccount | null;
   private ws: WebSocket | null;
   private host: string;
-  private subscriptions: ISubscription[];
-  private registered: boolean;
+  private trxSubs: ITrxSub[];
   private serverAlive: boolean;
   private keyring: KeyRing;
   private pingInterval: NodeJS.Timeout | null;
   private secure: boolean;
   private wsPrefix: string;
   private httpPrefix: string;
-  private uuid: string | null;
-  private serverPubkey: string | null;
   private challengeID: string;
+  private connectedChannelList: string[];
+  private history: IMessage[];
+  private requestingHistory: boolean;
 
-  constructor(
-    host: string,
-    serverPubkey: string | null,
-    keyring: KeyRing,
-    secure: boolean = true
-  ) {
+  constructor(host: string, keyring: KeyRing, secure: boolean = true) {
     super();
     this.secure = secure;
     this.keyring = keyring;
-    this.user = null;
+    this.clientInfo = null;
     this.ws = null;
-    this.handshakeStatus = false;
-    this.registered = false;
     this.host = host;
+    this.account = null;
     this.challengeID = uuidv4();
-    this.connectedChannelId = null;
-    this.subscriptions = [];
-    this.historyRetrieved = false;
+    this.trxSubs = [];
+    this.requestingHistory = false;
     this.serverAlive = true;
     this.authed = false;
+    this.history = [];
     this.channelList = [];
+    this.connectedChannelList = [];
     this.pingInterval = null;
-    this.uuid = null;
-    this.serverPubkey = serverPubkey;
+
+    this.channels = {
+      join: this.joinChannel.bind(this),
+      leave: this.leaveChannel.bind(this),
+      retrieve: this.getChannelList.bind(this),
+    };
+
+    this.messages = {
+      retrieve: this.getHistory.bind(this),
+      send: this.sendMessage.bind(this),
+    };
 
     if (!this.secure) {
       console.warn(
-        "Warning! Insecure connections are dangeorus. You should only use them for development."
+        "Warning! Insecure connections are dangerous. You should only use them for development."
       );
       this.wsPrefix = "ws://";
       this.httpPrefix = "http://";
@@ -105,7 +128,145 @@ export class Client extends EventEmitter {
     this.init();
   }
 
-  public getHost(websocket: boolean): string {
+  public logout() {
+    if (this.pingInterval) {
+      clearInterval(this.pingInterval);
+    }
+    this.ws?.close();
+  }
+
+  public async register(): Promise<IAccount> {
+    const res: any = await this.newUUID();
+    const { type, uuid, transmissionID, serverPubkey } = res;
+
+    if (type === "error") {
+      console.log(res);
+    } else {
+      const res2: IMessage = await this.registerUUID(uuid, transmissionID);
+      if (res2.status === "SUCCESS") {
+        this.account = {
+          hostname: this.host,
+          pubkey: toHexString(this.keyring.getPub()),
+          serverPubkey,
+          uuid: res2.uuid!,
+        };
+        return this.account;
+      }
+    }
+    throw new Error("Register error!");
+  }
+
+  public info() {
+    return {
+      account: this.account,
+      authed: this.authed,
+      clientInfo: this.clientInfo,
+      host: this.getHost(true),
+      secure: this.secure,
+    };
+  }
+
+  public async auth(account: IAccount) {
+    this.getWs()!.onmessage = this.handleMessage.bind(this);
+
+    this.challengeID = uuidv4();
+    const transmissionID = uuidv4();
+
+    this.subscribe(transmissionID, async (msg: IMessage) => {
+      try {
+        if (
+          this.keyring.verify(
+            decodeUTF8(this.challengeID),
+            fromHexString(msg.response!),
+            fromHexString(account.serverPubkey)
+          )
+        ) {
+          // do nothing
+        } else {
+          this.getWs()!.close();
+          this.emit(
+            "error",
+            new Error("Server sent back bad signature! Disconnected.")
+          );
+        }
+      } catch (err) {
+        this.emit("error", err);
+      }
+    });
+
+    this.getWs()!.send(
+      JSON.stringify({
+        challenge: this.challengeID,
+        pubkey: toHexString(this.keyring.getPub()),
+        transmissionID,
+        type: "challenge",
+      })
+    );
+
+    let timeout = 1;
+    while (!this.authed) {
+      await sleep(timeout);
+      timeout *= 2;
+
+      if (timeout > 5000) {
+        this.emit("error", new Error("Handshake never completed."));
+        break;
+      }
+    }
+  }
+
+  private sendMessage(channelID: string, data: string) {
+    const chatMessage = {
+      channelID,
+      message: data,
+      method: "CREATE",
+      transmissionID: uuidv4(),
+      type: "chat",
+    };
+    this.getWs()?.send(JSON.stringify(chatMessage));
+  }
+
+  private async getHistory(
+    channelID: string,
+    topMessage: string = "00000000-0000-0000-0000-000000000000"
+  ) {
+    this.requestingHistory = true;
+
+    const transID = uuidv4();
+    const historyReqMessage = {
+      channelID,
+      method: "RETRIEVE",
+      topMessage,
+      transmissionID: transID,
+      type: "historyReq_v2",
+    };
+
+    this.ws?.send(JSON.stringify(historyReqMessage));
+
+    let timeout = 1;
+    while (this.requestingHistory) {
+      await sleep(timeout);
+      timeout *= 2;
+    }
+    return this.history;
+  }
+
+  private joinChannel(channelID: string) {
+    if (this.connectedChannelList.includes(channelID)) {
+      return;
+    }
+
+    const joinChannelMsgId = uuidv4();
+    const joinMsg = {
+      channelID,
+      method: "JOIN",
+      transmissionID: joinChannelMsgId,
+      type: "channel",
+    };
+    this.getWs()?.send(JSON.stringify(joinMsg));
+  }
+
+  private getHost(websocket: boolean): string {
     if (websocket) {
       return this.wsPrefix + this.host;
     } else {
@@ -113,7 +274,8 @@ export class Client extends EventEmitter {
     }
   }
 
-  public init() {
+  private init() {
+    this.keyring.init();
     const endpoint = "/socket";
     this.ws = new WebSocket(this.getHost(true) + endpoint);
 
@@ -122,26 +284,32 @@ export class Client extends EventEmitter {
     };
   }
 
-  public getWs() {
+  private getWs() {
     return this.ws;
   }
 
-  public close() {
-    if (this.pingInterval) {
-      clearInterval(this.pingInterval);
-    }
-    this.ws?.close();
-  }
-
   // tslint:disable-next-line: ban-types
-  public subscribe(id: string, callback: Function) {
-    this.subscriptions.push({
+  private subscribe(id: string, callback: Function) {
+    this.trxSubs.push({
       callback,
       id,
     });
   }
 
-  public registerUUID(uuid: string, transmissionID: string): Promise<IMessage> {
+  private leaveChannel(channelID: string) {
+    const leaveMsg = {
+      channelID,
+      method: "LEAVE",
+      transmissionID: uuidv4(),
+      type: "channel",
+    };
+    this.getWs()?.send(JSON.stringify(leaveMsg));
+  }
+
+  private registerUUID(
+    uuid: string,
+    transmissionID: string
+  ): Promise<IMessage> {
     return new Promise((resolve, reject) => {
       const message = {
         method: "REGISTER",
@@ -165,104 +333,27 @@ export class Client extends EventEmitter {
     });
   }
 
-  public async register(): Promise<IAccount> {
-    const res: any = await this.newUUID();
-    const { type, uuid, transmissionID, serverPubkey } = res;
-
-    if (type === "error") {
-      console.log(res);
-    } else {
-      const res2: IMessage = await this.registerUUID(uuid, transmissionID);
-      if (res2.status === "SUCCESS") {
-        return {
-          hostname: this.host,
-          pubkey: toHexString(this.keyring.getPub()),
-          serverPubkey,
-          uuid: res2.uuid,
-        };
-      }
-    }
-    throw new Error("Register error!");
+  private getChannelList() {
+    return this.channelList;
   }
 
-  public getChannelList() {
-    const listChannelMsgId = uuidv4();
-    const msg = {
-      method: "RETRIEVE",
-      transmissionID: listChannelMsgId,
-
-      type: "channel",
+  private async respondToChallenge(jsonMessage: IMessage) {
+    const challengeResponse = {
+      pubkey: toHexString(this.keyring.getPub()),
+      response: toHexString(
+        this.keyring.sign(decodeUTF8(jsonMessage.challenge!))
+      ),
+      transmissionID: uuidv4(),
+      type: "challengeRes",
     };
-
-    this.getWs()?.send(JSON.stringify(msg));
-  }
-
-  public async getHistory(
-    channelID: string,
-    topMessage: string = "00000000-0000-0000-0000-000000000000"
-  ) {
-    let t = 1;
-    while (!this.authed) {
-      await sleep(t);
-      t *= 2;
-    }
-
-    const transID = uuidv4();
-    const historyReqMessage = {
-      channelID: this.connectedChannelId,
-      method: "RETRIEVE",
-      topMessage,
-      transmissionID: transID,
-      type: "historyReq",
-    };
-
-    this.ws?.send(JSON.stringify(historyReqMessage));
-  }
-
-  public async auth(account: IAccount) {
-    this.getWs()!.onmessage = this.handleMessage.bind(this);
-
-
-    this.challengeID = uuidv4();
-    const transmissionID = uuidv4();
-
-    this.subscribe(transmissionID, async (msg: IMessage) => {
-      try {
-        if (
-          this.keyring.verify(
-            decodeUTF8(this.challengeID),
-            fromHexString(msg.response),
-            fromHexString(account.serverPubkey)
-          )
-        ) {
-          console.log("Bazinga")
-          this.handshakeStatus = true;
-        } else {
-          console.log(
-            "Server sent back bad signature! Disconnecting."
-          );
-          this.getWs()!.close();
-        }
-      } catch (err) {
-        this.emit("error", err);
-      }
-    });
-
-    this.getWs()!.send(
-      JSON.stringify({
-        challenge: this.challengeID,
-        pubkey: toHexString(this.keyring.getPub()),
-        transmissionID,
-        type: "challenge",
-      })
-    );
+    this.getWs()?.send(JSON.stringify(challengeResponse));
   }
 
   private async handleMessage(msg: WebSocket.MessageEvent) {
     try {
       const jsonMessage = JSON.parse(msg.data.toString());
 
-      for (const message of this.subscriptions) {
+      for (const message of this.trxSubs) {
         if (message.id === jsonMessage.transmissionID) {
           if (jsonMessage.type === "error") {
             this.emit("error", jsonMessage);
@@ -270,28 +361,57 @@ export class Client extends EventEmitter {
           }
 
           await message.callback(jsonMessage);
-          this.subscriptions.splice(this.subscriptions.indexOf(message), 1);
+          this.trxSubs.splice(this.trxSubs.indexOf(message), 1);
           return;
         }
       }
 
       switch (jsonMessage.type) {
+        case "historyReqRes":
+          this.requestingHistory = false;
+          break;
+        case "history":
+          this.history.push(jsonMessage);
+          break;
+        case "channelLeaveMsgRes":
+          if (this.connectedChannelList.includes(jsonMessage.channelID)) {
+            this.connectedChannelList.splice(
+              this.connectedChannelList.indexOf(jsonMessage.channelID),
+              1
+            );
+          }
+          break;
+        case "channelJoinRes":
+          if (jsonMessage.status === "SUCCESS") {
+            this.connectedChannelList.push(jsonMessage.channelID);
+          }
+          break;
+        case "authResult":
+          if (jsonMessage.status === "SUCCESS") {
+            this.authed = true;
+            if (!this.pingInterval) {
+              this.startPing();
+            }
+          }
+          break;
+        case "clientInfo":
+          this.clientInfo = jsonMessage.client;
+          break;
+        case "welcomeMessage":
+          break;
+        case "channelListResponse":
+          this.channelList = jsonMessage.channels;
+          break;
         case "challenge":
-          const challengeResponse = {
-            pubkey: toHexString(this.keyring.getPub()),
-            response: toHexString(
-              this.keyring.sign(decodeUTF8(jsonMessage.challenge))
-            ),
-            transmissionID: uuidv4(),
-            type: "challengeRes",
-          };
-          this.getWs()?.send(JSON.stringify(challengeResponse));
+          this.respondToChallenge(jsonMessage);
+          break;
+        case "chat":
+          this.emit("message", jsonMessage);
           break;
         default:
-          console.log(jsonMessage)
+          console.log(jsonMessage);
           break;
       }
-
     } catch (err) {
       this.emit("error", err);
     }
@@ -330,8 +450,8 @@ export class Client extends EventEmitter {
       }
       if (failedCount > 6) {
         failedCount = 0;
-        this.close();
-        this.emit("unresponsive", this.connectedChannelId);
+        this.logout();
+        this.auth(this.account!);
         return;
       }
       this.serverAlive = false;
