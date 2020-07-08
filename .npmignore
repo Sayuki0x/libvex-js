@@ -11,3 +11,4 @@ yarn.lock
 tsconfig.json
 tslint.json
 scripts
+docs

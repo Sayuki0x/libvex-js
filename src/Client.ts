@@ -3,8 +3,7 @@ import WebSocket from "isomorphic-ws";
 import { decodeUTF8 } from "tweetnacl-util";
 import { v4 as uuidv4 } from "uuid";
 import { KeyRing } from "./Keyring";
-import { sleep } from "./utils/sleep";
-import { fromHexString, toHexString } from "./utils/typeHelpers";
+import { Utils } from "./Utils";
 
 interface ITrxSub {
   // tslint:disable-next-line: ban-types
@@ -146,7 +145,7 @@ export class Client extends EventEmitter {
       if (res2.status === "SUCCESS") {
         this.account = {
           hostname: this.host,
-          pubkey: toHexString(this.keyring.getPub()),
+          pubkey: Utils.toHexString(this.keyring.getPub()),
           serverPubkey,
           uuid: res2.uuid!,
         };
@@ -177,8 +176,8 @@ export class Client extends EventEmitter {
         if (
           this.keyring.verify(
             decodeUTF8(this.challengeID),
-            fromHexString(msg.response!),
-            fromHexString(account.serverPubkey)
+            Utils.fromHexString(msg.response!),
+            Utils.fromHexString(account.serverPubkey)
           )
         ) {
           // do nothing
@@ -197,7 +196,7 @@ export class Client extends EventEmitter {
     this.getWs()!.send(
       JSON.stringify({
         challenge: this.challengeID,
-        pubkey: toHexString(this.keyring.getPub()),
+        pubkey: Utils.toHexString(this.keyring.getPub()),
         transmissionID,
         type: "challenge",
       })
@@ -205,7 +204,7 @@ export class Client extends EventEmitter {
 
     let timeout = 1;
     while (!this.authed) {
-      await sleep(timeout);
+      await Utils.sleep(timeout);
       timeout *= 2;
 
       if (timeout > 5000) {
@@ -245,7 +244,7 @@ export class Client extends EventEmitter {
 
     let timeout = 1;
     while (this.requestingHistory) {
-      await sleep(timeout);
+      await Utils.sleep(timeout);
       timeout *= 2;
     }
     return this.history;
@@ -313,8 +312,8 @@ export class Client extends EventEmitter {
     return new Promise((resolve, reject) => {
       const message = {
         method: "REGISTER",
-        pubkey: toHexString(this.keyring.getPub()),
-        signed: toHexString(this.keyring.sign(decodeUTF8(uuid))),
+        pubkey: Utils.toHexString(this.keyring.getPub()),
+        signed: Utils.toHexString(this.keyring.sign(decodeUTF8(uuid))),
         transmissionID,
         type: "identity",
         uuid,
@@ -339,8 +338,8 @@ export class Client extends EventEmitter {
 
   private async respondToChallenge(jsonMessage: IMessage) {
     const challengeResponse = {
-      pubkey: toHexString(this.keyring.getPub()),
-      response: toHexString(
+      pubkey: Utils.toHexString(this.keyring.getPub()),
+      response: Utils.toHexString(
         this.keyring.sign(decodeUTF8(jsonMessage.challenge!))
       ),
       transmissionID: uuidv4(),

@@ -35,6 +35,11 @@ vexClient.on("ready", async () => {
   // if you don't have an account, register.
   const account = await vexClient.register();
 
+  // tslint:disable-next-line: forin
+  for (const key in account) {
+    console.log(key.toUpperCase() + " " + (account as any)[key])
+  }
+
   // save the account info here, you need it to log in.
 
   // then log in with the account
@@ -49,7 +54,6 @@ vexClient.on("ready", async () => {
 
     for (const channel of channelList) {
       const { channelID } = channel;
-
       // we're connecting to the bot channel here
       if (channelID === "fba2fb45-c8a3-42dd-89d2-0a5cc1588185") {
         // joining the channel. you can join as many as you want.
