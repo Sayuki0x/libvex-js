@@ -35,11 +35,29 @@ export interface IChannel {
   name: string;
 }
 
+export interface IChallenge {
+  type: string;
+  transmissionID: string;
+  messageID?: string;
+  challenge: string;
+  pubkey: string;
+}
+
+export interface IResponse {
+  type: string;
+  transmissionID: string;
+  messageID?: string;
+  response: string;
+  pubkey: string;
+}
+
 export interface IMessage {
   index?: number;
   channelID?: string;
   method?: string;
+  pubkey: string;
   type: string;
+  data: any;
   message?: string;
   messageID?: string;
   transmissionID: string;
@@ -89,7 +107,6 @@ export class Client extends EventEmitter {
   private authed: boolean;
   private channelList: IChannel[];
   private clientInfo: IClient | null;
-  private account: IAccount | null;
   private ws: WebSocket | null;
   private host: string;
   private trxSubs: ITrxSub[];
@@ -99,21 +116,24 @@ export class Client extends EventEmitter {
   private secure: boolean;
   private wsPrefix: string;
   private httpPrefix: string;
-  private challengeID: string;
   private reconnecting: boolean;
   private connectedChannelList: string[];
   private history: IMessage[];
+  private serverPubkey: string | null;
   private requestingHistory: boolean;
 
-  constructor(host: string, keyring: KeyRing, secure: boolean = true) {
+  constructor(
+    host: string,
+    keyring: KeyRing,
+    serverPubkey: string | null,
+    secure: boolean = true
+  ) {
     super();
     this.secure = secure;
     this.keyring = keyring;
     this.clientInfo = null;
     this.ws = null;
     this.host = host;
-    this.account = null;
-    this.challengeID = uuidv4();
     this.trxSubs = [];
     this.requestingHistory = false;
     this.serverAlive = true;
@@ -121,6 +141,7 @@ export class Client extends EventEmitter {
     this.reconnecting = false;
     this.history = [];
     this.channelList = [];
+    this.serverPubkey = serverPubkey;
     this.connectedChannelList = [];
     this.pingInterval = null;
 
@@ -169,84 +190,58 @@ export class Client extends EventEmitter {
     this.ws?.close();
   }
 
-  public async register(): Promise<IAccount> {
-    const res: any = await this.newUUID();
-    const { type, uuid, transmissionID, serverPubkey } = res;
-
-    if (type === "error") {
-      console.log(res);
-    } else {
-      const res2: IMessage = await this.registerUUID(uuid, transmissionID);
-      if (res2.status === "SUCCESS") {
-        this.account = {
-          hostname: this.host,
-          pubkey: Utils.toHexString(this.keyring.getPub()),
-          serverPubkey,
-          uuid: res2.uuid!,
-        };
-        return this.account;
-      }
-    }
-    throw new Error("Register error!");
+  public async register(): Promise<IClient> {
+    const userAccount: IClient = await this.newUser();
+    await this.registerUser(userAccount);
+    return userAccount;
   }
 
   public info() {
     return {
-      account: this.account,
       authed: this.authed,
+      client: this.clientInfo,
       clientInfo: this.clientInfo,
       host: this.getHost(true),
       secure: this.secure,
     };
   }
 
-  public async auth(account: IAccount) {
-    this.getWs()!.onmessage = this.handleMessage.bind(this);
+  public async auth() {
+    return this.sendChallenge();
+  }
 
-    this.challengeID = uuidv4();
-    const transmissionID = uuidv4();
+  private async sendChallenge(): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const timeout = setTimeout(reject, 10000);
 
-    this.subscribe(transmissionID, async (msg: IMessage) => {
-      try {
-        if (
-          this.keyring.verify(
-            decodeUTF8(this.challengeID),
-            Utils.fromHexString(msg.response!),
-            Utils.fromHexString(account.serverPubkey)
-          )
-        ) {
-          // do nothing
-        } else {
-          this.getWs()!.close();
-          this.emit(
-            "error",
-            new Error("Server sent back bad signature! Disconnected.")
-          );
-        }
-      } catch (err) {
-        this.emit("error", err);
-      }
-    });
-
-    this.getWs()!.send(
-      JSON.stringify({
-        challenge: this.challengeID,
+      const transmissionID = uuidv4();
+      const challenge = uuidv4();
+      const challengeMessage = {
+        challenge,
         pubkey: Utils.toHexString(this.keyring.getPub()),
         transmissionID,
         type: "challenge",
-      })
-    );
+      };
 
-    let timeout = 1;
-    while (!this.authed) {
-      await Utils.sleep(timeout);
-      timeout *= 2;
+      this.subscribe(transmissionID, (msg: IMessage) => {
+        if (
+          this.keyring.verify(
+            decodeUTF8(challenge),
+            Utils.fromHexString(msg.response!),
+            Utils.fromHexString(this.serverPubkey || msg.pubkey)
+          )
+        ) {
+          if (!this.serverPubkey) {
+            this.serverPubkey = msg.pubkey;
+          }
+          resolve(this.serverPubkey);
+        } else {
+          reject(new Error("Server signature did not verify!"));
+        }
+      });
 
-      if (timeout > 5000) {
-        this.emit("error", new Error("Handshake never completed."));
-        break;
-      }
-    }
+      this.getWs()!.send(JSON.stringify(challengeMessage));
+    });
   }
 
   private async sendMessage(channelID: string, data: string) {
@@ -416,8 +411,8 @@ export class Client extends EventEmitter {
     this.authed = false;
     await Utils.sleep(5000);
     await this.init();
-    if (this.account) {
-      await this.auth(this.account);
+    if (this.clientInfo) {
+      await this.auth();
 
       if (this.connectedChannelList.length > 0) {
         for (const id of this.connectedChannelList) {
@@ -469,6 +464,8 @@ export class Client extends EventEmitter {
       await Utils.sleep(5000);
       this.reconnect();
     };
+
+    this.getWs()!.onmessage = this.handleMessage.bind(this);
   }
 
   private getWs() {
@@ -499,7 +496,33 @@ export class Client extends EventEmitter {
     }
   }
 
-  private registerUUID(
+  private async registerUser(user: IClient): Promise<IClient> {
+    return new Promise((resolve, reject) => {
+      const transmissionID = uuidv4();
+
+      const message = {
+        method: "REGISTER",
+        pubkey: Utils.toHexString(this.keyring.getPub()),
+        signed: Utils.toHexString(this.keyring.sign(decodeUTF8(user.userID))),
+        transmissionID,
+        type: "identity",
+        uuid: user.userID,
+      };
+
+      this.subscribe(transmissionID, (msg: IMessage) => {
+        if (msg.type === "error") {
+          reject(msg);
+        } else {
+          this.clientInfo = msg.data;
+          resolve(msg.data);
+        }
+      });
+
+      this.getWs()!.send(JSON.stringify(message));
+    });
+  }
+
+  private registerUUID_(
     uuid: string,
     transmissionID: string
   ): Promise<IMessage> {
@@ -513,14 +536,13 @@ export class Client extends EventEmitter {
         uuid,
       };
 
-      this.getWs()!.onmessage = (msg: WebSocket.MessageEvent) => {
-        try {
-          const jsonMessage = JSON.parse(msg.data.toString());
-          resolve(jsonMessage);
-        } catch (err) {
-          reject(err);
+      this.subscribe(transmissionID, (msg: IMessage) => {
+        if (msg.type === "error") {
+          reject(msg.data);
+        } else {
+          resolve(msg.data);
         }
-      };
+      });
 
       this.getWs()!.send(JSON.stringify(message));
     });
@@ -531,30 +553,38 @@ export class Client extends EventEmitter {
   }
 
   private async respondToChallenge(jsonMessage: IMessage) {
-    const challengeResponse = {
-      pubkey: Utils.toHexString(this.keyring.getPub()),
-      response: Utils.toHexString(
-        this.keyring.sign(decodeUTF8(jsonMessage.challenge!))
-      ),
-      transmissionID: uuidv4(),
-      type: "challengeRes",
-    };
-    this.getWs()?.send(JSON.stringify(challengeResponse));
+    return new Promise((resolve, reject) => {
+      const transmissionID = uuidv4();
+      const challengeResponse = {
+        pubkey: Utils.toHexString(this.keyring.getPub()),
+        response: Utils.toHexString(
+          this.keyring.sign(decodeUTF8(jsonMessage.challenge!))
+        ),
+        transmissionID,
+        type: "response",
+      };
+
+      this.subscribe(transmissionID, (jMsg: IMessage) => {
+        if (jMsg.type === "success") {
+          this.authed = true;
+          resolve();
+        } else {
+          reject(jMsg);
+        }
+      });
+
+      this.getWs()?.send(JSON.stringify(challengeResponse));
+    });
   }
 
   private async handleMessage(msg: WebSocket.MessageEvent) {
     try {
       const jsonMessage = JSON.parse(msg.data.toString());
 
-      for (const message of this.trxSubs) {
-        if (message.id === jsonMessage.transmissionID) {
-          if (jsonMessage.type === "error") {
-            this.emit("error", jsonMessage);
-            break;
-          }
-
-          await message.callback(jsonMessage);
-          this.trxSubs.splice(this.trxSubs.indexOf(message), 1);
+      for (const sub of this.trxSubs) {
+        if (sub.id === jsonMessage.transmissionID) {
+          await sub.callback(jsonMessage);
+          this.trxSubs.splice(this.trxSubs.indexOf(sub), 1);
           return;
         }
       }
@@ -564,13 +594,7 @@ export class Client extends EventEmitter {
           this.history.push(jsonMessage);
           break;
         case "clientInfo":
-          if (!this.authed) {
-            this.authed = true;
-            if (!this.pingInterval) {
-              this.startPing();
-            }
-            this.clientInfo = jsonMessage.Client;
-          }
+          this.clientInfo = jsonMessage.Client;
           break;
         case "channelList":
           this.channelList = jsonMessage.channels;
@@ -590,7 +614,7 @@ export class Client extends EventEmitter {
     }
   }
 
-  private async newUUID(): Promise<IMessage> {
+  private async newUser(): Promise<IClient> {
     return new Promise((resolve, reject) => {
       const transmissionID = uuidv4();
 
@@ -600,14 +624,13 @@ export class Client extends EventEmitter {
         type: "identity",
       };
 
-      this.getWs()!.onmessage = (msg: WebSocket.MessageEvent) => {
-        try {
-          const jsonMessage = JSON.parse(msg.data.toString());
-          resolve(jsonMessage);
-        } catch (err) {
-          reject(err);
+      this.subscribe(transmissionID, (msg: IMessage) => {
+        if (msg.type === "error") {
+          reject(msg);
+        } else {
+          resolve(msg.data);
         }
-      };
+      });
 
       this.getWs()!.send(JSON.stringify(registerMessage));
     });

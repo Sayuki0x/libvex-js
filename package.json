@@ -13,7 +13,8 @@
     "prettier": "node ./node_modules/prettier/bin-prettier.js '**/*.{ts,tsx,json,md}' --trailing-comma es5 --ignore-path .gitignore --arrow-parens always --write",
     "lint": "./node_modules/tslint/bin/tslint src/**/*.ts{,x}",
     "lint-fix": "./node_modules/tslint/bin/tslint src/**/*.ts{,x} --fix",
-    "test": "npx ts-node ./tests/test.ts"
+    "test": "npx ts-node ./tests/ci.ts",
+    "dev": "npx ts-node ./tests/scratchpad.ts"
   },
   "devDependencies": {
     "husky": "^3.1.0",

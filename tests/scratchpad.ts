@@ -3,11 +3,6 @@ import { Client, IMessage } from "../src/Client";
 import { KeyRing } from "../src/Keyring";
 import { Utils } from "../src/Utils";
 
-setTimeout(() => {
-  console.log("Never received message. Test failed.");
-  process.exit(1);
-}, 10000);
-
 const keyring = new KeyRing(":memory:");
 
 keyring.on("ready", () => {
@@ -16,7 +11,7 @@ keyring.on("ready", () => {
   console.log("PRIVATE KEY", Utils.toHexString(keyring.getPriv()));
 });
 
-const vexClient = new Client("us.vex.chat", keyring, true);
+const vexClient = new Client("localhost:8000", keyring, null, false);
 
 const testID = uuidv4();
 console.log("TEST ID", testID);
@@ -33,34 +28,17 @@ vexClient.on("ready", async () => {
   // if you don't have an account, register.
   const account = await vexClient.register();
 
+  const serverPubkey = await vexClient.auth();
+  console.log("SERVER PUBKEY", serverPubkey);
+
   // tslint:disable-next-line: forin
   for (const key in account) {
     console.log(key.toUpperCase(), (account as any)[key]);
   }
-
   // save the account info here, you need it to log in.
+
   // then log in with the account
-  await vexClient.auth(account);
-
-  vexClient.users.update(account.uuid, { username: "ci_test" });
-
-  // next we'll join a channel
-  const channelList = vexClient.channels.retrieve();
-  if (channelList.length === 0) {
-    console.log("Didn't find any channels on the server!");
-  } else {
-    // we'll join the first channel on the list
-
-    for (const channel of channelList) {
-      const { channelID } = channel;
-      // we're connecting to the bot channel here
-      if (channelID === "fba2fb45-c8a3-42dd-89d2-0a5cc1588185") {
-        // joining the channel. you can join as many as you want.
-        vexClient.channels.join(channelID);
-        vexClient.messages.send(channelID, testID);
-      }
-    }
-  }
+  await vexClient.auth();
 });
 
 vexClient.on("message", async (message: IMessage) => {
