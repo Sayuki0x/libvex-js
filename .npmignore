@@ -12,3 +12,4 @@ tsconfig.json
 tslint.json
 scripts
 docs
+typedoc.json

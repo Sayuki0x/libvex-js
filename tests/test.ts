@@ -42,6 +42,8 @@ vexClient.on("ready", async () => {
   // then log in with the account
   await vexClient.auth(account);
 
+  vexClient.users.update(account.uuid, { username: "ci_test" });
+
   // next we'll join a channel
   const channelList = vexClient.channels.retrieve();
   if (channelList.length === 0) {
