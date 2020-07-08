@@ -59,13 +59,33 @@ interface IMessages {
 
 interface IChannels {
   retrieve: () => IChannel[];
+  create: (name: string, privateChannel: boolean) => void;
   join: (channelID: string) => void;
   leave: (channelID: string) => void;
+  delete: (channelID: string) => void;
+}
+
+interface IUserOptions {
+  powerLevel?: number;
+  username?: string;
+}
+
+interface IUsers {
+  update: (userID: string, options: IUserOptions) => void;
+  kick: (userID: string) => void;
+  ban: (userID: string) => void;
+}
+
+interface IPermissions {
+  create: (userID: string, channelID: string) => void;
+  delete: (userID: string, channelID: string) => void;
 }
 
 export class Client extends EventEmitter {
   public channels: IChannels;
+  public permissions: IPermissions;
   public messages: IMessages;
+  public users: IUsers;
   private authed: boolean;
   private channelList: IChannel[];
   private clientInfo: IClient | null;
@@ -103,14 +123,27 @@ export class Client extends EventEmitter {
     this.pingInterval = null;
 
     this.channels = {
+      create: this.createChannel.bind(this),
+      delete: this.deleteChannel.bind(this),
       join: this.joinChannel.bind(this),
       leave: this.leaveChannel.bind(this),
       retrieve: this.getChannelList.bind(this),
     };
 
+    this.permissions = {
+      create: this.grantChannel.bind(this),
+      delete: this.revokeChannel.bind(this),
+    };
+
     this.messages = {
       retrieve: this.getHistory.bind(this),
       send: this.sendMessage.bind(this),
+    };
+
+    this.users = {
+      ban: this.banUser.bind(this),
+      kick: this.kickUser.bind(this),
+      update: this.updateUser.bind(this),
     };
 
     if (!this.secure) {
@@ -223,6 +256,105 @@ export class Client extends EventEmitter {
       type: "chat",
     };
     this.getWs()?.send(JSON.stringify(chatMessage));
+  }
+
+  private async opUser(userID: string, powerLevel: number) {
+    const opMessage = {
+      method: "UPDATE",
+      powerLevel,
+      transmissionID: uuidv4(),
+      type: "user",
+      userID,
+    };
+    this.getWs()?.send(JSON.stringify(opMessage));
+  }
+
+  private updateUser(userID: string, values: IUserOptions) {
+    const { username, powerLevel } = values;
+
+    if (username) {
+      const userMessage = {
+        method: "NICK",
+        transmissionID: uuidv4(),
+        type: "user",
+        username,
+      };
+      this.getWs()?.send(JSON.stringify(userMessage));
+    }
+
+    if (powerLevel) {
+      this.opUser(userID, powerLevel);
+    }
+  }
+
+  private createChannel(name: string, privateChannel: boolean) {
+    const transmissionID = uuidv4();
+    const message = {
+      method: "CREATE",
+      name,
+      privateChannel,
+      transmissionID,
+      type: "channel",
+    };
+
+    this.getWs()?.send(JSON.stringify(message));
+  }
+
+  private deleteChannel(channelID: string) {
+    const transmissionID = uuidv4();
+    const message = {
+      channelID,
+      method: "DELETE",
+      transmissionID,
+      type: "channel",
+    };
+    this.getWs()?.send(JSON.stringify(message));
+  }
+
+  private grantChannel(userID: string, channelID: string) {
+    const msg = {
+      method: "CREATE",
+      permission: {
+        channelID,
+        userID,
+      },
+      transmissionID: uuidv4(),
+      type: "channelPerm",
+    };
+    this.getWs()?.send(JSON.stringify(msg));
+  }
+
+  private revokeChannel(userID: string, channelID: string) {
+    const msg = {
+      method: "DELETE",
+      permission: {
+        channelID,
+        userID,
+      },
+      transmissionID: uuidv4(),
+      type: "channelPerm",
+    };
+    this.getWs()?.send(JSON.stringify(msg));
+  }
+
+  private banUser(userID: string) {
+    const kickMessage = {
+      method: "BAN",
+      transmissionID: uuidv4(),
+      type: "user",
+      userID,
+    };
+    this.getWs()?.send(JSON.stringify(kickMessage));
+  }
+
+  private kickUser(userID: string) {
+    const kickMessage = {
+      method: "KICK",
+      transmissionID: uuidv4(),
+      type: "user",
+      userID,
+    };
+    this.getWs()?.send(JSON.stringify(kickMessage));
   }
 
   private async getHistory(
