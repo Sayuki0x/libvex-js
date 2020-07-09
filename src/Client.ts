@@ -15,9 +15,9 @@ interface ITrxSub {
 }
 
 /**
- * The IClient interface represents a user "account" on a server.
+ * The IUser interface represents a user "account" on a server.
  */
-export interface IClient {
+export interface IUser {
   index: number;
   pubkey: string;
   username: string;
@@ -27,7 +27,7 @@ export interface IClient {
 }
 
 /**
- * The IClient interface represents a channel on the server.
+ * The IUser interface represents a channel on the server.
  */
 export interface IChannel {
   index: number;
@@ -35,6 +35,17 @@ export interface IChannel {
   admin: string;
   public: boolean;
   name: string;
+}
+
+/**
+ * The IFile interface represents file info returned from the server.
+ */
+export interface IFile {
+  index: number;
+  fileID: string;
+  fileName: string;
+  ownerID: string;
+  url: string;
 }
 
 /**
@@ -120,7 +131,7 @@ export interface IPermission {
  */
 export interface IClientInfo {
   authed: boolean;
-  client: IClient | null;
+  client: IUser | null;
   host: string;
   secure: boolean;
 }
@@ -157,7 +168,7 @@ interface IChannels {
   /**
    * Retrieves the channels in the server that you have permission to.
    *
-   * @returns - An array of Channel objects.
+   * @returns - An array of IChannel objects.
    */
   retrieve: () => Promise<IChannel[]>;
   /**
@@ -165,30 +176,44 @@ interface IChannels {
    * @param name - The name of the channel.
    * @param privateChannel - Whether or not the channel is private.
    *
-   * @returns - The created Channel object.
+   * @returns - The created IChannel object.
    */
   create: (name: string, privateChannel: boolean) => Promise<IChannel>;
   /**
    * Joins a channel on the server.
    * @param channelID - The channel unique id.
    *
-   * @returns - The joined Channel object.
+   * @returns - The joined IChannel object.
    */
   join: (channelID: string) => Promise<IChannel>;
   /**
    * Leaves a channel on the server you have previously joined.
    * @param channelID - The channel unique id.
    *
-   * @returns - The left Channel object.
+   * @returns - The left IChannel object.
    */
   leave: (channelID: string) => Promise<IChannel>;
   /**
    * Deletes a channel on the server.
    * @param channelID - The channel unique id.
    *
-   * @returns - The deleted Channel object.
+   * @returns - The deleted IChannel object.
    */
   delete: (channelID: string) => Promise<IChannel>;
+}
+
+/**
+ * The IFiles interface contains methods for dealing with files.
+ */
+interface IFiles {
+  /**
+   * Uploads a file to the server.
+   * @param file - The file as a buffer.
+   * @param fileName - The name of the file.
+   *
+   * @returns - The created IFile object.
+   */
+  create: (file: Buffer, fileName: string, channelID: string) => Promise<IFile>;
 }
 
 /**
@@ -200,23 +225,23 @@ interface IUsers {
    * @param userID - The user's unique id.
    * @param powerLevel - The power level to set.
    *
-   * @returns - The modified Client object.
+   * @returns - The modified IUser object.
    */
-  update: (userID: string, powerLevel: number) => Promise<IClient>;
+  update: (userID: string, powerLevel: number) => Promise<IUser>;
   /**
    * Disconnects a user temporarily from the server.
    * @param userID - The user's unique id.
    *
-   * @returns - The kicked Client object.
+   * @returns - The kicked IUser object.
    */
-  kick: (userID: string) => Promise<IClient>;
+  kick: (userID: string) => Promise<IUser>;
   /**
    * Bans a user's public key permanently from the server.
    * @param userID - The user's unique id.
    *
-   * @returns - The banned Client object.
+   * @returns - The banned IUser object.
    */
-  ban: (userID: string) => Promise<IClient>;
+  ban: (userID: string) => Promise<IUser>;
 }
 
 /**
@@ -228,7 +253,7 @@ interface IPermissions {
    * @param userID - The user's unique id.
    * @param channelID - The channel's unique id.
    *
-   * @returns - The created Permission object.
+   * @returns - The created IPermission object.
    */
 
   create: (userID: string, channelID: string) => Promise<IPermission>;
@@ -237,7 +262,7 @@ interface IPermissions {
    * @param userID - The user's unique id.
    * @param channelID - The channel's unique id.
    *
-   * @returns - The deleted Permission object.
+   * @returns - The deleted IPermission object.
    */
 
   delete: (userID: string, channelID: string) => Promise<IPermission>;
@@ -359,9 +384,10 @@ export class Client extends EventEmitter {
   public permissions: IPermissions;
   public messages: IMessages;
   public users: IUsers;
+  public files: IFiles;
   private authed: boolean;
   private channelList: IChannel[];
-  private clientInfo: IClient | null;
+  private clientInfo: IUser | null;
   private ws: WebSocket | null;
   private host: string;
   private trxSubs: ITrxSub[];
@@ -428,6 +454,10 @@ export class Client extends EventEmitter {
       update: this.opUser.bind(this),
     };
 
+    this.files = {
+      create: this.uploadFile.bind(this),
+    };
+
     if (!this.secure) {
       console.warn(
         "Warning! Insecure connections are dangerous. You should only use them for development."
@@ -457,8 +487,8 @@ export class Client extends EventEmitter {
    *
    * @returns The new account object.
    */
-  public async register(): Promise<IClient> {
-    const userAccount: IClient = await this.newUser();
+  public async register(): Promise<IUser> {
+    const userAccount: IUser = await this.newUser();
     await this.registerUser(userAccount);
     return userAccount;
   }
@@ -491,6 +521,37 @@ export class Client extends EventEmitter {
       timeout *= 2;
     }
     return serverPubkey;
+  }
+
+  private uploadFile(
+    file: Buffer,
+    fileName: string,
+    channelID: string
+  ): Promise<IFile> {
+    return new Promise((resolve, reject) => {
+      const transmissionID = uuidv4();
+      const message = {
+        channelID,
+        file: file.toString("hex"),
+        fileName,
+        method: "CREATE",
+        transmissionID,
+        type: "file",
+      };
+
+      this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
+        console.log("reached");
+        if (msg.type === "error") {
+          reject(msg);
+        } else {
+          const fileDetails: IFile = msg.data;
+          fileDetails.url = this.getHost(false) + "/file/" + fileDetails.fileID;
+          resolve(msg.data);
+        }
+      });
+
+      this.getWs()?.send(JSON.stringify(message));
+    });
   }
 
   private async sendChallenge(): Promise<string> {
@@ -549,7 +610,7 @@ export class Client extends EventEmitter {
     });
   }
 
-  private async opUser(userID: string, powerLevel: number): Promise<IClient> {
+  private async opUser(userID: string, powerLevel: number): Promise<IUser> {
     return new Promise((resolve, reject) => {
       const transmissionID = uuidv4();
       const message = {
@@ -681,7 +742,7 @@ export class Client extends EventEmitter {
     });
   }
 
-  private banUser(userID: string): Promise<IClient> {
+  private banUser(userID: string): Promise<IUser> {
     return new Promise((resolve, reject) => {
       const transmissionID = uuidv4();
       const message = {
@@ -703,7 +764,7 @@ export class Client extends EventEmitter {
     });
   }
 
-  private kickUser(userID: string): Promise<IClient> {
+  private kickUser(userID: string): Promise<IUser> {
     return new Promise((resolve, reject) => {
       const transmissionID = uuidv4();
       const message = {
@@ -824,10 +885,12 @@ export class Client extends EventEmitter {
       switch (event.code) {
         case 1006:
           console.log("reconnecting...");
+          this.authed = false;
           this.reconnect();
           break;
         default:
           console.log("reconnecting...");
+          this.authed = false;
           this.reconnect();
           break;
       }
@@ -885,7 +948,7 @@ export class Client extends EventEmitter {
     });
   }
 
-  private async registerUser(user: IClient): Promise<IClient> {
+  private async registerUser(user: IUser): Promise<IUser> {
     return new Promise((resolve, reject) => {
       const transmissionID = uuidv4();
 
@@ -941,7 +1004,7 @@ export class Client extends EventEmitter {
     this.startPing();
   }
 
-  private async respondToChallenge(jsonMessage: IChallenge): Promise<IClient> {
+  private async respondToChallenge(jsonMessage: IChallenge): Promise<IUser> {
     return new Promise((resolve, reject) => {
       const transmissionID = uuidv4();
       const challengeResponse = {
@@ -1003,7 +1066,7 @@ export class Client extends EventEmitter {
     }
   }
 
-  private async newUser(): Promise<IClient> {
+  private async newUser(): Promise<IUser> {
     return new Promise((resolve, reject) => {
       const transmissionID = uuidv4();
 

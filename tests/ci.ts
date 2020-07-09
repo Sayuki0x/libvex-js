@@ -1,9 +1,12 @@
+import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 import { Client, IChatMessage } from "../src/Client";
 import { KeyRing } from "../src/Keyring";
 import { Utils } from "../src/Utils";
 
 const keyring = new KeyRing(":memory:");
+
+const file = fs.readFileSync("./LICENSE");
 
 keyring.on("ready", () => {
   console.log("--------keys---------");
@@ -23,10 +26,18 @@ vexClient.on("ready", async () => {
   const serverPubkey = await vexClient.auth();
   console.log("SERVER PUBKEY", serverPubkey);
 
-  const botChannel = "c27ce1af-4b68-4d9b-aef0-8c7cb7503d5e";
+  const channelID = "191a90e6-15b7-4e40-8ae2-2cf60c3f70eb";
 
-  await vexClient.channels.join(botChannel);
-  await vexClient.messages.send(botChannel, testID);
+  await vexClient.channels.join(channelID);
+
+  const uploadedFile = await vexClient.files.create(
+    file,
+    "catcat_menacing.png",
+    channelID
+  );
+  diagPrint("file", uploadedFile);
+
+  await vexClient.messages.send(channelID, testID);
 });
 
 vexClient.on("message", async (message: IChatMessage) => {
