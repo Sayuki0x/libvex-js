@@ -412,10 +412,10 @@ export class Client extends EventEmitter {
   private secure: boolean;
   private wsPrefix: string;
   private httpPrefix: string;
-  private reconnecting: boolean;
   private connectedChannelList: string[];
   private history: IChatMessage[];
   private serverPubkey: string | null;
+  private connectCount: number;
 
   /**
    * @param host - The hostname:port of the server.
@@ -433,12 +433,12 @@ export class Client extends EventEmitter {
     this.secure = secure;
     this.keyring = keyring;
     this.clientInfo = null;
+    this.connectCount = 0;
     this.ws = null;
     this.host = host;
     this.trxSubs = [];
     this.serverAlive = true;
     this.authed = false;
-    this.reconnecting = false;
     this.history = [];
     this.channelList = [];
     this.serverPubkey = serverPubkey;
@@ -896,6 +896,7 @@ export class Client extends EventEmitter {
         if (msg.type === "error") {
           reject(msg);
         } else {
+          this.connectedChannelList.push(msg.data.channelID);
           resolve(msg.data);
         }
       });
@@ -912,55 +913,42 @@ export class Client extends EventEmitter {
     }
   }
 
-  private async reconnect() {
-    this.reconnecting = true;
+  private resetState() {
+    this.trxSubs = [];
+    this.serverAlive = true;
     this.authed = false;
-    await Utils.sleep(5000);
-    await this.init();
-    if (this.clientInfo) {
-      await this.auth();
-
-      if (this.connectedChannelList.length > 0) {
-        for (const id of this.connectedChannelList) {
-          // i need to remove it as well
-          this.connectedChannelList.splice(
-            this.connectedChannelList.indexOf(id),
-            1
-          );
-          console.log("joining channel " + id);
-          this.joinChannel(id);
-        }
-      }
-    }
-    this.reconnecting = false;
+    this.history = [];
   }
 
   private async init() {
+    this.resetState();
     this.keyring.init();
     const endpoint = "/socket";
     this.ws = new WebSocket(this.getHost(true) + endpoint);
 
-    this.getWs()!.onopen = (event: WebSocket.OpenEvent) => {
-      if (!this.reconnecting) {
+    this.getWs()!.onopen = async (event: WebSocket.OpenEvent) => {
+      this.initPing();
+      if (this.connectCount === 0) {
         this.emit("ready");
+      } else {
+        await this.auth();
+        const oldSubscriptions = this.connectedChannelList.slice();
+        this.connectedChannelList = [];
+        for (const id of oldSubscriptions) {
+          await this.joinChannel(id);
+        }
       }
+      this.connectCount++;
     };
 
     this.getWs()!.onclose = async (event: WebSocket.CloseEvent) => {
+      if (this.pingInterval) {
+        clearInterval(this.pingInterval);
+      }
       console.log("close code " + event.code);
       this.getWs()!.close();
-      switch (event.code) {
-        case 1006:
-          console.log("reconnecting...");
-          this.authed = false;
-          this.reconnect();
-          break;
-        default:
-          console.log("reconnecting...");
-          this.authed = false;
-          this.reconnect();
-          break;
-      }
+      await Utils.sleep(5000);
+      this.init();
     };
 
     this.getWs()!.onerror = async (event: WebSocket.ErrorEvent) => {
@@ -968,13 +956,10 @@ export class Client extends EventEmitter {
         clearInterval(this.pingInterval);
       }
       console.warn(event.error);
-
-      await Utils.sleep(5000);
-      this.reconnect();
+      this.emit("error", event.error);
     };
 
     this.getWs()!.onmessage = this.handleMessage.bind(this);
-    this.initPing();
   }
 
   private getWs() {
