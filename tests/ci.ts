@@ -30,11 +30,7 @@ vexClient.on("ready", async () => {
 
   await vexClient.channels.join(channelID);
 
-  const uploadedFile = await vexClient.files.create(
-    file,
-    "catcat_menacing.png",
-    channelID
-  );
+  const uploadedFile = await vexClient.files.create(file, "LICENSE", channelID);
   diagPrint("file", uploadedFile);
 
   await vexClient.messages.send(channelID, testID);

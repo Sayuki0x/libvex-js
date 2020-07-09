@@ -207,13 +207,28 @@ interface IChannels {
  */
 interface IFiles {
   /**
-   * Uploads a file to the server.
+   * Uploads a file to a channel.
    * @param file - The file as a buffer.
    * @param fileName - The name of the file.
+   * @param channelID - The channel to upload the file to.
    *
    * @returns - The created IFile object.
    */
   create: (file: Buffer, fileName: string, channelID: string) => Promise<IFile>;
+  /**
+   * Retrieves files from a channel.
+   * @param channelID - The channel to search for files.
+   *
+   * @returns - An array of IFile objects.
+   */
+  retrieve: (channelID: string) => Promise<IFile[]>;
+  /**
+   * Deletes a file from a channel.
+   * @param fileID - The channel to search for files.
+   *
+   * @returns - The deleted IFile object.
+   */
+  delete: (fileID: string) => Promise<IFile>;
 }
 
 /**
@@ -456,6 +471,8 @@ export class Client extends EventEmitter {
 
     this.files = {
       create: this.uploadFile.bind(this),
+      delete: this.deleteFile.bind(this),
+      retrieve: this.retrieveFiles.bind(this),
     };
 
     if (!this.secure) {
@@ -521,6 +538,56 @@ export class Client extends EventEmitter {
       timeout *= 2;
     }
     return serverPubkey;
+  }
+
+  private deleteFile(fileID: string): Promise<IFile> {
+    return new Promise((resolve, reject) => {
+      const transmissionID = uuidv4();
+      const message = {
+        fileID,
+        method: "DELETE",
+        transmissionID,
+        type: "file",
+      };
+
+      this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
+        console.log("reached");
+        if (msg.type === "error") {
+          reject(msg);
+        } else {
+          resolve(msg.data);
+        }
+      });
+
+      this.getWs()?.send(JSON.stringify(message));
+    });
+  }
+
+  private retrieveFiles(channelID: string): Promise<IFile[]> {
+    return new Promise((resolve, reject) => {
+      const transmissionID = uuidv4();
+      const message = {
+        channelID,
+        method: "RETRIEVE",
+        transmissionID,
+        type: "file",
+      };
+
+      this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
+        console.log("reached");
+        if (msg.type === "error") {
+          reject(msg);
+        } else {
+          const fileList: IFile[] = msg.data;
+          for (const file of fileList) {
+            file.url = this.getHost(false) + "/file/" + file.fileID;
+          }
+          resolve(msg.data);
+        }
+      });
+
+      this.getWs()?.send(JSON.stringify(message));
+    });
   }
 
   private uploadFile(

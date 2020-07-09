@@ -33,6 +33,8 @@ vexClient.on("ready", async () => {
   const uploadedFile = await vexClient.files.create(file, "LICENSE", channelID);
   diagPrint("file", uploadedFile);
 
+  const fileList = await vexClient.files.retrieve(channelID);
+
   await vexClient.messages.send(channelID, testID);
 });
 
