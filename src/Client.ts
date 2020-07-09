@@ -14,6 +14,9 @@ interface ITrxSub {
   id: string;
 }
 
+/**
+ * The IClient interface represents a user "account" on a server.
+ */
 export interface IClient {
   index: number;
   pubkey: string;
@@ -23,6 +26,9 @@ export interface IClient {
   banned: boolean;
 }
 
+/**
+ * The IClient interface represents a channel on the server.
+ */
 export interface IChannel {
   index: number;
   channelID: string;
@@ -31,6 +37,9 @@ export interface IChannel {
   name: string;
 }
 
+/**
+ * The IChallenge interface represents a challenge message.
+ */
 export interface IChallenge {
   type: string;
   transmissionID: string;
@@ -39,6 +48,9 @@ export interface IChallenge {
   pubkey: string;
 }
 
+/**
+ * The IResponse interface represents a response message.
+ */
 export interface IResponse {
   type: string;
   transmissionID: string;
@@ -47,6 +59,11 @@ export interface IResponse {
   pubkey: string;
 }
 
+/**
+ * The IApiSuccess interface represents a success message. The data
+ * will be whatever you did the operation on, for example, with
+ * a new channel operation it will return the channel.
+ */
 export interface IApiSuccess {
   type: "success";
   transmissionID: string;
@@ -54,6 +71,9 @@ export interface IApiSuccess {
   data: any;
 }
 
+/**
+ * The IApiError interface represents an error from the API.
+ */
 export interface IApiError {
   type: "error";
   transmissionID: string;
@@ -63,12 +83,18 @@ export interface IApiError {
   Error: Error | null;
 }
 
+/**
+ * The IApiPong interface represents a pong message.
+ */
 export interface IApiPong {
   type: "pong";
   messageID: string;
   transmissionID: string;
 }
 
+/**
+ * The IChatMessage interface represents a broadcasted chat message.
+ */
 export interface IChatMessage {
   type: "chat";
   index: number;
@@ -80,12 +106,18 @@ export interface IChatMessage {
   channelID: string;
 }
 
+/**
+ * The IPermission interface represents an access permission to a private channel.
+ */
 export interface IPermission {
   userID: string;
   channelID: string;
   powerLevel: number;
 }
 
+/**
+ * The IClientInfo interface represents some basic info on the client.
+ */
 export interface IClientInfo {
   authed: boolean;
   client: IClient | null;
@@ -93,6 +125,9 @@ export interface IClientInfo {
   secure: boolean;
 }
 
+/**
+ * The IMessages interface contains methods for dealing with messages.
+ */
 interface IMessages {
   /**
    * Retrieves history since a last known message. If no last message is supplied,
@@ -115,6 +150,9 @@ interface IMessages {
   send: (channelID: string, data: string) => void;
 }
 
+/**
+ * The IChannels interface contains methods for dealing with channels.
+ */
 interface IChannels {
   /**
    * Retrieves the channels in the server that you have permission to.
@@ -153,6 +191,9 @@ interface IChannels {
   delete: (channelID: string) => Promise<IChannel>;
 }
 
+/**
+ * The IUsers interface contains methods for dealing with users.
+ */
 interface IUsers {
   /**
    * Updates a user's power level.
@@ -178,6 +219,9 @@ interface IUsers {
   ban: (userID: string) => Promise<IClient>;
 }
 
+/**
+ * The IPermissions interface contains methods for dealing with permissions.
+ */
 interface IPermissions {
   /**
    * Creates a new permission for a user for a private channel.
