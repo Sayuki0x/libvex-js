@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { Client, IMessage } from "../src/Client";
+import { Client, IChatMessage } from "../src/Client";
 import { KeyRing } from "../src/Keyring";
 import { Utils } from "../src/Utils";
 
@@ -52,12 +52,12 @@ vexClient.on("ready", async () => {
   await vexClient.messages.send("be87726f-e79c-48a1-aa81-eadf948f2903", testID);
 });
 
-vexClient.on("message", async (message: IMessage) => {
+vexClient.on("message", async (message: IChatMessage) => {
   diagPrint("message", message);
 
   if (message.message === testID) {
     console.log("All tests passed.");
-    process.exit(0);
+    // process.exit(0);
   }
 });
 

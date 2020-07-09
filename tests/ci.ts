@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { Client, IMessage } from "../src/Client";
+import { Client, IChatMessage } from "../src/Client";
 import { KeyRing } from "../src/Keyring";
 import { Utils } from "../src/Utils";
 
@@ -58,7 +58,7 @@ vexClient.on("ready", async () => {
   }
 });
 
-vexClient.on("message", async (message: IMessage) => {
+vexClient.on("message", async (message: IChatMessage) => {
   if (message.message === testID) {
     console.log("All tests successful!");
     process.exit(0);

@@ -90,18 +90,33 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="ban" class="tsd-anchor"></a>
 					<h3>ban</h3>
-					<div class="tsd-signature tsd-kind-icon">ban<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>userID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
+					<div class="tsd-signature tsd-kind-icon">ban<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>userID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="iclient.html" class="tsd-signature-type">IClient</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/9a84ed9/src/Client.ts#L76">src/Client.ts:76</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/eab6695/src/Client.ts#L177">src/Client.ts:177</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Bans a user&#39;s public key permanently from the server.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>param</dt>
+							<dd><p>The user&#39;s unique id.</p>
+							</dd>
+							<dt>returns</dt>
+							<dd><ul>
+									<li>The banned Client object.</li>
+								</ul>
+							</dd>
+						</dl>
+					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-signature">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>userID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>userID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="iclient.html" class="tsd-signature-type">IClient</a><span class="tsd-signature-symbol">&gt;</span></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
@@ -111,7 +126,7 @@
 												<h5>userID: <span class="tsd-signature-type">string</span></h5>
 											</li>
 										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="iclient.html" class="tsd-signature-type">IClient</a><span class="tsd-signature-symbol">&gt;</span></h4>
 									</li>
 								</ul>
 							</li>
@@ -121,18 +136,33 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="kick" class="tsd-anchor"></a>
 					<h3>kick</h3>
-					<div class="tsd-signature tsd-kind-icon">kick<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>userID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
+					<div class="tsd-signature tsd-kind-icon">kick<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>userID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="iclient.html" class="tsd-signature-type">IClient</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/9a84ed9/src/Client.ts#L75">src/Client.ts:75</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/eab6695/src/Client.ts#L170">src/Client.ts:170</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Disconnects a user temporarily from the server.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>param</dt>
+							<dd><p>The user&#39;s unique id.</p>
+							</dd>
+							<dt>returns</dt>
+							<dd><ul>
+									<li>The kicked Client object.</li>
+								</ul>
+							</dd>
+						</dl>
+					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-signature">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>userID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>userID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="iclient.html" class="tsd-signature-type">IClient</a><span class="tsd-signature-symbol">&gt;</span></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
@@ -142,7 +172,7 @@
 												<h5>userID: <span class="tsd-signature-type">string</span></h5>
 											</li>
 										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="iclient.html" class="tsd-signature-type">IClient</a><span class="tsd-signature-symbol">&gt;</span></h4>
 									</li>
 								</ul>
 							</li>
@@ -152,18 +182,36 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="update" class="tsd-anchor"></a>
 					<h3>update</h3>
-					<div class="tsd-signature tsd-kind-icon">update<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>userID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, options<span class="tsd-signature-symbol">: </span><a href="iuseroptions.html" class="tsd-signature-type">IUserOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
+					<div class="tsd-signature tsd-kind-icon">update<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>userID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, powerLevel<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="iclient.html" class="tsd-signature-type">IClient</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/9a84ed9/src/Client.ts#L74">src/Client.ts:74</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/eab6695/src/Client.ts#L163">src/Client.ts:163</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Updates a user&#39;s power level.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>param</dt>
+							<dd><p>The user&#39;s unique id.</p>
+							</dd>
+							<dt>param</dt>
+							<dd><p>The power level to set.</p>
+							</dd>
+							<dt>returns</dt>
+							<dd><ul>
+									<li>The modified Client object.</li>
+								</ul>
+							</dd>
+						</dl>
+					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-signature">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>userID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, options<span class="tsd-signature-symbol">: </span><a href="iuseroptions.html" class="tsd-signature-type">IUserOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>userID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, powerLevel<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="iclient.html" class="tsd-signature-type">IClient</a><span class="tsd-signature-symbol">&gt;</span></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
@@ -173,10 +221,10 @@
 												<h5>userID: <span class="tsd-signature-type">string</span></h5>
 											</li>
 											<li>
-												<h5>options: <a href="iuseroptions.html" class="tsd-signature-type">IUserOptions</a></h5>
+												<h5>powerLevel: <span class="tsd-signature-type">number</span></h5>
 											</li>
 										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="iclient.html" class="tsd-signature-type">IClient</a><span class="tsd-signature-symbol">&gt;</span></h4>
 									</li>
 								</ul>
 							</li>
@@ -205,7 +253,16 @@
 						<a href="../classes/utils.html" class="tsd-kind-icon">Utils</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="iaccount.html" class="tsd-kind-icon">IAccount</a>
+						<a href="iapierror.html" class="tsd-kind-icon">IApi<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="iapipong.html" class="tsd-kind-icon">IApi<wbr>Pong</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="iapisuccess.html" class="tsd-kind-icon">IApi<wbr>Success</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="ichallenge.html" class="tsd-kind-icon">IChallenge</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="ichannel.html" class="tsd-kind-icon">IChannel</a>
@@ -214,22 +271,25 @@
 						<a href="ichannels.html" class="tsd-kind-icon">IChannels</a>
 					</li>
 					<li class=" tsd-kind-interface">
+						<a href="ichatmessage.html" class="tsd-kind-icon">IChat<wbr>Message</a>
+					</li>
+					<li class=" tsd-kind-interface">
 						<a href="iclient.html" class="tsd-kind-icon">IClient</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="imessage.html" class="tsd-kind-icon">IMessage</a>
+						<a href="iclientinfo.html" class="tsd-kind-icon">IClient<wbr>Info</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="imessages.html" class="tsd-kind-icon">IMessages</a>
 					</li>
 					<li class=" tsd-kind-interface">
+						<a href="ipermission.html" class="tsd-kind-icon">IPermission</a>
+					</li>
+					<li class=" tsd-kind-interface">
 						<a href="ipermissions.html" class="tsd-kind-icon">IPermissions</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="itrxsub.html" class="tsd-kind-icon">ITrx<wbr>Sub</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="iuseroptions.html" class="tsd-kind-icon">IUser<wbr>Options</a>
+						<a href="iresponse.html" class="tsd-kind-icon">IResponse</a>
 					</li>
 				</ul>
 				<ul class="current">
@@ -268,9 +328,6 @@
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>

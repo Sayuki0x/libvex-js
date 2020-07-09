@@ -2262,6 +2262,11 @@ typedoc-default-themes@^0.10.2:
   dependencies:
     lunr "^2.3.8"
 
+typedoc-plugin-no-inherit@^1.1.10:
+  version "1.1.10"
+  resolved "https://registry.yarnpkg.com/typedoc-plugin-no-inherit/-/typedoc-plugin-no-inherit-1.1.10.tgz#559d2fa68bc5d31052bf058399c2c135f9af2f68"
+  integrity sha512-BhSFAWlBTh9Bf6PSfruIqdQBM8gd/Gj8hVuRk5pVWkHu4I/SB24LzFr5gAo52ZlaQSeN72+VOkkRD6tNYl8Enw==
+
 typedoc@^0.17.8:
   version "0.17.8"
   resolved "https://registry.yarnpkg.com/typedoc/-/typedoc-0.17.8.tgz#96b67e9454aa7853bfc4dc9a55c8a07adfd5478e"

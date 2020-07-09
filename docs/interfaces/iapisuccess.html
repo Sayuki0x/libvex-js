@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ITrxSub | libvex</title>
+	<title>IApiSuccess | libvex</title>
 	<meta name="description" content="Documentation for libvex">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,10 +52,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="itrxsub.html">ITrxSub</a>
+					<a href="iapisuccess.html">IApiSuccess</a>
 				</li>
 			</ul>
-			<h1>Interface ITrxSub</h1>
+			<h1>Interface IApiSuccess</h1>
 		</div>
 	</div>
 </header>
@@ -66,7 +66,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">ITrxSub</span>
+						<span class="target">IApiSuccess</span>
 					</li>
 				</ul>
 			</section>
@@ -77,8 +77,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="itrxsub.html#callback" class="tsd-kind-icon">callback</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="itrxsub.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iapisuccess.html#data" class="tsd-kind-icon">data</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iapisuccess.html#messageid" class="tsd-kind-icon">messageID</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iapisuccess.html#transmissionid" class="tsd-kind-icon">transmissionID</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iapisuccess.html#type" class="tsd-kind-icon">type</a></li>
 							</ul>
 						</section>
 					</div>
@@ -87,22 +89,42 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="callback" class="tsd-anchor"></a>
-					<h3>callback</h3>
-					<div class="tsd-signature tsd-kind-icon">callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Function</span></div>
+					<a name="data" class="tsd-anchor"></a>
+					<h3>data</h3>
+					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/9a84ed9/src/Client.ts#L10">src/Client.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/eab6695/src/Client.ts#L54">src/Client.ts:54</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="id" class="tsd-anchor"></a>
-					<h3>id</h3>
-					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="messageid" class="tsd-anchor"></a>
+					<h3>messageID</h3>
+					<div class="tsd-signature tsd-kind-icon">messageID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/9a84ed9/src/Client.ts#L11">src/Client.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/eab6695/src/Client.ts#L53">src/Client.ts:53</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="transmissionid" class="tsd-anchor"></a>
+					<h3>transmissionID</h3>
+					<div class="tsd-signature tsd-kind-icon">transmissionID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/eab6695/src/Client.ts#L52">src/Client.ts:52</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="type" class="tsd-anchor"></a>
+					<h3>type</h3>
+					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"success"</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/eab6695/src/Client.ts#L51">src/Client.ts:51</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -128,7 +150,34 @@
 						<a href="../classes/utils.html" class="tsd-kind-icon">Utils</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="iaccount.html" class="tsd-kind-icon">IAccount</a>
+						<a href="iapierror.html" class="tsd-kind-icon">IApi<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="iapipong.html" class="tsd-kind-icon">IApi<wbr>Pong</a>
+					</li>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface">
+						<a href="iapisuccess.html" class="tsd-kind-icon">IApi<wbr>Success</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="iapisuccess.html#data" class="tsd-kind-icon">data</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="iapisuccess.html#messageid" class="tsd-kind-icon">messageID</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="iapisuccess.html#transmissionid" class="tsd-kind-icon">transmissionID</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="iapisuccess.html#type" class="tsd-kind-icon">type</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-interface">
+						<a href="ichallenge.html" class="tsd-kind-icon">IChallenge</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="ichannel.html" class="tsd-kind-icon">IChannel</a>
@@ -137,34 +186,25 @@
 						<a href="ichannels.html" class="tsd-kind-icon">IChannels</a>
 					</li>
 					<li class=" tsd-kind-interface">
+						<a href="ichatmessage.html" class="tsd-kind-icon">IChat<wbr>Message</a>
+					</li>
+					<li class=" tsd-kind-interface">
 						<a href="iclient.html" class="tsd-kind-icon">IClient</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="imessage.html" class="tsd-kind-icon">IMessage</a>
+						<a href="iclientinfo.html" class="tsd-kind-icon">IClient<wbr>Info</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="imessages.html" class="tsd-kind-icon">IMessages</a>
 					</li>
 					<li class=" tsd-kind-interface">
+						<a href="ipermission.html" class="tsd-kind-icon">IPermission</a>
+					</li>
+					<li class=" tsd-kind-interface">
 						<a href="ipermissions.html" class="tsd-kind-icon">IPermissions</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-interface">
-						<a href="itrxsub.html" class="tsd-kind-icon">ITrx<wbr>Sub</a>
-						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="itrxsub.html#callback" class="tsd-kind-icon">callback</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="itrxsub.html#id" class="tsd-kind-icon">id</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-interface">
-						<a href="iuseroptions.html" class="tsd-kind-icon">IUser<wbr>Options</a>
+						<a href="iresponse.html" class="tsd-kind-icon">IResponse</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="iusers.html" class="tsd-kind-icon">IUsers</a>
@@ -188,9 +228,6 @@
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>

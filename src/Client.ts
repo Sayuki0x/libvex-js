@@ -5,17 +5,13 @@ import { v4 as uuidv4 } from "uuid";
 import { KeyRing } from "./Keyring";
 import { Utils } from "./Utils";
 
+/**
+ * @ignore
+ */
 interface ITrxSub {
   // tslint:disable-next-line: ban-types
   callback: Function;
   id: string;
-}
-
-export interface IAccount {
-  pubkey: string;
-  serverPubkey: string;
-  hostname: string;
-  uuid: string;
 }
 
 export interface IClient {
@@ -73,59 +69,247 @@ export interface IApiPong {
   transmissionID: string;
 }
 
-export interface IMessage {
-  index?: number;
-  channelID?: string;
-  method?: string;
-  pubkey: string;
-  type: string;
-  data: any;
-  message?: string;
-  messageID?: string;
+export interface IChatMessage {
+  type: "chat";
+  index: number;
+  username: string;
+  messageID: string;
   transmissionID: string;
-  uuid?: string;
-  response?: string;
-  status?: string;
-  challenge?: string;
+  method: string;
+  message: string;
+  channelID: string;
 }
 
-interface IMessages {
-  retrieve: (
-    channelID: string,
-    lastKnownMessageID?: string
-  ) => Promise<IMessage[]>;
-  send: (channelID: string, data: string) => void;
-}
-
-interface IChannels {
-  retrieve: () => Promise<IChannel[]>;
-  create: (name: string, privateChannel: boolean) => Promise<IChannel>;
-  join: (channelID: string) => Promise<IChannel>;
-  leave: (channelID: string) => Promise<IChannel>;
-  delete: (channelID: string) => Promise<IChannel>;
-}
-
-interface IUserOptions {
-  powerLevel?: number;
-}
-
-interface IUsers {
-  update: (userID: string, powerLevel: number) => Promise<IClient>;
-  kick: (userID: string) => Promise<IClient>;
-  ban: (userID: string) => Promise<IClient>;
-}
-
-interface IPermission {
+export interface IPermission {
   userID: string;
   channelID: string;
   powerLevel: number;
 }
 
+export interface IClientInfo {
+  authed: boolean;
+  client: IClient | null;
+  host: string;
+  secure: boolean;
+}
+
+interface IMessages {
+  /**
+   * Retrieves history since a last known message. If no last message is supplied,
+   * all history will be retrieved.
+   * @param channelID - The channel's unique id.
+   * @param lastKnownMessageID - The unique ID of the last known message.
+   *
+   * @returns - An array of the messages since the known message.
+   */
+
+  retrieve: (
+    channelID: string,
+    lastKnownMessageID?: string
+  ) => Promise<IChatMessage[]>;
+  /**
+   * Sends a message to a channel.
+   * @param channelID - The channel's unique id.
+   * @param data - The message to send.
+   */
+  send: (channelID: string, data: string) => void;
+}
+
+interface IChannels {
+  /**
+   * Retrieves the channels in the server that you have permission to.
+   *
+   * @returns - An array of Channel objects.
+   */
+  retrieve: () => Promise<IChannel[]>;
+  /**
+   * Creates a new channel on the server.
+   * @param name - The name of the channel.
+   * @param privateChannel - Whether or not the channel is private.
+   *
+   * @returns - The created Channel object.
+   */
+  create: (name: string, privateChannel: boolean) => Promise<IChannel>;
+  /**
+   * Joins a channel on the server.
+   * @param channelID - The channel unique id.
+   *
+   * @returns - The joined Channel object.
+   */
+  join: (channelID: string) => Promise<IChannel>;
+  /**
+   * Leaves a channel on the server you have previously joined.
+   * @param channelID - The channel unique id.
+   *
+   * @returns - The left Channel object.
+   */
+  leave: (channelID: string) => Promise<IChannel>;
+  /**
+   * Deletes a channel on the server.
+   * @param channelID - The channel unique id.
+   *
+   * @returns - The deleted Channel object.
+   */
+  delete: (channelID: string) => Promise<IChannel>;
+}
+
+interface IUsers {
+  /**
+   * Updates a user's power level.
+   * @param userID - The user's unique id.
+   * @param powerLevel - The power level to set.
+   *
+   * @returns - The modified Client object.
+   */
+  update: (userID: string, powerLevel: number) => Promise<IClient>;
+  /**
+   * Disconnects a user temporarily from the server.
+   * @param userID - The user's unique id.
+   *
+   * @returns - The kicked Client object.
+   */
+  kick: (userID: string) => Promise<IClient>;
+  /**
+   * Bans a user's public key permanently from the server.
+   * @param userID - The user's unique id.
+   *
+   * @returns - The banned Client object.
+   */
+  ban: (userID: string) => Promise<IClient>;
+}
+
 interface IPermissions {
+  /**
+   * Creates a new permission for a user for a private channel.
+   * @param userID - The user's unique id.
+   * @param channelID - The channel's unique id.
+   *
+   * @returns - The created Permission object.
+   */
+
   create: (userID: string, channelID: string) => Promise<IPermission>;
+  /**
+   * Revokes a permission for a user for a private channel.
+   * @param userID - The user's unique id.
+   * @param channelID - The channel's unique id.
+   *
+   * @returns - The deleted Permission object.
+   */
+
   delete: (userID: string, channelID: string) => Promise<IPermission>;
 }
 
+// tslint:disable-next-line: interface-name
+export declare interface Client {
+  /**
+   * This is emitted whenever the keyring is done initializing. You must wait
+   * to perform any operaitons until this event.
+   *
+   * Example:
+   *
+   * ```ts
+   *
+   *   client.on("ready", (error) => {
+   *     await client.register()
+   *   });
+   * ```
+   *
+   * @event
+   */
+  on(event: "ready", callback: () => void): this;
+
+  /**
+   * This is emitted whenever the client experiences an error initializing.
+   *
+   * Example:
+   *
+   * ```ts
+   *
+   *   client.on("error", (error) => {
+   *     // do something with the error
+   *   });
+   * ```
+   *
+   * @event
+   */
+  on(event: "error", callback: (error: Error) => void): this;
+
+  /**
+   * Messages are emitted through this event. You must join a channel
+   * to get messages.
+   *
+   * ```ts
+   *
+   *   client.on("message", (message) => {
+   *     console.log(message)
+   *   });
+   * ```
+   *
+   * @event
+   */
+  on(event: "message", callback: (message: IChatMessage) => void): this;
+}
+
+/**
+ * The Client provides an interface that allows you to interface with
+ * a vex chat server.
+ *
+ * Example Usage:
+ *
+ * ```ts
+ *   import { v4 as uuidv4 } from "uuid";
+ *   import { Client, IChatMessage } from "../src/Client";
+ *   import { KeyRing } from "../src/Keyring";
+ *   import { Utils } from "../src/Utils";
+ *
+ *   const keyring = new KeyRing("./keys");
+ *
+ *   keyring.on("ready", () => {
+ *    console.log("PUBLIC KEY", Utils.toHexString(keyring.getPub()));
+ *    // make sure you save your private key somewhere
+ *    console.log("PRIVATE KEY", Utils.toHexString(keyring.getPriv()));
+ *   });
+ *
+ *   const vexClient = new Client(
+ *     "localhost:8000",
+ *     keyring,
+ *     null,
+ *     false
+ *   );
+ *
+ *   const testID = uuidv4();
+ *   console.log("TEST ID", testID);
+ *
+ *   vexClient.on("ready", async () => {
+ *     const account = await vexClient.register()
+ *
+ *     // save the account info here, you need it to log in.
+ *     console.log(account);
+ *
+ *     const serverPubkey = await vexClient.auth();
+ *     console.log("SERVER PUBKEY", serverPubkey);
+ *
+ *
+ *     // then log in with the account
+ *     await vexClient.auth();
+ *   });
+ *
+ *   vexClient.on("message", async (message: IChatMessage) => {
+ *     console.log(message);
+ *   });
+ *
+ *   vexClient.on("error", (error: any) => {
+ *     console.log(error);
+ *   });
+ *
+ * ```
+ *
+ * Note that the sign() and verify() functions take uint8 arrays.
+ * If you need to convert hex strings into Uint8 arrays, use the
+ * helper functions in the Utils class.
+ *
+ * @noInheritDoc
+ */
 export class Client extends EventEmitter {
   public channels: IChannels;
   public permissions: IPermissions;
@@ -145,10 +329,15 @@ export class Client extends EventEmitter {
   private httpPrefix: string;
   private reconnecting: boolean;
   private connectedChannelList: string[];
-  private history: IMessage[];
+  private history: IChatMessage[];
   private serverPubkey: string | null;
-  private requestingHistory: boolean;
 
+  /**
+   * @param host - The hostname:port of the server.
+   * @param keyring - The keyring object to use to login.
+   * @param serverPubKey - The server pubkey, if already known. If not, use null and save it after first login.
+   * @param secure - Whether or not to use SSL. You should only disable SSL for development.
+   */
   constructor(
     host: string,
     keyring: KeyRing,
@@ -162,7 +351,6 @@ export class Client extends EventEmitter {
     this.ws = null;
     this.host = host;
     this.trxSubs = [];
-    this.requestingHistory = false;
     this.serverAlive = true;
     this.authed = false;
     this.reconnecting = false;
@@ -210,6 +398,9 @@ export class Client extends EventEmitter {
     this.init();
   }
 
+  /**
+   * Logs out of the server.
+   */
   public logout() {
     if (this.pingInterval) {
       clearInterval(this.pingInterval);
@@ -217,22 +408,37 @@ export class Client extends EventEmitter {
     this.ws?.close();
   }
 
+  /**
+   * Registers a new account on the server.
+   *
+   * @returns The new account object.
+   */
   public async register(): Promise<IClient> {
     const userAccount: IClient = await this.newUser();
     await this.registerUser(userAccount);
     return userAccount;
   }
 
-  public info() {
+  /**
+   * Returns info about the current connection.
+   *
+   * @returns The new account object.
+   */
+  public info(): IClientInfo {
     return {
       authed: this.authed,
       client: this.clientInfo,
-      clientInfo: this.clientInfo,
       host: this.getHost(true),
       secure: this.secure,
     };
   }
 
+  /**
+   * Performs the login handshake with the server. You must do this
+   * before you can do any other operations.
+   *
+   * @returns The authorized account.
+   */
   public async auth() {
     return this.sendChallenge();
   }
@@ -250,7 +456,7 @@ export class Client extends EventEmitter {
         type: "challenge",
       };
 
-      this.subscribe(transmissionID, (msg: IMessage) => {
+      this.subscribe(transmissionID, (msg: IResponse) => {
         if (
           this.keyring.verify(
             decodeUTF8(challenge),
@@ -261,6 +467,7 @@ export class Client extends EventEmitter {
           if (!this.serverPubkey) {
             this.serverPubkey = msg.pubkey;
           }
+          clearTimeout(timeout);
           resolve(this.serverPubkey);
         } else {
           reject(new Error("Server signature did not verify!"));
@@ -281,11 +488,11 @@ export class Client extends EventEmitter {
         transmissionID,
         type: "chat",
       };
-      this.subscribe(transmissionID, (msg: IMessage) => {
-        if (msg.type === "success") {
-          resolve();
-        } else {
+      this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
+        if (msg.type === "error") {
           reject(msg);
+        } else {
+          resolve();
         }
       });
       this.getWs()?.send(JSON.stringify(chatMessage));
@@ -303,7 +510,7 @@ export class Client extends EventEmitter {
         userID,
       };
 
-      this.subscribe(transmissionID, (msg: IMessage) => {
+      this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
         if (msg.type === "error") {
           reject(msg);
         } else {
@@ -315,6 +522,11 @@ export class Client extends EventEmitter {
     });
   }
 
+  /**
+   * Creates a new channel.
+   *
+   * @returns The created channel object.
+   */
   private createChannel(
     name: string,
     privateChannel: boolean
@@ -329,7 +541,7 @@ export class Client extends EventEmitter {
         type: "channel",
       };
 
-      this.subscribe(transmissionID, (msg: IMessage) => {
+      this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
         if (msg.type === "error") {
           reject(msg);
         } else {
@@ -351,7 +563,7 @@ export class Client extends EventEmitter {
         type: "channel",
       };
 
-      this.subscribe(transmissionID, (msg: IMessage) => {
+      this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
         if (msg.type === "error") {
           reject(msg);
         } else {
@@ -379,7 +591,7 @@ export class Client extends EventEmitter {
         type: "channelPerm",
       };
 
-      this.subscribe(transmissionID, (msg: IMessage) => {
+      this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
         if (msg.type === "error") {
           reject(msg);
         } else {
@@ -407,7 +619,7 @@ export class Client extends EventEmitter {
         type: "channelPerm",
       };
 
-      this.subscribe(transmissionID, (msg: IMessage) => {
+      this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
         if (msg.type === "error") {
           reject(msg);
         } else {
@@ -429,7 +641,7 @@ export class Client extends EventEmitter {
         userID,
       };
 
-      this.subscribe(transmissionID, (msg: IMessage) => {
+      this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
         if (msg.type === "error") {
           reject(msg);
         } else {
@@ -451,7 +663,7 @@ export class Client extends EventEmitter {
         userID,
       };
 
-      this.subscribe(transmissionID, (msg: IMessage) => {
+      this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
         if (msg.type === "error") {
           reject(msg);
         } else {
@@ -466,10 +678,8 @@ export class Client extends EventEmitter {
   private async getHistory(
     channelID: string,
     topMessage: string = "00000000-0000-0000-0000-000000000000"
-  ): Promise<IMessage[]> {
+  ): Promise<IChatMessage[]> {
     return new Promise((resolve, reject) => {
-      this.requestingHistory = true;
-
       const transID = uuidv4();
       const historyReqMessage = {
         channelID,
@@ -479,7 +689,7 @@ export class Client extends EventEmitter {
         type: "historyReq_v2",
       };
 
-      this.subscribe(transID, (msg: IMessage) => {
+      this.subscribe(transID, (msg: IApiSuccess | IApiError) => {
         if (msg.type === "success") {
           resolve(msg.data);
         } else {
@@ -504,7 +714,7 @@ export class Client extends EventEmitter {
         type: "channel",
       };
 
-      this.subscribe(transmissionID, (msg: IMessage) => {
+      this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
         if (msg.type === "error") {
           reject(msg);
         } else {
@@ -584,6 +794,7 @@ export class Client extends EventEmitter {
     };
 
     this.getWs()!.onmessage = this.handleMessage.bind(this);
+    this.initPing();
   }
 
   private getWs() {
@@ -612,7 +823,7 @@ export class Client extends EventEmitter {
         type: "channel",
       };
 
-      this.subscribe(transmissionID, (msg: IMessage) => {
+      this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
         if (msg.type === "error") {
           reject(msg);
         } else {
@@ -637,7 +848,7 @@ export class Client extends EventEmitter {
         uuid: user.userID,
       };
 
-      this.subscribe(transmissionID, (msg: IMessage) => {
+      this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
         if (msg.type === "error") {
           reject(msg);
         } else {
@@ -659,7 +870,7 @@ export class Client extends EventEmitter {
         type: "channel",
       };
 
-      this.subscribe(transmissionID, (msg: IMessage) => {
+      this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
         if (msg.type === "error") {
           reject(msg);
         } else {
@@ -671,7 +882,16 @@ export class Client extends EventEmitter {
     });
   }
 
-  private async respondToChallenge(jsonMessage: IMessage) {
+  private async initPing() {
+    let timeout = 1;
+    while (!this.authed) {
+      await Utils.sleep(timeout);
+      timeout *= 2;
+    }
+    this.startPing();
+  }
+
+  private async respondToChallenge(jsonMessage: IChallenge): Promise<IClient> {
     return new Promise((resolve, reject) => {
       const transmissionID = uuidv4();
       const challengeResponse = {
@@ -683,12 +903,12 @@ export class Client extends EventEmitter {
         type: "response",
       };
 
-      this.subscribe(transmissionID, (jMsg: IMessage) => {
-        if (jMsg.type === "success") {
-          this.authed = true;
-          resolve();
+      this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
+        if (msg.type === "error") {
+          reject(msg);
         } else {
-          reject(jMsg);
+          this.authed = true;
+          resolve(msg.data);
         }
       });
 
@@ -743,7 +963,7 @@ export class Client extends EventEmitter {
         type: "identity",
       };
 
-      this.subscribe(transmissionID, (msg: IMessage) => {
+      this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
         if (msg.type === "error") {
           reject(msg);
         } else {
@@ -764,14 +984,11 @@ export class Client extends EventEmitter {
         failedCount = 0;
       }
       if (failedCount > 2) {
-        failedCount = 0;
-        this.logout();
-        this.reconnect();
-        return;
+        console.log("connection might be down");
       }
       this.serverAlive = false;
       const pongID = uuidv4();
-      this.subscribe(pongID, () => {
+      this.subscribe(pongID, (message: IApiPong) => {
         this.serverAlive = true;
       });
       this.getWs()?.send(

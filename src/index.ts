@@ -1,7 +1,28 @@
-import { Client, IAccount, IClient, IMessage } from "./Client";
+import {
+  Client,
+  IApiError,
+  IApiPong,
+  IApiSuccess,
+  IChallenge,
+  IChannel,
+  IChatMessage,
+  IClient,
+  IPermission,
+  IResponse,
+} from "./Client";
 import { KeyRing } from "./Keyring";
 import { Utils } from "./Utils";
 
 export { Client, KeyRing, Utils };
 
-export { IMessage, IAccount, IClient };
+export {
+  IChatMessage,
+  IClient,
+  IChannel,
+  IChallenge,
+  IResponse,
+  IApiSuccess,
+  IApiError,
+  IApiPong,
+  IPermission,
+};

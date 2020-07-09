@@ -89,18 +89,37 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="retrieve" class="tsd-anchor"></a>
 					<h3>retrieve</h3>
-					<div class="tsd-signature tsd-kind-icon">retrieve<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>channelID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, lastKnownMessageID<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="imessage.html" class="tsd-signature-type">IMessage</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">retrieve<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>channelID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, lastKnownMessageID<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="ichatmessage.html" class="tsd-signature-type">IChatMessage</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/9a84ed9/src/Client.ts#L53">src/Client.ts:53</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/eab6695/src/Client.ts#L105">src/Client.ts:105</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Retrieves history since a last known message. If no last message is supplied,
+							all history will be retrieved.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>param</dt>
+							<dd><p>The channel&#39;s unique id.</p>
+							</dd>
+							<dt>param</dt>
+							<dd><p>The unique ID of the last known message.</p>
+							</dd>
+							<dt>returns</dt>
+							<dd><ul>
+									<li>An array of the messages since the known message.</li>
+								</ul>
+							</dd>
+						</dl>
+					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-signature">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>channelID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, lastKnownMessageID<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="imessage.html" class="tsd-signature-type">IMessage</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>channelID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, lastKnownMessageID<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="ichatmessage.html" class="tsd-signature-type">IChatMessage</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
@@ -113,7 +132,7 @@
 												<h5><span class="tsd-flag ts-flagOptional">Optional</span> lastKnownMessageID: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
 											</li>
 										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="imessage.html" class="tsd-signature-type">IMessage</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="ichatmessage.html" class="tsd-signature-type">IChatMessage</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
 									</li>
 								</ul>
 							</li>
@@ -126,9 +145,22 @@
 					<div class="tsd-signature tsd-kind-icon">send<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>channelID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/9a84ed9/src/Client.ts#L57">src/Client.ts:57</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/eab6695/src/Client.ts#L114">src/Client.ts:114</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Sends a message to a channel.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>param</dt>
+							<dd><p>The channel&#39;s unique id.</p>
+							</dd>
+							<dt>param</dt>
+							<dd><p>The message to send.</p>
+							</dd>
+						</dl>
+					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
@@ -176,7 +208,16 @@
 						<a href="../classes/utils.html" class="tsd-kind-icon">Utils</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="iaccount.html" class="tsd-kind-icon">IAccount</a>
+						<a href="iapierror.html" class="tsd-kind-icon">IApi<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="iapipong.html" class="tsd-kind-icon">IApi<wbr>Pong</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="iapisuccess.html" class="tsd-kind-icon">IApi<wbr>Success</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="ichallenge.html" class="tsd-kind-icon">IChallenge</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="ichannel.html" class="tsd-kind-icon">IChannel</a>
@@ -185,10 +226,13 @@
 						<a href="ichannels.html" class="tsd-kind-icon">IChannels</a>
 					</li>
 					<li class=" tsd-kind-interface">
+						<a href="ichatmessage.html" class="tsd-kind-icon">IChat<wbr>Message</a>
+					</li>
+					<li class=" tsd-kind-interface">
 						<a href="iclient.html" class="tsd-kind-icon">IClient</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="imessage.html" class="tsd-kind-icon">IMessage</a>
+						<a href="iclientinfo.html" class="tsd-kind-icon">IClient<wbr>Info</a>
 					</li>
 				</ul>
 				<ul class="current">
@@ -206,13 +250,13 @@
 				</ul>
 				<ul class="after-current">
 					<li class=" tsd-kind-interface">
+						<a href="ipermission.html" class="tsd-kind-icon">IPermission</a>
+					</li>
+					<li class=" tsd-kind-interface">
 						<a href="ipermissions.html" class="tsd-kind-icon">IPermissions</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="itrxsub.html" class="tsd-kind-icon">ITrx<wbr>Sub</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="iuseroptions.html" class="tsd-kind-icon">IUser<wbr>Options</a>
+						<a href="iresponse.html" class="tsd-kind-icon">IResponse</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="iusers.html" class="tsd-kind-icon">IUsers</a>
@@ -236,9 +280,6 @@
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IAccount | libvex</title>
+	<title>IClientInfo | libvex</title>
 	<meta name="description" content="Documentation for libvex">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,10 +52,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="iaccount.html">IAccount</a>
+					<a href="iclientinfo.html">IClientInfo</a>
 				</li>
 			</ul>
-			<h1>Interface IAccount</h1>
+			<h1>Interface IClientInfo</h1>
 		</div>
 	</div>
 </header>
@@ -66,7 +66,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IAccount</span>
+						<span class="target">IClientInfo</span>
 					</li>
 				</ul>
 			</section>
@@ -77,10 +77,10 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iaccount.html#hostname" class="tsd-kind-icon">hostname</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iaccount.html#pubkey" class="tsd-kind-icon">pubkey</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iaccount.html#serverpubkey" class="tsd-kind-icon">server<wbr>Pubkey</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iaccount.html#uuid" class="tsd-kind-icon">uuid</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iclientinfo.html#authed" class="tsd-kind-icon">authed</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iclientinfo.html#client" class="tsd-kind-icon">client</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iclientinfo.html#host" class="tsd-kind-icon">host</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iclientinfo.html#secure" class="tsd-kind-icon">secure</a></li>
 							</ul>
 						</section>
 					</div>
@@ -89,42 +89,42 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="hostname" class="tsd-anchor"></a>
-					<h3>hostname</h3>
-					<div class="tsd-signature tsd-kind-icon">hostname<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="authed" class="tsd-anchor"></a>
+					<h3>authed</h3>
+					<div class="tsd-signature tsd-kind-icon">authed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/9a84ed9/src/Client.ts#L17">src/Client.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/eab6695/src/Client.ts#L90">src/Client.ts:90</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="pubkey" class="tsd-anchor"></a>
-					<h3>pubkey</h3>
-					<div class="tsd-signature tsd-kind-icon">pubkey<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="client" class="tsd-anchor"></a>
+					<h3>client</h3>
+					<div class="tsd-signature tsd-kind-icon">client<span class="tsd-signature-symbol">:</span> <a href="iclient.html" class="tsd-signature-type">IClient</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/9a84ed9/src/Client.ts#L15">src/Client.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/eab6695/src/Client.ts#L91">src/Client.ts:91</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="serverpubkey" class="tsd-anchor"></a>
-					<h3>server<wbr>Pubkey</h3>
-					<div class="tsd-signature tsd-kind-icon">server<wbr>Pubkey<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="host" class="tsd-anchor"></a>
+					<h3>host</h3>
+					<div class="tsd-signature tsd-kind-icon">host<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/9a84ed9/src/Client.ts#L16">src/Client.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/eab6695/src/Client.ts#L92">src/Client.ts:92</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="uuid" class="tsd-anchor"></a>
-					<h3>uuid</h3>
-					<div class="tsd-signature tsd-kind-icon">uuid<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="secure" class="tsd-anchor"></a>
+					<h3>secure</h3>
+					<div class="tsd-signature tsd-kind-icon">secure<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/9a84ed9/src/Client.ts#L18">src/Client.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/eab6695/src/Client.ts#L93">src/Client.ts:93</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -149,27 +149,18 @@
 					<li class=" tsd-kind-class">
 						<a href="../classes/utils.html" class="tsd-kind-icon">Utils</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-interface">
-						<a href="iaccount.html" class="tsd-kind-icon">IAccount</a>
-						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="iaccount.html#hostname" class="tsd-kind-icon">hostname</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="iaccount.html#pubkey" class="tsd-kind-icon">pubkey</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="iaccount.html#serverpubkey" class="tsd-kind-icon">server<wbr>Pubkey</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="iaccount.html#uuid" class="tsd-kind-icon">uuid</a>
-							</li>
-						</ul>
+					<li class=" tsd-kind-interface">
+						<a href="iapierror.html" class="tsd-kind-icon">IApi<wbr>Error</a>
 					</li>
-				</ul>
-				<ul class="after-current">
+					<li class=" tsd-kind-interface">
+						<a href="iapipong.html" class="tsd-kind-icon">IApi<wbr>Pong</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="iapisuccess.html" class="tsd-kind-icon">IApi<wbr>Success</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="ichallenge.html" class="tsd-kind-icon">IChallenge</a>
+					</li>
 					<li class=" tsd-kind-interface">
 						<a href="ichannel.html" class="tsd-kind-icon">IChannel</a>
 					</li>
@@ -177,22 +168,43 @@
 						<a href="ichannels.html" class="tsd-kind-icon">IChannels</a>
 					</li>
 					<li class=" tsd-kind-interface">
+						<a href="ichatmessage.html" class="tsd-kind-icon">IChat<wbr>Message</a>
+					</li>
+					<li class=" tsd-kind-interface">
 						<a href="iclient.html" class="tsd-kind-icon">IClient</a>
 					</li>
-					<li class=" tsd-kind-interface">
-						<a href="imessage.html" class="tsd-kind-icon">IMessage</a>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface">
+						<a href="iclientinfo.html" class="tsd-kind-icon">IClient<wbr>Info</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="iclientinfo.html#authed" class="tsd-kind-icon">authed</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="iclientinfo.html#client" class="tsd-kind-icon">client</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="iclientinfo.html#host" class="tsd-kind-icon">host</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="iclientinfo.html#secure" class="tsd-kind-icon">secure</a>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-interface">
 						<a href="imessages.html" class="tsd-kind-icon">IMessages</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="ipermission.html" class="tsd-kind-icon">IPermission</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="ipermissions.html" class="tsd-kind-icon">IPermissions</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="itrxsub.html" class="tsd-kind-icon">ITrx<wbr>Sub</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="iuseroptions.html" class="tsd-kind-icon">IUser<wbr>Options</a>
+						<a href="iresponse.html" class="tsd-kind-icon">IResponse</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="iusers.html" class="tsd-kind-icon">IUsers</a>
@@ -216,9 +228,6 @@
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
