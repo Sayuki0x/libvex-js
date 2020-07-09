@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IClient | libvex</title>
+	<title>IFile | libvex</title>
 	<meta name="description" content="Documentation for libvex">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,10 +52,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="iclient.html">IClient</a>
+					<a href="ifile.html">IFile</a>
 				</li>
 			</ul>
-			<h1>Interface IClient</h1>
+			<h1>Interface IFile</h1>
 		</div>
 	</div>
 </header>
@@ -65,7 +65,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>The IClient interface represents a user &quot;account&quot; on a server.</p>
+						<p>The IFile interface represents file info returned from the server.</p>
 					</div>
 				</div>
 			</section>
@@ -73,7 +73,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IClient</span>
+						<span class="target">IFile</span>
 					</li>
 				</ul>
 			</section>
@@ -84,12 +84,11 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iclient.html#banned" class="tsd-kind-icon">banned</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iclient.html#index" class="tsd-kind-icon">index</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iclient.html#powerlevel" class="tsd-kind-icon">power<wbr>Level</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iclient.html#pubkey" class="tsd-kind-icon">pubkey</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iclient.html#userid" class="tsd-kind-icon">userID</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iclient.html#username" class="tsd-kind-icon">username</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ifile.html#fileid" class="tsd-kind-icon">fileID</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ifile.html#filename" class="tsd-kind-icon">file<wbr>Name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ifile.html#index" class="tsd-kind-icon">index</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ifile.html#ownerid" class="tsd-kind-icon">ownerID</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ifile.html#url" class="tsd-kind-icon">url</a></li>
 							</ul>
 						</section>
 					</div>
@@ -98,12 +97,22 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="banned" class="tsd-anchor"></a>
-					<h3>banned</h3>
-					<div class="tsd-signature tsd-kind-icon">banned<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<a name="fileid" class="tsd-anchor"></a>
+					<h3>fileID</h3>
+					<div class="tsd-signature tsd-kind-icon">fileID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/0c7aaef/src/Client.ts#L26">src/Client.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/bd059aa/src/Client.ts#L45">src/Client.ts:45</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="filename" class="tsd-anchor"></a>
+					<h3>file<wbr>Name</h3>
+					<div class="tsd-signature tsd-kind-icon">file<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/bd059aa/src/Client.ts#L46">src/Client.ts:46</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -113,47 +122,27 @@
 					<div class="tsd-signature tsd-kind-icon">index<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/0c7aaef/src/Client.ts#L21">src/Client.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/bd059aa/src/Client.ts#L44">src/Client.ts:44</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="powerlevel" class="tsd-anchor"></a>
-					<h3>power<wbr>Level</h3>
-					<div class="tsd-signature tsd-kind-icon">power<wbr>Level<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="ownerid" class="tsd-anchor"></a>
+					<h3>ownerID</h3>
+					<div class="tsd-signature tsd-kind-icon">ownerID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/0c7aaef/src/Client.ts#L24">src/Client.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/bd059aa/src/Client.ts#L47">src/Client.ts:47</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="pubkey" class="tsd-anchor"></a>
-					<h3>pubkey</h3>
-					<div class="tsd-signature tsd-kind-icon">pubkey<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="url" class="tsd-anchor"></a>
+					<h3>url</h3>
+					<div class="tsd-signature tsd-kind-icon">url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/0c7aaef/src/Client.ts#L22">src/Client.ts:22</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="userid" class="tsd-anchor"></a>
-					<h3>userID</h3>
-					<div class="tsd-signature tsd-kind-icon">userID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/0c7aaef/src/Client.ts#L25">src/Client.ts:25</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="username" class="tsd-anchor"></a>
-					<h3>username</h3>
-					<div class="tsd-signature tsd-kind-icon">username<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/0c7aaef/src/Client.ts#L23">src/Client.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/bd059aa/src/Client.ts#L48">src/Client.ts:48</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -199,35 +188,35 @@
 					<li class=" tsd-kind-interface">
 						<a href="ichatmessage.html" class="tsd-kind-icon">IChat<wbr>Message</a>
 					</li>
+					<li class=" tsd-kind-interface">
+						<a href="iclientinfo.html" class="tsd-kind-icon">IClient<wbr>Info</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="iclient.html" class="tsd-kind-icon">IClient</a>
+						<a href="ifile.html" class="tsd-kind-icon">IFile</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="iclient.html#banned" class="tsd-kind-icon">banned</a>
+								<a href="ifile.html#fileid" class="tsd-kind-icon">fileID</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="iclient.html#index" class="tsd-kind-icon">index</a>
+								<a href="ifile.html#filename" class="tsd-kind-icon">file<wbr>Name</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="iclient.html#powerlevel" class="tsd-kind-icon">power<wbr>Level</a>
+								<a href="ifile.html#index" class="tsd-kind-icon">index</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="iclient.html#pubkey" class="tsd-kind-icon">pubkey</a>
+								<a href="ifile.html#ownerid" class="tsd-kind-icon">ownerID</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="iclient.html#userid" class="tsd-kind-icon">userID</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="iclient.html#username" class="tsd-kind-icon">username</a>
+								<a href="ifile.html#url" class="tsd-kind-icon">url</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
 					<li class=" tsd-kind-interface">
-						<a href="iclientinfo.html" class="tsd-kind-icon">IClient<wbr>Info</a>
+						<a href="ifiles.html" class="tsd-kind-icon">IFiles</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="imessages.html" class="tsd-kind-icon">IMessages</a>
@@ -240,6 +229,9 @@
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="iresponse.html" class="tsd-kind-icon">IResponse</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="iuser.html" class="tsd-kind-icon">IUser</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="iusers.html" class="tsd-kind-icon">IUsers</a>
