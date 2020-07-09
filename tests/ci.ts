@@ -40,7 +40,7 @@ vexClient.on("ready", async () => {
   console.log("SERVER PUBKEY", serverPubkey);
 
   // next we'll join a channel
-  const channelList = vexClient.channels.retrieve();
+  const channelList = await vexClient.channels.retrieve();
   if (channelList.length === 0) {
     console.log("Didn't find any channels on the server!");
   } else {

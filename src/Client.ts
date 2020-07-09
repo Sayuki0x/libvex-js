@@ -51,6 +51,28 @@ export interface IResponse {
   pubkey: string;
 }
 
+export interface IApiSuccess {
+  type: "success";
+  transmissionID: string;
+  messageID: string;
+  data: any;
+}
+
+export interface IApiError {
+  type: "error";
+  transmissionID: string;
+  messageID: string;
+  Code: string;
+  Message: string;
+  Error: Error | null;
+}
+
+export interface IApiPong {
+  type: "pong";
+  messageID: string;
+  transmissionID: string;
+}
+
 export interface IMessage {
   index?: number;
   channelID?: string;
@@ -76,27 +98,32 @@ interface IMessages {
 }
 
 interface IChannels {
-  retrieve: () => IChannel[];
-  create: (name: string, privateChannel: boolean) => void;
-  join: (channelID: string) => void;
-  leave: (channelID: string) => void;
-  delete: (channelID: string) => void;
+  retrieve: () => Promise<IChannel[]>;
+  create: (name: string, privateChannel: boolean) => Promise<IChannel>;
+  join: (channelID: string) => Promise<IChannel>;
+  leave: (channelID: string) => Promise<IChannel>;
+  delete: (channelID: string) => Promise<IChannel>;
 }
 
 interface IUserOptions {
   powerLevel?: number;
-  username?: string;
 }
 
 interface IUsers {
-  update: (userID: string, options: IUserOptions) => void;
-  kick: (userID: string) => void;
-  ban: (userID: string) => void;
+  update: (userID: string, powerLevel: number) => Promise<IClient>;
+  kick: (userID: string) => Promise<IClient>;
+  ban: (userID: string) => Promise<IClient>;
+}
+
+interface IPermission {
+  userID: string;
+  channelID: string;
+  powerLevel: number;
 }
 
 interface IPermissions {
-  create: (userID: string, channelID: string) => void;
-  delete: (userID: string, channelID: string) => void;
+  create: (userID: string, channelID: string) => Promise<IPermission>;
+  delete: (userID: string, channelID: string) => Promise<IPermission>;
 }
 
 export class Client extends EventEmitter {
@@ -166,7 +193,7 @@ export class Client extends EventEmitter {
     this.users = {
       ban: this.banUser.bind(this),
       kick: this.kickUser.bind(this),
-      update: this.updateUser.bind(this),
+      update: this.opUser.bind(this),
     };
 
     if (!this.secure) {
@@ -245,157 +272,248 @@ export class Client extends EventEmitter {
   }
 
   private async sendMessage(channelID: string, data: string) {
-    while (this.reconnecting) {
-      await Utils.sleep(500);
-    }
-
-    const chatMessage = {
-      channelID,
-      message: data,
-      method: "CREATE",
-      transmissionID: uuidv4(),
-      type: "chat",
-    };
-    this.getWs()?.send(JSON.stringify(chatMessage));
+    return new Promise((resolve, reject) => {
+      const transmissionID = uuidv4();
+      const chatMessage = {
+        channelID,
+        message: data,
+        method: "CREATE",
+        transmissionID,
+        type: "chat",
+      };
+      this.subscribe(transmissionID, (msg: IMessage) => {
+        if (msg.type === "success") {
+          resolve();
+        } else {
+          reject(msg);
+        }
+      });
+      this.getWs()?.send(JSON.stringify(chatMessage));
+    });
   }
 
-  private async opUser(userID: string, powerLevel: number) {
-    const opMessage = {
-      method: "UPDATE",
-      powerLevel,
-      transmissionID: uuidv4(),
-      type: "user",
-      userID,
-    };
-    this.getWs()?.send(JSON.stringify(opMessage));
-  }
-
-  private updateUser(userID: string, values: IUserOptions) {
-    const { username, powerLevel } = values;
-
-    if (username) {
-      const userMessage = {
-        method: "NICK",
+  private async opUser(userID: string, powerLevel: number): Promise<IClient> {
+    return new Promise((resolve, reject) => {
+      const transmissionID = uuidv4();
+      const message = {
+        method: "UPDATE",
+        powerLevel,
         transmissionID: uuidv4(),
         type: "user",
-        username,
+        userID,
       };
-      this.getWs()?.send(JSON.stringify(userMessage));
-    }
 
-    if (powerLevel) {
-      this.opUser(userID, powerLevel);
-    }
+      this.subscribe(transmissionID, (msg: IMessage) => {
+        if (msg.type === "error") {
+          reject(msg);
+        } else {
+          resolve(msg.data);
+        }
+      });
+
+      this.getWs()?.send(JSON.stringify(message));
+    });
   }
 
-  private createChannel(name: string, privateChannel: boolean) {
-    const transmissionID = uuidv4();
-    const message = {
-      method: "CREATE",
-      name,
-      privateChannel,
-      transmissionID,
-      type: "channel",
-    };
+  private createChannel(
+    name: string,
+    privateChannel: boolean
+  ): Promise<IChannel> {
+    return new Promise((resolve, reject) => {
+      const transmissionID = uuidv4();
+      const message = {
+        method: "CREATE",
+        name,
+        privateChannel,
+        transmissionID,
+        type: "channel",
+      };
 
-    this.getWs()?.send(JSON.stringify(message));
+      this.subscribe(transmissionID, (msg: IMessage) => {
+        if (msg.type === "error") {
+          reject(msg);
+        } else {
+          resolve(msg.data);
+        }
+      });
+
+      this.getWs()?.send(JSON.stringify(message));
+    });
   }
 
-  private deleteChannel(channelID: string) {
-    const transmissionID = uuidv4();
-    const message = {
-      channelID,
-      method: "DELETE",
-      transmissionID,
-      type: "channel",
-    };
-    this.getWs()?.send(JSON.stringify(message));
-  }
-
-  private grantChannel(userID: string, channelID: string) {
-    const msg = {
-      method: "CREATE",
-      permission: {
+  private deleteChannel(channelID: string): Promise<IChannel> {
+    return new Promise((resolve, reject) => {
+      const transmissionID = uuidv4();
+      const message = {
         channelID,
+        method: "DELETE",
+        transmissionID,
+        type: "channel",
+      };
+
+      this.subscribe(transmissionID, (msg: IMessage) => {
+        if (msg.type === "error") {
+          reject(msg);
+        } else {
+          resolve(msg.data);
+        }
+      });
+
+      this.getWs()?.send(JSON.stringify(message));
+    });
+  }
+
+  private grantChannel(
+    userID: string,
+    channelID: string
+  ): Promise<IPermission> {
+    return new Promise((resolve, reject) => {
+      const transmissionID = uuidv4();
+      const message = {
+        method: "CREATE",
+        permission: {
+          channelID,
+          userID,
+        },
+        transmissionID: uuidv4(),
+        type: "channelPerm",
+      };
+
+      this.subscribe(transmissionID, (msg: IMessage) => {
+        if (msg.type === "error") {
+          reject(msg);
+        } else {
+          resolve(msg.data);
+        }
+      });
+
+      this.getWs()?.send(JSON.stringify(message));
+    });
+  }
+
+  private revokeChannel(
+    userID: string,
+    channelID: string
+  ): Promise<IPermission> {
+    return new Promise((resolve, reject) => {
+      const transmissionID = uuidv4();
+      const message = {
+        method: "DELETE",
+        permission: {
+          channelID,
+          userID,
+        },
+        transmissionID: uuidv4(),
+        type: "channelPerm",
+      };
+
+      this.subscribe(transmissionID, (msg: IMessage) => {
+        if (msg.type === "error") {
+          reject(msg);
+        } else {
+          resolve(msg.data);
+        }
+      });
+
+      this.getWs()?.send(JSON.stringify(message));
+    });
+  }
+
+  private banUser(userID: string): Promise<IClient> {
+    return new Promise((resolve, reject) => {
+      const transmissionID = uuidv4();
+      const message = {
+        method: "BAN",
+        transmissionID: uuidv4(),
+        type: "user",
         userID,
-      },
-      transmissionID: uuidv4(),
-      type: "channelPerm",
-    };
-    this.getWs()?.send(JSON.stringify(msg));
+      };
+
+      this.subscribe(transmissionID, (msg: IMessage) => {
+        if (msg.type === "error") {
+          reject(msg);
+        } else {
+          resolve(msg.data);
+        }
+      });
+
+      this.getWs()?.send(JSON.stringify(message));
+    });
   }
 
-  private revokeChannel(userID: string, channelID: string) {
-    const msg = {
-      method: "DELETE",
-      permission: {
-        channelID,
+  private kickUser(userID: string): Promise<IClient> {
+    return new Promise((resolve, reject) => {
+      const transmissionID = uuidv4();
+      const message = {
+        method: "KICK",
+        transmissionID: uuidv4(),
+        type: "user",
         userID,
-      },
-      transmissionID: uuidv4(),
-      type: "channelPerm",
-    };
-    this.getWs()?.send(JSON.stringify(msg));
-  }
+      };
 
-  private banUser(userID: string) {
-    const kickMessage = {
-      method: "BAN",
-      transmissionID: uuidv4(),
-      type: "user",
-      userID,
-    };
-    this.getWs()?.send(JSON.stringify(kickMessage));
-  }
+      this.subscribe(transmissionID, (msg: IMessage) => {
+        if (msg.type === "error") {
+          reject(msg);
+        } else {
+          resolve(msg.data);
+        }
+      });
 
-  private kickUser(userID: string) {
-    const kickMessage = {
-      method: "KICK",
-      transmissionID: uuidv4(),
-      type: "user",
-      userID,
-    };
-    this.getWs()?.send(JSON.stringify(kickMessage));
+      this.getWs()?.send(JSON.stringify(message));
+    });
   }
 
   private async getHistory(
     channelID: string,
     topMessage: string = "00000000-0000-0000-0000-000000000000"
-  ) {
-    this.requestingHistory = true;
+  ): Promise<IMessage[]> {
+    return new Promise((resolve, reject) => {
+      this.requestingHistory = true;
 
-    const transID = uuidv4();
-    const historyReqMessage = {
-      channelID,
-      method: "RETRIEVE",
-      topMessage,
-      transmissionID: transID,
-      type: "historyReq_v2",
-    };
+      const transID = uuidv4();
+      const historyReqMessage = {
+        channelID,
+        method: "RETRIEVE",
+        topMessage,
+        transmissionID: transID,
+        type: "historyReq_v2",
+      };
 
-    this.ws?.send(JSON.stringify(historyReqMessage));
-
-    let timeout = 1;
-    while (this.requestingHistory) {
-      await Utils.sleep(timeout);
-      timeout *= 2;
-    }
-    return this.history;
+      this.subscribe(transID, (msg: IMessage) => {
+        if (msg.type === "success") {
+          resolve(msg.data);
+        } else {
+          reject(msg);
+        }
+      });
+      this.ws?.send(JSON.stringify(historyReqMessage));
+    });
   }
 
-  private joinChannel(channelID: string) {
-    if (this.connectedChannelList.includes(channelID)) {
-      return;
-    }
+  private joinChannel(channelID: string): Promise<IChannel> {
+    return new Promise((resolve, reject) => {
+      if (this.connectedChannelList.includes(channelID)) {
+        resolve();
+      }
 
-    const joinChannelMsgId = uuidv4();
-    const joinMsg = {
-      channelID,
-      method: "JOIN",
-      transmissionID: joinChannelMsgId,
-      type: "channel",
-    };
-    this.getWs()?.send(JSON.stringify(joinMsg));
+      const transmissionID = uuidv4();
+      const joinMsg = {
+        channelID,
+        method: "JOIN",
+        transmissionID,
+        type: "channel",
+      };
+
+      this.subscribe(transmissionID, (msg: IMessage) => {
+        if (msg.type === "error") {
+          reject(msg);
+        } else {
+          resolve(msg.data);
+        }
+      });
+
+      this.getWs()?.send(JSON.stringify(joinMsg));
+    });
   }
 
   private getHost(websocket: boolean): string {
@@ -480,20 +598,30 @@ export class Client extends EventEmitter {
     });
   }
 
-  private leaveChannel(channelID: string) {
-    const leaveMsg = {
-      channelID,
-      method: "LEAVE",
-      transmissionID: uuidv4(),
-      type: "channel",
-    };
-    this.getWs()?.send(JSON.stringify(leaveMsg));
-    if (this.connectedChannelList.includes(channelID)) {
-      this.connectedChannelList.splice(
-        this.connectedChannelList.indexOf(channelID),
-        1
-      );
-    }
+  private leaveChannel(channelID: string): Promise<IChannel> {
+    return new Promise((resolve, reject) => {
+      if (this.connectedChannelList.includes(channelID)) {
+        resolve();
+      }
+
+      const transmissionID = uuidv4();
+      const joinMsg = {
+        channelID,
+        method: "LEAVE",
+        transmissionID,
+        type: "channel",
+      };
+
+      this.subscribe(transmissionID, (msg: IMessage) => {
+        if (msg.type === "error") {
+          reject(msg);
+        } else {
+          resolve(msg.data);
+        }
+      });
+
+      this.getWs()?.send(JSON.stringify(joinMsg));
+    });
   }
 
   private async registerUser(user: IClient): Promise<IClient> {
@@ -522,23 +650,18 @@ export class Client extends EventEmitter {
     });
   }
 
-  private registerUUID_(
-    uuid: string,
-    transmissionID: string
-  ): Promise<IMessage> {
+  private getChannelList(): Promise<IChannel[]> {
     return new Promise((resolve, reject) => {
+      const transmissionID = uuidv4();
       const message = {
-        method: "REGISTER",
-        pubkey: Utils.toHexString(this.keyring.getPub()),
-        signed: Utils.toHexString(this.keyring.sign(decodeUTF8(uuid))),
+        method: "RETRIEVE",
         transmissionID,
-        type: "identity",
-        uuid,
+        type: "channel",
       };
 
       this.subscribe(transmissionID, (msg: IMessage) => {
         if (msg.type === "error") {
-          reject(msg.data);
+          reject(msg);
         } else {
           resolve(msg.data);
         }
@@ -546,10 +669,6 @@ export class Client extends EventEmitter {
 
       this.getWs()!.send(JSON.stringify(message));
     });
-  }
-
-  private getChannelList() {
-    return this.channelList;
   }
 
   private async respondToChallenge(jsonMessage: IMessage) {
