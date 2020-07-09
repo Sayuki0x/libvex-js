@@ -1,6 +1,6 @@
 {
   "name": "libvex",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "A javascript module for interacting with a vex server.",
   "main": "./dist/index.js",
   "author": "Extra <extrahash@protonmail.com>",
