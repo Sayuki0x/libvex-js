@@ -13,7 +13,7 @@ This library provides three exported classes.
 ## Install
 
 ```
-yarn add libkarai-js
+yarn add libvex
 ```
 
 ## Documentation
