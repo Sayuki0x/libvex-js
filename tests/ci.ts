@@ -30,7 +30,6 @@ vexClient.on("ready", async () => {
     diagPrint("CLIENT INFO", vexClient.info());
 
     const channelList = await vexClient.channels.retrieve();
-    console.log(channelList);
 
     const [channel] = channelList;
 
