@@ -263,6 +263,13 @@ interface IUsers {
    * @returns - The banned IUser object.
    */
   ban: (userID: string) => Promise<IUser>;
+  /**
+   * Changes the nick of the currently logged in user.
+   * @param nick - The nick to change to.
+   *
+   * @returns - The changed IUser object.
+   */
+  nick: (nick: string) => Promise<IUser>;
 }
 
 /**
@@ -512,6 +519,7 @@ export class Client extends EventEmitter {
     this.users = {
       ban: this.banUser.bind(this),
       kick: this.kickUser.bind(this),
+      nick: this.changeNick.bind(this),
       update: this.opUser.bind(this),
     };
 
@@ -607,6 +615,28 @@ export class Client extends EventEmitter {
         });
         this.getWs()!.send(JSON.stringify(message));
       }
+    });
+  }
+
+  private changeNick(nick: string): Promise<IUser> {
+    return new Promise((resolve, reject) => {
+      const transmissionID = uuidv4();
+      const message = {
+        method: "NICK",
+        transmissionID: uuidv4(),
+        type: "user",
+        username: nick,
+      };
+
+      this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
+        if (msg.type === "error") {
+          reject(msg);
+        } else {
+          resolve(msg.data);
+        }
+      });
+
+      this.getWs()?.send(JSON.stringify(message));
     });
   }
 
