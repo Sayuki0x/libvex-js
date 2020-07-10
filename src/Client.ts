@@ -340,7 +340,7 @@ export declare interface Client {
   on(event: "message", callback: (message: IChatMessage) => void): this;
 
   /**
-   * This is emitted whenever the server sends you an updated channel 
+   * This is emitted whenever the server sends you an updated channel
    * list. It does this when changes are made to your available channels.
    *
    * Example:
@@ -358,7 +358,7 @@ export declare interface Client {
 
   /**
    * This is emitted whenever the server sends you an updated online
-   * user list for a channel. 
+   * user list for a channel.
    *
    * Example:
    *
@@ -586,7 +586,7 @@ export class Client extends EventEmitter {
   private getOnlineList(channelID: string): Promise<IUser[]> {
     return new Promise((resolve, reject) => {
       if (this.onlineLists[channelID]) {
-        resolve(this.onlineLists[channelID])
+        resolve(this.onlineLists[channelID]);
       } else {
         const transmissionID = uuidv4();
         const message = {
@@ -594,17 +594,17 @@ export class Client extends EventEmitter {
           method: "ACTIVE",
           transmissionID,
           type: "channel",
-        }
+        };
         this.subscribe(transmissionID, (msg: IApiError | IApiSuccess) => {
           if (msg.type === "error") {
             reject(msg);
           } else {
             resolve(msg.data);
           }
-        })
+        });
         this.getWs()!.send(JSON.stringify(message));
       }
-    })
+    });
   }
 
   private deleteFile(fileID: string): Promise<IFile> {
@@ -1103,7 +1103,7 @@ export class Client extends EventEmitter {
           transmissionID,
           type: "channel",
         };
-  
+
         this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
           if (msg.type === "error") {
             reject(msg);
@@ -1111,7 +1111,7 @@ export class Client extends EventEmitter {
             resolve(msg.data);
           }
         });
-  
+
         this.getWs()!.send(JSON.stringify(message));
       }
     });
@@ -1169,16 +1169,16 @@ export class Client extends EventEmitter {
           break;
         case "clientInfo":
           this.clientInfo = jsonMessage.client;
-          this.emit("clientInfo", this.clientInfo)
+          this.emit("clientInfo", this.clientInfo);
           break;
         case "channelList":
           this.channelList = jsonMessage.data;
-          this.emit("channelList", this.channelList)
+          this.emit("channelList", this.channelList);
           break;
         case "onlineList":
-          this.onlineLists[jsonMessage.channelID] = jsonMessage.data
-          this.emit("onlineList", this.onlineLists[jsonMessage.channelID])
-          break
+          this.onlineLists[jsonMessage.channelID] = jsonMessage.data;
+          this.emit("onlineList", this.onlineLists[jsonMessage.channelID]);
+          break;
         case "challenge":
           this.respondToChallenge(jsonMessage);
           break;

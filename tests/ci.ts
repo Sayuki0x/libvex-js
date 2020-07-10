@@ -27,30 +27,33 @@ vexClient.on("ready", async () => {
     const serverPubkey = await vexClient.auth();
     console.log("SERVER PUBKEY", serverPubkey);
 
-    diagPrint("CLIENT INFO", vexClient.info())
+    diagPrint("CLIENT INFO", vexClient.info());
 
     const channelList = await vexClient.channels.retrieve();
     console.log(channelList);
 
-    const [ channel ] = channelList;
+    const [channel] = channelList;
 
     for (const ch of channelList) {
-      diagPrint("AVAILABLE CHANNEL", ch)
+      diagPrint("AVAILABLE CHANNEL", ch);
     }
 
     await vexClient.channels.join(channel.channelID);
-    diagPrint("JOINED CHANNEL", channel)
+    diagPrint("JOINED CHANNEL", channel);
 
     const onlineList = await vexClient.channels.active(channel.channelID);
     for (const user of onlineList) {
-      diagPrint("ONLINE USER LIST", user)
+      diagPrint("ONLINE USER LIST", user);
     }
 
-    const uploadedFile = await vexClient.files.create(file, "LICENSE", channel.channelID);
+    const uploadedFile = await vexClient.files.create(
+      file,
+      "LICENSE",
+      channel.channelID
+    );
     diagPrint("UPLOADED FILE", uploadedFile);
-  
+
     await vexClient.messages.send(channel.channelID, testID);
-    
   } catch (error) {
     console.warn(error);
     console.warn("Tests failed.");

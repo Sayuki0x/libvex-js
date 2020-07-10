@@ -29,18 +29,21 @@ vexClient.on("ready", async () => {
 
     const channelID = "60d51418-6bcb-442e-a13f-92d475cf2752";
     const channel = await vexClient.channels.join(channelID);
-    diagPrint("channel", channel)
+    diagPrint("channel", channel);
 
     const onlineList = await vexClient.channels.active(channelID);
     for (const user of onlineList) {
-      diagPrint("online user", user)
+      diagPrint("online user", user);
     }
 
-    const uploadedFile = await vexClient.files.create(file, "LICENSE", channelID);
+    const uploadedFile = await vexClient.files.create(
+      file,
+      "LICENSE",
+      channelID
+    );
     diagPrint("file", uploadedFile);
-  
+
     await vexClient.messages.send(channelID, testID);
-    
   } catch (error) {
     console.warn(error);
     console.warn("Tests failed.");
