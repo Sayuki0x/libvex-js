@@ -23,27 +23,37 @@ console.log("TEST ID", testID);
 vexClient.on("ready", async () => {
   try {
     const account = await vexClient.register();
-    diagPrint("account", account);
+    diagPrint("ACCOUNT INFO", account);
     const serverPubkey = await vexClient.auth();
     console.log("SERVER PUBKEY", serverPubkey);
 
-    const channelID = "60d51418-6bcb-442e-a13f-92d475cf2752";
-    const channel = await vexClient.channels.join(channelID);
-    diagPrint("channel", channel);
+    diagPrint("CLIENT INFO", vexClient.info());
 
-    const onlineList = await vexClient.channels.active(channelID);
+    const channelList = await vexClient.channels.retrieve();
+    console.log(channelList);
+
+    const [channel] = channelList;
+
+    for (const ch of channelList) {
+      diagPrint("AVAILABLE CHANNEL", ch);
+    }
+
+    await vexClient.channels.join(channel.channelID);
+    diagPrint("JOINED CHANNEL", channel);
+
+    const onlineList = await vexClient.channels.active(channel.channelID);
     for (const user of onlineList) {
-      diagPrint("online user", user);
+      diagPrint("ONLINE USER LIST", user);
     }
 
     const uploadedFile = await vexClient.files.create(
       file,
       "LICENSE",
-      channelID
+      channel.channelID
     );
-    diagPrint("file", uploadedFile);
+    diagPrint("UPLOADED FILE", uploadedFile);
 
-    await vexClient.messages.send(channelID, testID);
+    await vexClient.messages.send(channel.channelID, testID);
   } catch (error) {
     console.warn(error);
     console.warn("Tests failed.");
@@ -52,7 +62,7 @@ vexClient.on("ready", async () => {
 });
 
 vexClient.on("message", async (message: IChatMessage) => {
-  diagPrint("message", message);
+  diagPrint("INCOMING MESSAGE", message);
   if (message.message === testID) {
     console.log("All tests passed.");
     process.exit(0);

@@ -573,7 +573,7 @@ export class Client extends EventEmitter {
    *
    * @returns The authorized account.
    */
-  public async auth() {
+  public async auth(): Promise<string> {
     const serverPubkey = await this.sendChallenge();
     let timeout = 1;
     while (!this.authed) {
