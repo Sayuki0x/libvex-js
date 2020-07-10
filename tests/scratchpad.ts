@@ -28,19 +28,19 @@ vexClient.on("ready", async () => {
     console.log("SERVER PUBKEY", serverPubkey);
 
     const channelID = "60d51418-6bcb-442e-a13f-92d475cf2752";
+    const channel = await vexClient.channels.join(channelID);
+    diagPrint("channel", channel)
 
-    await vexClient.channels.join(channelID);
+    const onlineList = await vexClient.channels.active(channelID);
+    for (const user of onlineList) {
+      diagPrint("online user", user)
+    }
 
-    const uploadedFile = await vexClient.files.create(
-      file,
-      "LICENSE",
-      channelID
-    );
+    const uploadedFile = await vexClient.files.create(file, "LICENSE", channelID);
     diagPrint("file", uploadedFile);
-
-    const fileList = await vexClient.files.retrieve(channelID);
-
+  
     await vexClient.messages.send(channelID, testID);
+    
   } catch (error) {
     console.warn(error);
     console.warn("Tests failed.");
@@ -52,7 +52,7 @@ vexClient.on("message", async (message: IChatMessage) => {
   diagPrint("message", message);
   if (message.message === testID) {
     console.log("All tests passed.");
-    // process.exit(0);
+    process.exit(0);
   }
 });
 

@@ -170,6 +170,12 @@ interface IChannels {
    *
    * @returns - An array of IChannel objects.
    */
+  active: (channelID: string) => Promise<IUser[]>;
+  /**
+   * Retrieves the channels in the server that you have permission to.
+   *
+   * @returns - An array of IChannel objects.
+   */
   retrieve: () => Promise<IChannel[]>;
   /**
    * Creates a new channel on the server.
@@ -332,6 +338,40 @@ export declare interface Client {
    * @event
    */
   on(event: "message", callback: (message: IChatMessage) => void): this;
+
+  /**
+   * This is emitted whenever the server sends you an updated channel 
+   * list. It does this when changes are made to your available channels.
+   *
+   * Example:
+   *
+   * ```ts
+   *
+   *   client.on("channelList", (channelList) => {
+   *     // update your UI with the new channels
+   *   });
+   * ```
+   *
+   * @event
+   */
+  on(event: "channelList", callback: (channelList: IChannel[]) => void): this;
+
+  /**
+   * This is emitted whenever the server sends you an updated online
+   * user list for a channel. 
+   *
+   * Example:
+   *
+   * ```ts
+   *
+   *   client.on("channelList", (channelList) => {
+   *     // update your UI with the new channels
+   *   });
+   * ```
+   *
+   * @event
+   */
+  on(event: "onlineList", callback: (onlineList: IUser[]) => void): this;
 }
 
 /**
@@ -400,6 +440,7 @@ export class Client extends EventEmitter {
   public messages: IMessages;
   public users: IUsers;
   public files: IFiles;
+  private onlineLists: Record<string, IUser[]>;
   private authed: boolean;
   private channelList: IChannel[];
   private clientInfo: IUser | null;
@@ -444,8 +485,10 @@ export class Client extends EventEmitter {
     this.serverPubkey = serverPubkey;
     this.connectedChannelList = [];
     this.pingInterval = null;
+    this.onlineLists = {};
 
     this.channels = {
+      active: this.getOnlineList.bind(this),
       create: this.createChannel.bind(this),
       delete: this.deleteChannel.bind(this),
       join: this.joinChannel.bind(this),
@@ -540,6 +583,30 @@ export class Client extends EventEmitter {
     return serverPubkey;
   }
 
+  private getOnlineList(channelID: string): Promise<IUser[]> {
+    return new Promise((resolve, reject) => {
+      if (this.onlineLists[channelID]) {
+        resolve(this.onlineLists[channelID])
+      } else {
+        const transmissionID = uuidv4();
+        const message = {
+          channelID,
+          method: "ACTIVE",
+          transmissionID,
+          type: "channel",
+        }
+        this.subscribe(transmissionID, (msg: IApiError | IApiSuccess) => {
+          if (msg.type === "error") {
+            reject(msg);
+          } else {
+            resolve(msg.data);
+          }
+        })
+        this.getWs()!.send(JSON.stringify(message));
+      }
+    })
+  }
+
   private deleteFile(fileID: string): Promise<IFile> {
     return new Promise((resolve, reject) => {
       const transmissionID = uuidv4();
@@ -551,7 +618,6 @@ export class Client extends EventEmitter {
       };
 
       this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
-        console.log("reached");
         if (msg.type === "error") {
           reject(msg);
         } else {
@@ -1028,22 +1094,26 @@ export class Client extends EventEmitter {
 
   private getChannelList(): Promise<IChannel[]> {
     return new Promise((resolve, reject) => {
-      const transmissionID = uuidv4();
-      const message = {
-        method: "RETRIEVE",
-        transmissionID,
-        type: "channel",
-      };
-
-      this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
-        if (msg.type === "error") {
-          reject(msg);
-        } else {
-          resolve(msg.data);
-        }
-      });
-
-      this.getWs()!.send(JSON.stringify(message));
+      if (this.channelList.length > 0) {
+        resolve(this.channelList);
+      } else {
+        const transmissionID = uuidv4();
+        const message = {
+          method: "RETRIEVE",
+          transmissionID,
+          type: "channel",
+        };
+  
+        this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
+          if (msg.type === "error") {
+            reject(msg);
+          } else {
+            resolve(msg.data);
+          }
+        });
+  
+        this.getWs()!.send(JSON.stringify(message));
+      }
     });
   }
 
@@ -1098,11 +1168,17 @@ export class Client extends EventEmitter {
           this.history.push(jsonMessage);
           break;
         case "clientInfo":
-          this.clientInfo = jsonMessage.Client;
+          this.clientInfo = jsonMessage.client;
+          this.emit("clientInfo", this.clientInfo)
           break;
         case "channelList":
-          this.channelList = jsonMessage.channels;
+          this.channelList = jsonMessage.data;
+          this.emit("channelList", this.channelList)
           break;
+        case "onlineList":
+          this.onlineLists[jsonMessage.channelID] = jsonMessage.data
+          this.emit("onlineList", this.onlineLists[jsonMessage.channelID])
+          break
         case "challenge":
           this.respondToChallenge(jsonMessage);
           break;
