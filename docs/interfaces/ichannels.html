@@ -84,6 +84,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ichannels.html#active" class="tsd-kind-icon">active</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ichannels.html#create" class="tsd-kind-icon">create</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ichannels.html#delete" class="tsd-kind-icon">delete</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ichannels.html#join" class="tsd-kind-icon">join</a></li>
@@ -97,12 +98,55 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="active" class="tsd-anchor"></a>
+					<h3>active</h3>
+					<div class="tsd-signature tsd-kind-icon">active<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>channelID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="iuser.html" class="tsd-signature-type">IUser</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/b6116ec/src/Client.ts#L173">src/Client.ts:173</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Retrieves the channels in the server that you have permission to.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>returns</dt>
+							<dd><ul>
+									<li>An array of IChannel objects.</li>
+								</ul>
+							</dd>
+						</dl>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>channelID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="iuser.html" class="tsd-signature-type">IUser</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>channelID: <span class="tsd-signature-type">string</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="iuser.html" class="tsd-signature-type">IUser</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="create" class="tsd-anchor"></a>
 					<h3>create</h3>
 					<div class="tsd-signature tsd-kind-icon">create<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, privateChannel<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="ichannel.html" class="tsd-signature-type">IChannel</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/bd059aa/src/Client.ts#L181">src/Client.ts:181</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/b6116ec/src/Client.ts#L187">src/Client.ts:187</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -154,7 +198,7 @@
 					<div class="tsd-signature tsd-kind-icon">delete<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>channelID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="ichannel.html" class="tsd-signature-type">IChannel</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/bd059aa/src/Client.ts#L202">src/Client.ts:202</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/b6116ec/src/Client.ts#L208">src/Client.ts:208</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -200,7 +244,7 @@
 					<div class="tsd-signature tsd-kind-icon">join<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>channelID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="ichannel.html" class="tsd-signature-type">IChannel</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/bd059aa/src/Client.ts#L188">src/Client.ts:188</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/b6116ec/src/Client.ts#L194">src/Client.ts:194</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -246,7 +290,7 @@
 					<div class="tsd-signature tsd-kind-icon">leave<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>channelID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="ichannel.html" class="tsd-signature-type">IChannel</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/bd059aa/src/Client.ts#L195">src/Client.ts:195</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/b6116ec/src/Client.ts#L201">src/Client.ts:201</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -292,7 +336,7 @@
 					<div class="tsd-signature tsd-kind-icon">retrieve<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="ichannel.html" class="tsd-signature-type">IChannel</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/vex-js/blob/bd059aa/src/Client.ts#L173">src/Client.ts:173</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/b6116ec/src/Client.ts#L179">src/Client.ts:179</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -364,6 +408,9 @@
 					<li class="current tsd-kind-interface">
 						<a href="ichannels.html" class="tsd-kind-icon">IChannels</a>
 						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ichannels.html#active" class="tsd-kind-icon">active</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="ichannels.html#create" class="tsd-kind-icon">create</a>
 							</li>
