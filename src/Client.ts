@@ -108,9 +108,11 @@ export interface IApiPong {
  */
 export interface IChatMessage {
   type: "chat";
+  createdAt: string;
   index: number;
   username: string;
   messageID: string;
+  userID: string;
   transmissionID: string;
   method: string;
   message: string;
