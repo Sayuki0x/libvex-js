@@ -930,7 +930,7 @@ export class Client extends EventEmitter {
         method: "RETRIEVE",
         topMessage,
         transmissionID: transID,
-        type: "historyReq_v2",
+        type: "historyReq",
       };
 
       this.subscribe(transID, (msg: IApiSuccess | IApiError) => {
