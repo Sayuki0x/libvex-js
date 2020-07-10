@@ -315,6 +315,23 @@ export declare interface Client {
    *
    * @event
    */
+  on(event: "authed", callback: (user: IUser) => void): this;
+
+  /**
+   * This is emitted whenever the keyring is done initializing. You must wait
+   * to perform any operaitons until this event.
+   *
+   * Example:
+   *
+   * ```ts
+   *
+   *   client.on("ready", (error) => {
+   *     await client.register()
+   *   });
+   * ```
+   *
+   * @event
+   */
   on(event: "ready", callback: () => void): this;
 
   /**
@@ -1178,6 +1195,7 @@ export class Client extends EventEmitter {
           reject(msg);
         } else {
           this.authed = true;
+          this.emit("authed", msg.data);
           resolve(msg.data);
         }
       });
