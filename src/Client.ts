@@ -371,7 +371,7 @@ export declare interface Client {
    *
    * @event
    */
-  on(event: "onlineList", callback: (onlineList: Record<string, IUser[]>) => void): this;
+  on(event: "onlineList", callback: (channelID: string, onlineList: IUser[]) => void): this;
 }
 
 /**
@@ -1177,7 +1177,7 @@ export class Client extends EventEmitter {
           break;
         case "onlineList":
           this.onlineLists[jsonMessage.channelID] = jsonMessage.data;
-          this.emit("onlineList", this.onlineLists);
+          this.emit("onlineList", jsonMessage.channelID, this.onlineLists[jsonMessage.channelID]);
           break;
         case "challenge":
           this.respondToChallenge(jsonMessage);
