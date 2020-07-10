@@ -86,6 +86,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iusers.html#ban" class="tsd-kind-icon">ban</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iusers.html#kick" class="tsd-kind-icon">kick</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iusers.html#nick" class="tsd-kind-icon">nick</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="iusers.html#update" class="tsd-kind-icon">update</a></li>
 							</ul>
 						</section>
@@ -100,7 +101,7 @@
 					<div class="tsd-signature tsd-kind-icon">ban<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>userID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="iuser.html" class="tsd-signature-type">IUser</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/af9fe84/src/Client.ts#L265">src/Client.ts:265</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/75f3ee6/src/Client.ts#L265">src/Client.ts:265</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -146,7 +147,7 @@
 					<div class="tsd-signature tsd-kind-icon">kick<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>userID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="iuser.html" class="tsd-signature-type">IUser</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/af9fe84/src/Client.ts#L258">src/Client.ts:258</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/75f3ee6/src/Client.ts#L258">src/Client.ts:258</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -187,12 +188,58 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="nick" class="tsd-anchor"></a>
+					<h3>nick</h3>
+					<div class="tsd-signature tsd-kind-icon">nick<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>nick<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="iuser.html" class="tsd-signature-type">IUser</a><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/75f3ee6/src/Client.ts#L272">src/Client.ts:272</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Changes the nick of the currently logged in user.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>returns</dt>
+							<dd><ul>
+									<li>The changed IUser object.</li>
+								</ul>
+							</dd>
+						</dl>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>nick<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="iuser.html" class="tsd-signature-type">IUser</a><span class="tsd-signature-symbol">&gt;</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<div class="tsd-comment tsd-typography">
+											<p>The nick to change to.</p>
+										</div>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>nick: <span class="tsd-signature-type">string</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="iuser.html" class="tsd-signature-type">IUser</a><span class="tsd-signature-symbol">&gt;</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="update" class="tsd-anchor"></a>
 					<h3>update</h3>
 					<div class="tsd-signature tsd-kind-icon">update<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>userID<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, powerLevel<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="iuser.html" class="tsd-signature-type">IUser</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/af9fe84/src/Client.ts#L251">src/Client.ts:251</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/75f3ee6/src/Client.ts#L251">src/Client.ts:251</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -314,6 +361,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="iusers.html#kick" class="tsd-kind-icon">kick</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="iusers.html#nick" class="tsd-kind-icon">nick</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="iusers.html#update" class="tsd-kind-icon">update</a>
