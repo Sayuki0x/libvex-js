@@ -1,3 +1,4 @@
+import { execSync } from "child_process";
 import fs, { createReadStream } from "fs";
 import { v4 as uuidv4 } from "uuid";
 import { Client, IChatMessage } from "../src/Client";
@@ -10,12 +11,21 @@ const file = fs.readFileSync("./LICENSE");
 
 let output = "";
 
+output += execSync("git branch -v")
+output += execSync("git log -n 1")
+output += "\nNODEJS VERSION:\n"
+output += execSync("node --version");
+output += "KERNEL VERSION:\n"
+output += execSync("uname -r");
+
+console.log(output);
+
 keyring.on("ready", () => {
   const keys = {
-    pubkey: Utils.toHexString(keyring.getPub()),
     privkey: Utils.toHexString(keyring.getPriv()),
+    pubkey: Utils.toHexString(keyring.getPub()),
   };
-  diagPrint("keys", keys);
+  diagPrint("KEYS", keys);
 });
 
 const vexClient = new Client("dev.vex.chat", keyring, null, true);
