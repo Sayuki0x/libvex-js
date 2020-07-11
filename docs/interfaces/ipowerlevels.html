@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IChatMessage | libvex</title>
+	<title>IPowerLevels | libvex</title>
 	<meta name="description" content="Documentation for libvex">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -52,10 +52,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="ichatmessage.html">IChatMessage</a>
+					<a href="ipowerlevels.html">IPowerLevels</a>
 				</li>
 			</ul>
-			<h1>Interface IChatMessage</h1>
+			<h1>Interface IPowerLevels</h1>
 		</div>
 	</div>
 </header>
@@ -65,7 +65,8 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>The IChatMessage interface represents a broadcasted chat message.</p>
+						<p>The IMessages interface contains the required power levels for
+						each action according to the server&#39;s configuration.</p>
 					</div>
 				</div>
 			</section>
@@ -73,7 +74,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IChatMessage</span>
+						<span class="target">IPowerLevels</span>
 					</li>
 				</ul>
 			</section>
@@ -84,16 +85,15 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ichatmessage.html#channelid" class="tsd-kind-icon">channelID</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ichatmessage.html#createdat" class="tsd-kind-icon">created<wbr>At</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ichatmessage.html#index" class="tsd-kind-icon">index</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ichatmessage.html#message" class="tsd-kind-icon">message</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ichatmessage.html#messageid" class="tsd-kind-icon">messageID</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ichatmessage.html#method" class="tsd-kind-icon">method</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ichatmessage.html#transmissionid" class="tsd-kind-icon">transmissionID</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ichatmessage.html#type" class="tsd-kind-icon">type</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ichatmessage.html#userid" class="tsd-kind-icon">userID</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ichatmessage.html#username" class="tsd-kind-icon">username</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipowerlevels.html#ban" class="tsd-kind-icon">ban</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipowerlevels.html#create" class="tsd-kind-icon">create</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipowerlevels.html#delete" class="tsd-kind-icon">delete</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipowerlevels.html#files" class="tsd-kind-icon">files</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipowerlevels.html#grant" class="tsd-kind-icon">grant</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipowerlevels.html#kick" class="tsd-kind-icon">kick</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipowerlevels.html#op" class="tsd-kind-icon">op</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipowerlevels.html#revoke" class="tsd-kind-icon">revoke</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipowerlevels.html#talk" class="tsd-kind-icon">talk</a></li>
 							</ul>
 						</section>
 					</div>
@@ -102,102 +102,92 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="channelid" class="tsd-anchor"></a>
-					<h3>channelID</h3>
-					<div class="tsd-signature tsd-kind-icon">channelID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="ban" class="tsd-anchor"></a>
+					<h3>ban</h3>
+					<div class="tsd-signature tsd-kind-icon">ban<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L119">src/Client.ts:119</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L148">src/Client.ts:148</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="createdat" class="tsd-anchor"></a>
-					<h3>created<wbr>At</h3>
-					<div class="tsd-signature tsd-kind-icon">created<wbr>At<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="create" class="tsd-anchor"></a>
+					<h3>create</h3>
+					<div class="tsd-signature tsd-kind-icon">create<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L111">src/Client.ts:111</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L153">src/Client.ts:153</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="index" class="tsd-anchor"></a>
-					<h3>index</h3>
-					<div class="tsd-signature tsd-kind-icon">index<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="delete" class="tsd-anchor"></a>
+					<h3>delete</h3>
+					<div class="tsd-signature tsd-kind-icon">delete<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L112">src/Client.ts:112</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L154">src/Client.ts:154</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="message" class="tsd-anchor"></a>
-					<h3>message</h3>
-					<div class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="files" class="tsd-anchor"></a>
+					<h3>files</h3>
+					<div class="tsd-signature tsd-kind-icon">files<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L118">src/Client.ts:118</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L155">src/Client.ts:155</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="messageid" class="tsd-anchor"></a>
-					<h3>messageID</h3>
-					<div class="tsd-signature tsd-kind-icon">messageID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="grant" class="tsd-anchor"></a>
+					<h3>grant</h3>
+					<div class="tsd-signature tsd-kind-icon">grant<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L114">src/Client.ts:114</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L150">src/Client.ts:150</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="method" class="tsd-anchor"></a>
-					<h3>method</h3>
-					<div class="tsd-signature tsd-kind-icon">method<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="kick" class="tsd-anchor"></a>
+					<h3>kick</h3>
+					<div class="tsd-signature tsd-kind-icon">kick<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L117">src/Client.ts:117</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L147">src/Client.ts:147</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="transmissionid" class="tsd-anchor"></a>
-					<h3>transmissionID</h3>
-					<div class="tsd-signature tsd-kind-icon">transmissionID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="op" class="tsd-anchor"></a>
+					<h3>op</h3>
+					<div class="tsd-signature tsd-kind-icon">op<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L116">src/Client.ts:116</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L149">src/Client.ts:149</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="type" class="tsd-anchor"></a>
-					<h3>type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"chat"</span></div>
+					<a name="revoke" class="tsd-anchor"></a>
+					<h3>revoke</h3>
+					<div class="tsd-signature tsd-kind-icon">revoke<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L110">src/Client.ts:110</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L151">src/Client.ts:151</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="userid" class="tsd-anchor"></a>
-					<h3>userID</h3>
-					<div class="tsd-signature tsd-kind-icon">userID<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="talk" class="tsd-anchor"></a>
+					<h3>talk</h3>
+					<div class="tsd-signature tsd-kind-icon">talk<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L115">src/Client.ts:115</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="username" class="tsd-anchor"></a>
-					<h3>username</h3>
-					<div class="tsd-signature tsd-kind-icon">username<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L113">src/Client.ts:113</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L152">src/Client.ts:152</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -240,45 +230,9 @@
 					<li class=" tsd-kind-interface">
 						<a href="ichannels.html" class="tsd-kind-icon">IChannels</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-interface">
+					<li class=" tsd-kind-interface">
 						<a href="ichatmessage.html" class="tsd-kind-icon">IChat<wbr>Message</a>
-						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ichatmessage.html#channelid" class="tsd-kind-icon">channelID</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ichatmessage.html#createdat" class="tsd-kind-icon">created<wbr>At</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ichatmessage.html#index" class="tsd-kind-icon">index</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ichatmessage.html#message" class="tsd-kind-icon">message</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ichatmessage.html#messageid" class="tsd-kind-icon">messageID</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ichatmessage.html#method" class="tsd-kind-icon">method</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ichatmessage.html#transmissionid" class="tsd-kind-icon">transmissionID</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ichatmessage.html#type" class="tsd-kind-icon">type</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ichatmessage.html#userid" class="tsd-kind-icon">userID</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ichatmessage.html#username" class="tsd-kind-icon">username</a>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-interface">
 						<a href="iclientinfo.html" class="tsd-kind-icon">IClient<wbr>Info</a>
 					</li>
@@ -297,9 +251,42 @@
 					<li class=" tsd-kind-interface">
 						<a href="ipermissions.html" class="tsd-kind-icon">IPermissions</a>
 					</li>
-					<li class=" tsd-kind-interface">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface">
 						<a href="ipowerlevels.html" class="tsd-kind-icon">IPower<wbr>Levels</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ipowerlevels.html#ban" class="tsd-kind-icon">ban</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ipowerlevels.html#create" class="tsd-kind-icon">create</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ipowerlevels.html#delete" class="tsd-kind-icon">delete</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ipowerlevels.html#files" class="tsd-kind-icon">files</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ipowerlevels.html#grant" class="tsd-kind-icon">grant</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ipowerlevels.html#kick" class="tsd-kind-icon">kick</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ipowerlevels.html#op" class="tsd-kind-icon">op</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ipowerlevels.html#revoke" class="tsd-kind-icon">revoke</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ipowerlevels.html#talk" class="tsd-kind-icon">talk</a>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-interface">
 						<a href="iresponse.html" class="tsd-kind-icon">IResponse</a>
 					</li>

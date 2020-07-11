@@ -136,6 +136,23 @@ export interface IClientInfo {
   client: IUser | null;
   host: string;
   secure: boolean;
+  powerLevels: IPowerLevels;
+}
+
+/**
+ * The IMessages interface contains the required power levels for
+ * each action according to the server's configuration.
+ */
+export interface IPowerLevels {
+  kick: number;
+  ban: number;
+  op: number;
+  grant: number;
+  revoke: number;
+  talk: number;
+  create: number;
+  delete: number;
+  files: number;
 }
 
 /**
@@ -481,6 +498,7 @@ export class Client extends EventEmitter {
   public messages: IMessages;
   public users: IUsers;
   public files: IFiles;
+  private powerLevels: IPowerLevels;
   private onlineLists: Record<string, IUser[]>;
   private authed: boolean;
   private channelList: IChannel[];
@@ -518,6 +536,17 @@ export class Client extends EventEmitter {
     this.connectCount = 0;
     this.ws = null;
     this.host = host;
+    this.powerLevels = {
+      ban: 50,
+      create: 50,
+      delete: 50,
+      files: 25,
+      grant: 50,
+      kick: 25,
+      op: 100,
+      revoke: 50,
+      talk: 0,
+    };
     this.trxSubs = [];
     this.serverAlive = true;
     this.authed = false;
@@ -600,13 +629,14 @@ export class Client extends EventEmitter {
   /**
    * Returns info about the current connection.
    *
-   * @returns The new account object.
+   * @returns The IClientInfo object.
    */
   public info(): IClientInfo {
     return {
       authed: this.authed,
       client: this.clientInfo,
       host: this.getHost(true),
+      powerLevels: this.powerLevels,
       secure: this.secure,
     };
   }
@@ -626,7 +656,6 @@ export class Client extends EventEmitter {
     }
     return serverPubkey;
   }
-
 
   private getOnlineList(channelID: string): Promise<IUser[]> {
     return new Promise((resolve, reject) => {
@@ -1278,6 +1307,9 @@ export class Client extends EventEmitter {
       }
 
       switch (jsonMessage.type) {
+        case "powerLevels":
+          this.powerLevels = jsonMessage.powerLevels;
+          break;
         case "history":
           this.history.push(jsonMessage);
           break;
