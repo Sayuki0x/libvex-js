@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs, { createReadStream } from "fs";
 import { v4 as uuidv4 } from "uuid";
 import { Client, IChatMessage } from "../src/Client";
 import { KeyRing } from "../src/Keyring";
@@ -8,11 +8,14 @@ const keyring = new KeyRing(":memory:");
 
 const file = fs.readFileSync("./LICENSE");
 
+let output = "";
+
 keyring.on("ready", () => {
-  console.log("--------keys---------");
-  console.log("PUBLIC KEY", Utils.toHexString(keyring.getPub()));
-  // make sure you save your private key somewhere
-  console.log("PRIVATE KEY", Utils.toHexString(keyring.getPriv()));
+  const keys = {
+    pubkey: Utils.toHexString(keyring.getPub()),
+    privkey: Utils.toHexString(keyring.getPriv()),
+  };
+  diagPrint("keys", keys);
 });
 
 const vexClient = new Client("dev.vex.chat", keyring, null, true);
@@ -25,7 +28,7 @@ vexClient.on("ready", async () => {
     const account = await vexClient.register();
     diagPrint("ACCOUNT INFO", account);
     const serverPubkey = await vexClient.auth();
-    console.log("SERVER PUBKEY", serverPubkey);
+    diagPrint("SERVER INFO", { serverPubkey });
 
     diagPrint("CLIENT INFO", vexClient.info());
 
@@ -51,8 +54,10 @@ vexClient.on("ready", async () => {
       channel.channelID
     );
     diagPrint("UPLOADED FILE", uploadedFile);
-
-    await vexClient.messages.send(channel.channelID, testID);
+    await vexClient.messages.send(
+      channel.channelID,
+      "```\n" + output + "\n```"
+    );
   } catch (error) {
     console.warn(error);
     console.warn("Tests failed.");
@@ -61,8 +66,7 @@ vexClient.on("ready", async () => {
 });
 
 vexClient.on("message", async (message: IChatMessage) => {
-  diagPrint("INCOMING MESSAGE", message);
-  if (message.message === testID) {
+  if (message.userID === vexClient.info().client!.userID) {
     console.log("All tests passed.");
     process.exit(0);
   }
@@ -74,8 +78,10 @@ vexClient.on("error", (error: any) => {
 
 function diagPrint(name: string, object: Record<string, any>) {
   console.log("--------" + name + "---------");
+  output += "--------" + name + "---------" + "\n";
   // tslint:disable-next-line: forin
   for (const key in object) {
+    output += key.toUpperCase() + " " + object[key] + "\n";
     console.log(key.toUpperCase(), object[key]);
   }
 }
