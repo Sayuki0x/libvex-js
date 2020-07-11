@@ -244,6 +244,13 @@ interface IFiles {
  */
 interface IUsers {
   /**
+   * Gets the IUser object from the user ID.
+   * @param userID - The user's unique id.
+   *
+   * @returns - The kicked IUser object.
+   */
+  retrieve: (userID: string) => Promise<IUser>;
+  /**
    * Updates a user's power level.
    * @param userID - The user's unique id.
    * @param powerLevel - The power level to set.
@@ -539,6 +546,7 @@ export class Client extends EventEmitter {
       ban: this.banUser.bind(this),
       kick: this.kickUser.bind(this),
       nick: this.changeNick.bind(this),
+      retrieve: this.retrieveUser.bind(this),
       update: this.opUser.bind(this),
     };
 
@@ -657,6 +665,28 @@ export class Client extends EventEmitter {
 
       this.getWs()?.send(JSON.stringify(message));
     });
+  }
+
+  private retrieveUser(userID: string): Promise<IUser> {
+    return new Promise((resolve, reject) => {
+      const transmissionID = uuidv4();
+      const message = {
+        userID,
+        method: "RETRIEVE",
+        transmissionID,
+        type: "user",
+      };
+
+      this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
+        if (msg.type === "error") {
+          reject(msg);
+        } else {
+          resolve(msg.data);
+        }
+      });
+
+      this.getWs()?.send(JSON.stringify(message));
+    })
   }
 
   private deleteFile(fileID: string): Promise<IFile> {
