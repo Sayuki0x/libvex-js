@@ -11,11 +11,11 @@ const file = fs.readFileSync("./LICENSE");
 
 let output = "";
 
-output += execSync("git branch -v")
-output += execSync("git log -n 1")
-output += "\nNODEJS VERSION:\n"
+output += execSync("git branch -v");
+output += execSync("git log -n 1");
+output += "\nNODEJS VERSION:\n";
 output += execSync("node --version");
-output += "KERNEL VERSION:\n"
+output += "KERNEL VERSION:\n";
 output += execSync("uname -r");
 
 console.log(output);

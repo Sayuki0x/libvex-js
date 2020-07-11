@@ -292,8 +292,14 @@ interface IPermissions {
    *
    * @returns - The created IPermission object.
    */
-
   create: (userID: string, channelID: string) => Promise<IPermission>;
+  /**
+   * Retrieves a list of permissions for a given channel ID.
+   * @param channelID - The channel's unique id.
+   *
+   * @returns - An array of IPermission objects.
+   */
+  retrieve: (channelID: string) => Promise<IPermission[]>;
   /**
    * Revokes a permission for a user for a private channel.
    * @param userID - The user's unique id.
@@ -301,7 +307,6 @@ interface IPermissions {
    *
    * @returns - The deleted IPermission object.
    */
-
   delete: (userID: string, channelID: string) => Promise<IPermission>;
 }
 
@@ -535,6 +540,7 @@ export class Client extends EventEmitter {
     this.permissions = {
       create: this.grantChannel.bind(this),
       delete: this.revokeChannel.bind(this),
+      retrieve: this.retrieveChannelPerms.bind(this),
     };
 
     this.messages = {
@@ -620,6 +626,7 @@ export class Client extends EventEmitter {
     }
     return serverPubkey;
   }
+
 
   private getOnlineList(channelID: string): Promise<IUser[]> {
     return new Promise((resolve, reject) => {
@@ -912,6 +919,30 @@ export class Client extends EventEmitter {
         permission: {
           channelID,
           userID,
+        },
+        transmissionID,
+        type: "channelPerm",
+      };
+
+      this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
+        if (msg.type === "error") {
+          reject(msg);
+        } else {
+          resolve(msg.data);
+        }
+      });
+
+      this.getWs()?.send(JSON.stringify(message));
+    });
+  }
+
+  private retrieveChannelPerms(channelID: string): Promise<IPermission[]> {
+    return new Promise((resolve, reject) => {
+      const transmissionID = uuidv4();
+      const message = {
+        method: "RETRIEVE",
+        permission: {
+          channelID,
         },
         transmissionID,
         type: "channelPerm",
