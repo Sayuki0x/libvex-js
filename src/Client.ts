@@ -671,10 +671,10 @@ export class Client extends EventEmitter {
     return new Promise((resolve, reject) => {
       const transmissionID = uuidv4();
       const message = {
-        userID,
         method: "RETRIEVE",
         transmissionID,
         type: "user",
+        userID,
       };
 
       this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
@@ -686,7 +686,7 @@ export class Client extends EventEmitter {
       });
 
       this.getWs()?.send(JSON.stringify(message));
-    })
+    });
   }
 
   private deleteFile(fileID: string): Promise<IFile> {
@@ -913,7 +913,7 @@ export class Client extends EventEmitter {
           channelID,
           userID,
         },
-        transmissionID: uuidv4(),
+        transmissionID,
         type: "channelPerm",
       };
 
