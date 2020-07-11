@@ -650,7 +650,7 @@ export class Client extends EventEmitter {
       const transmissionID = uuidv4();
       const message = {
         method: "NICK",
-        transmissionID: uuidv4(),
+        transmissionID,
         type: "user",
         username: nick,
       };
@@ -831,7 +831,7 @@ export class Client extends EventEmitter {
       const message = {
         method: "UPDATE",
         powerLevel,
-        transmissionID: uuidv4(),
+        transmissionID,
         type: "user",
         userID,
       };
@@ -941,7 +941,7 @@ export class Client extends EventEmitter {
           channelID,
           userID,
         },
-        transmissionID: uuidv4(),
+        transmissionID,
         type: "channelPerm",
       };
 
@@ -962,7 +962,7 @@ export class Client extends EventEmitter {
       const transmissionID = uuidv4();
       const message = {
         method: "BAN",
-        transmissionID: uuidv4(),
+        transmissionID,
         type: "user",
         userID,
       };
@@ -984,7 +984,7 @@ export class Client extends EventEmitter {
       const transmissionID = uuidv4();
       const message = {
         method: "KICK",
-        transmissionID: uuidv4(),
+        transmissionID,
         type: "user",
         userID,
       };
