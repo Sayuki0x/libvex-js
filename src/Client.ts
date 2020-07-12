@@ -516,6 +516,7 @@ export class Client extends EventEmitter {
   private history: IChatMessage[];
   private serverPubkey: string | null;
   private connectCount: number;
+  private authCount: number;
 
   /**
    * @param host - The hostname:port of the server.
@@ -547,6 +548,7 @@ export class Client extends EventEmitter {
       revoke: 50,
       talk: 0,
     };
+    this.authCount = 0;
     this.trxSubs = [];
     this.serverAlive = true;
     this.authed = false;
@@ -1285,7 +1287,10 @@ export class Client extends EventEmitter {
           reject(msg);
         } else {
           this.authed = true;
-          this.emit("authed", msg.data);
+          if (this.authCount === 0) {
+            this.emit("authed", msg.data);
+          }
+          this.authCount++;
           resolve(msg.data);
         }
       });

@@ -33,6 +33,10 @@ const vexClient = new Client("dev.vex.chat", keyring, null, true);
 const testID = uuidv4();
 console.log("TEST ID", testID);
 
+vexClient.on("authed", async () => {
+  console.log("Authed evente fired!");
+});
+
 vexClient.on("ready", async () => {
   try {
     const account = await vexClient.register();
@@ -64,10 +68,10 @@ vexClient.on("ready", async () => {
       channel.channelID
     );
     diagPrint("UPLOADED FILE", uploadedFile);
-    await vexClient.messages.send(
-      channel.channelID,
-      "```\n" + output + "\n```"
-    );
+    // await vexClient.messages.send(
+    //   channel.channelID,
+    //   "```\n" + output + "\n```"
+    // );
   } catch (error) {
     console.warn(error);
     console.warn("Tests failed.");
