@@ -48,10 +48,17 @@ vexClient.on("ready", async () => {
 
     const channelList = await vexClient.channels.retrieve();
 
-    const [channel] = channelList;
+    let channel;
 
     for (const ch of channelList) {
       diagPrint("AVAILABLE CHANNEL", ch);
+      if (ch.name === "ci_tests") {
+        channel = ch;
+      }
+    }
+
+    if (!channel) {
+      throw new Error("Couldn't find the channel!");
     }
 
     await vexClient.channels.join(channel.channelID);
@@ -68,10 +75,10 @@ vexClient.on("ready", async () => {
       channel.channelID
     );
     diagPrint("UPLOADED FILE", uploadedFile);
-    // await vexClient.messages.send(
-    //   channel.channelID,
-    //   "```\n" + output + "\n```"
-    // );
+    await vexClient.messages.send(
+      channel.channelID,
+      "```\n" + output + "\n```"
+    );
   } catch (error) {
     console.warn(error);
     console.warn("Tests failed.");
