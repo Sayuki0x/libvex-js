@@ -239,7 +239,11 @@ interface IFiles {
    *
    * @returns - The created IFile object.
    */
-  create: (file: Buffer, fileName: string, channelID: string) => Promise<IFile>;
+  create: (
+    file: Buffer | string,
+    fileName: string,
+    channelID: string
+  ) => Promise<IFile>;
   /**
    * Retrieves files from a channel.
    * @param channelID - The channel to search for files.
