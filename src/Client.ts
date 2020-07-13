@@ -233,7 +233,7 @@ interface IChannels {
 interface IFiles {
   /**
    * Uploads a file to a channel.
-   * @param file - The file as a buffer.
+   * @param file - The file as a buffer or hex string.
    * @param fileName - The name of the file.
    * @param channelID - The channel to upload the file to.
    *
@@ -777,7 +777,7 @@ export class Client extends EventEmitter {
   }
 
   private uploadFile(
-    file: Buffer,
+    file: Buffer | string,
     fileName: string,
     channelID: string
   ): Promise<IFile> {
@@ -785,7 +785,7 @@ export class Client extends EventEmitter {
       const transmissionID = uuidv4();
       const message = {
         channelID,
-        file: file.toString("hex"),
+        file: typeof file === "string" ? file : file.toString("hex"),
         fileName,
         method: "CREATE",
         transmissionID,
