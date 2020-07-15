@@ -928,7 +928,7 @@ export class Client extends EventEmitter {
 
   private async opUser(
     userID: string,
-    powerLevel: number,
+    powerLevel?: number,
     avatar?: string
   ): Promise<IUser> {
     return new Promise((resolve, reject) => {
