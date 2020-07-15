@@ -8,7 +8,7 @@
   "scripts": {
     "start": "node ./dist/index.js",
     "build": "node ./scripts/versionUpdate.js; node ./node_modules/typescript/bin/tsc",
-    "prepack": "yarn build",
+    "prepack": "yarn build; yarn test;",
     "docs": "npx typedoc --options typedoc.json",
     "prettier": "node ./node_modules/prettier/bin-prettier.js '**/*.{ts,tsx,json,md}' --trailing-comma es5 --ignore-path .gitignore --arrow-parens always --write",
     "lint": "./node_modules/tslint/bin/tslint src/**/*.ts{,x}",
