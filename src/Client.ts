@@ -363,7 +363,7 @@ export declare interface Client {
    * ```
    * @event
    */
-  on(event: "disconnect", callback: () => void): this;
+  on(event: "disconnect", callback: (closeCode: number) => void): this;
   /**
    * This is emitted whenever the keyring is done initializing. You must wait
    * to perform any operaitons until this event.
@@ -1187,6 +1187,7 @@ export class Client extends EventEmitter {
     };
 
     this.getWs()!.onclose = async (event: WebSocket.CloseEvent) => {
+      this.emit("disconnect", event.code);
       if (this.pingInterval) {
         clearInterval(this.pingInterval);
       }
