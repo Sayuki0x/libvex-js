@@ -1438,7 +1438,7 @@ export class Client extends EventEmitter {
       } else {
         failedCount = 0;
       }
-      if (failedCount > 4) {
+      if (failedCount > 10) {
         this.emit("dead_ping");
       }
       this.serverAlive = false;
