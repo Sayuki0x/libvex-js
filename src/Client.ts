@@ -1438,14 +1438,16 @@ export class Client extends EventEmitter {
       } else {
         failedCount = 0;
       }
-      if (failedCount > 10) {
+      if (failedCount > 3) {
         this.emit("dead_ping");
       }
       this.serverAlive = false;
       const pongID = uuidv4();
       this.subscribe(pongID, (message: IApiPong) => {
+        console.log("Received pong message" + pongID);
         this.serverAlive = true;
       });
+      console.log("Sending ping message " + pongID);
       this.getWs()?.send(
         JSON.stringify({ type: "ping", transmissionID: pongID })
       );
