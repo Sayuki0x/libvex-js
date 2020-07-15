@@ -1438,14 +1438,8 @@ export class Client extends EventEmitter {
       } else {
         failedCount = 0;
       }
-      if (failedCount > 2) {
+      if (failedCount > 4) {
         this.emit("dead_ping");
-        if (this.pingInterval) {
-          clearInterval(this.pingInterval);
-        }
-        this.getWs()!.close();
-        await Utils.sleep(5000);
-        this.init();
       }
       this.serverAlive = false;
       const pongID = uuidv4();
