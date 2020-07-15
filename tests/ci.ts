@@ -18,6 +18,9 @@ let output = "";
 
 output += execSync("git branch -v");
 output += execSync("git log -n 1");
+
+const versionInfo = output;
+
 output += "\nNODEJS VERSION:\n";
 output += execSync("node --version");
 output += "KERNEL VERSION:\n";
@@ -75,15 +78,18 @@ vexClient.on("ready", async () => {
     }
 
     const uploadedFile = await vexClient.files.create(
-      file,
+      Buffer.from(output),
       "LICENSE",
       channel.channelID
     );
-    diagPrint("UPLOADED FILE", uploadedFile);
     await vexClient.messages.send(
       channel.channelID,
-      "```\n" + output + "\n```"
+      `\`\`\`${"libvex-js\n" +
+        versionInfo}\`\`\` \n [CI Test Results ${new Date(
+        Date.now()
+      ).toUTCString()}](${uploadedFile.url})`
     );
+    diagPrint("UPLOADED FILE", uploadedFile);
   } catch (error) {
     console.warn(error);
     console.warn("Tests failed.");
