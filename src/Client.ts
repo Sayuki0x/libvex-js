@@ -928,15 +928,15 @@ export class Client extends EventEmitter {
 
   private async opUser(
     userID: string,
-    powerLevel?: number,
+    powerLevel: number,
     avatar?: string
   ): Promise<IUser> {
     return new Promise((resolve, reject) => {
       const transmissionID = uuidv4();
       const message = {
-        avatar,
+        avatar: avatar || "00000000-0000-0000-0000-000000000000",
         method: "UPDATE",
-        powerLevel,
+        powerLevel: powerLevel || 0,
         transmissionID,
         type: "user",
         userID,
