@@ -820,7 +820,6 @@ export class Client extends EventEmitter {
       };
 
       this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
-        console.log("reached");
         if (msg.type === "error") {
           reject(msg);
         } else {
@@ -853,7 +852,6 @@ export class Client extends EventEmitter {
       };
 
       this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
-        console.log("reached");
         if (msg.type === "error") {
           reject(msg);
         } else {
@@ -1217,7 +1215,6 @@ export class Client extends EventEmitter {
       if (this.pingInterval) {
         clearInterval(this.pingInterval);
       }
-      console.log("close code " + event.code);
       this.getWs()!.close();
       await Utils.sleep(5000);
       this.init();
