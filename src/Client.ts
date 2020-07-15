@@ -694,6 +694,21 @@ export class Client extends EventEmitter {
   }
 
   /**
+   * Returns the current host name.
+   *
+   * @param websocket - Whether or not you want the websocket prefix ws:// (true) or http:// (false).
+   *
+   * @returns The host string.
+   */
+  public getHost(websocket: boolean): string {
+    if (websocket) {
+      return this.wsPrefix + this.host;
+    } else {
+      return this.httpPrefix + this.host;
+    }
+  }
+
+  /**
    * Returns info about the current connection.
    *
    * @returns The IClientInfo object.
@@ -1182,15 +1197,6 @@ export class Client extends EventEmitter {
       this.getWs()?.send(JSON.stringify(joinMsg));
     });
   }
-
-  private getHost(websocket: boolean): string {
-    if (websocket) {
-      return this.wsPrefix + this.host;
-    } else {
-      return this.httpPrefix + this.host;
-    }
-  }
-
   private resetState() {
     this.trxSubs = [];
     this.serverAlive = true;
