@@ -350,6 +350,21 @@ export declare interface Client {
    */
   on(event: "authed", callback: (user: IUser) => void): this;
   /**
+   * This is emitted whenever the connection is closed. Note that the client class will
+   * attempt to reconnect when this occurs.
+   *
+   * Example:
+   *
+   * ```ts
+   *
+   *   client.on("disconnect", () => {
+   *     // do something
+   *   });
+   * ```
+   * @event
+   */
+  on(event: "disconnect", callback: () => void): this;
+  /**
    * This is emitted whenever the keyring is done initializing. You must wait
    * to perform any operaitons until this event.
    *
@@ -357,7 +372,7 @@ export declare interface Client {
    *
    * ```ts
    *
-   *   client.on("ready", (error) => {
+   *   client.on("ready", () => {
    *     await client.register()
    *   });
    * ```
@@ -366,7 +381,8 @@ export declare interface Client {
    */
   on(event: "dead_ping", callback: () => void): this;
   /**
-   * This is emitted whenever the server stops responding to the ping message.
+   * This is emitted whenever the server stops responding to the ping message. Note that the client will
+   * attempt to reconnect when this occurs.
    *
    * Example:
    *
@@ -379,7 +395,7 @@ export declare interface Client {
    *
    * @event
    */
-
+  // tslint:disable-next-line: unified-signatures
   on(event: "ready", callback: () => void): this;
 
   /**
@@ -1399,7 +1415,13 @@ export class Client extends EventEmitter {
         failedCount = 0;
       }
       if (failedCount > 2) {
-        this.emit("ping_dead");
+        this.emit("dead_ping");
+        if (this.pingInterval) {
+          clearInterval(this.pingInterval);
+        }
+        this.getWs()!.close();
+        await Utils.sleep(5000);
+        this.init();
       }
       this.serverAlive = false;
       const pongID = uuidv4();
