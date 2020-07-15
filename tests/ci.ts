@@ -33,7 +33,7 @@ keyring.on("ready", () => {
   diagPrint("KEYS", keys);
 });
 
-const vexClient = new Client("dev.vex.chat", keyring, null, true);
+const vexClient = new Client("us2.vex.chat", keyring, null, true);
 
 const testID = uuidv4();
 console.log("TEST ID", testID);

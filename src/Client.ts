@@ -334,6 +334,22 @@ interface IPermissions {
 // tslint:disable-next-line: interface-name
 export declare interface Client {
   /**
+   * This is emitted whenever the keyring is done initializing. You must wait
+   * to perform any operaitons until this event.
+   *
+   * Example:
+   *
+   * ```ts
+   *
+   *   client.on("ready", (error) => {
+   *     await client.register()
+   *   });
+   * ```
+   *
+   * @event
+   */
+  on(event: "authed", callback: (user: IUser) => void): this;
+  /**
    * This is emitted whenever the connection is re-established after a dead ping
    * or disconnect event.
    *
@@ -405,6 +421,7 @@ export declare interface Client {
    *
    * @event
    */
+  // tslint:disable-next-line: unified-signatures
   on(event: "ready", callback: () => void): this;
   /**
    * This is emitted whenever the client experiences an error initializing.
