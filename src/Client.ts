@@ -274,11 +274,16 @@ interface IUsers {
   /**
    * Updates a user's power level.
    * @param userID - The user's unique id.
-   * @param powerLevel - The power level to set.
+   * @param powerLevel - The power level to set. Can be null to leave alone.
+   * @param avatar - The avatar file ID to set. Can be null to leave alone.
    *
    * @returns - The modified IUser object.
    */
-  update: (userID: string, powerLevel: number) => Promise<IUser>;
+  update: (
+    userID: string,
+    powerLevel?: number,
+    avatar?: string
+  ) => Promise<IUser>;
   /**
    * Disconnects a user temporarily from the server.
    * @param userID - The user's unique id.
@@ -921,10 +926,15 @@ export class Client extends EventEmitter {
     });
   }
 
-  private async opUser(userID: string, powerLevel: number): Promise<IUser> {
+  private async opUser(
+    userID: string,
+    powerLevel?: number,
+    avatar?: string
+  ): Promise<IUser> {
     return new Promise((resolve, reject) => {
       const transmissionID = uuidv4();
       const message = {
+        avatar,
         method: "UPDATE",
         powerLevel,
         transmissionID,
