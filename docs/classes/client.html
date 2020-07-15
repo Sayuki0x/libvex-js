@@ -183,7 +183,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L518">src/Client.ts:518</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/3630016/src/Client.ts#L562">src/Client.ts:562</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -229,7 +229,9 @@
 					<a name="on" class="tsd-anchor"></a>
 					<h3>on</h3>
 					<ul class="tsd-signatures tsd-kind-event tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"authed"</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>user<span class="tsd-signature-symbol">: </span><a href="../interfaces/iuser.html" class="tsd-signature-type">IUser</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"reconnect"</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>reconnectCount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"disconnect"</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>closeCode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"dead_ping"</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"ready"</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"error"</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Error</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"message"</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><a href="../interfaces/ichatmessage.html" class="tsd-signature-type">IChatMessage</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
@@ -241,38 +243,33 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L347">src/Client.ts:347</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/3630016/src/Client.ts#L352">src/Client.ts:352</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>This is emitted whenever the keyring is done initializing. You must wait
-									to perform any operaitons until this event.</p>
+									<p>This is emitted whenever the connection is re-established after a dead ping
+									or disconnect event.</p>
 								</div>
-								<p>Example:</p>
-								<pre><code class="language-ts">
-  client.on(<span class="hljs-string">&quot;ready&quot;</span>, <span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {
-    <span class="hljs-keyword">await</span> client.register()
-  });</code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>event: <span class="tsd-signature-type">"authed"</span></h5>
+									<h5>event: <span class="tsd-signature-type">"reconnect"</span></h5>
 								</li>
 								<li>
-									<h5>callback: <span class="tsd-signature-symbol">(</span>user<span class="tsd-signature-symbol">: </span><a href="../interfaces/iuser.html" class="tsd-signature-type">IUser</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
+									<h5>callback: <span class="tsd-signature-symbol">(</span>reconnectCount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>user<span class="tsd-signature-symbol">: </span><a href="../interfaces/iuser.html" class="tsd-signature-type">IUser</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>reconnectCount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
 													<h4 class="tsd-parameters-title">Parameters</h4>
 													<ul class="tsd-parameters">
 														<li>
-															<h5>user: <a href="../interfaces/iuser.html" class="tsd-signature-type">IUser</a></h5>
+															<h5>reconnectCount: <span class="tsd-signature-type">number</span></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -288,7 +285,90 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L364">src/Client.ts:364</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/3630016/src/Client.ts#L372">src/Client.ts:372</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>This is emitted whenever the connection is closed. Note that the client class will
+									attempt to reconnect when this occurs.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <span class="tsd-signature-type">"disconnect"</span></h5>
+								</li>
+								<li>
+									<h5>callback: <span class="tsd-signature-symbol">(</span>closeCode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>closeCode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>closeCode: <span class="tsd-signature-type">number</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides EventEmitter.on</p>
+								<ul>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/3630016/src/Client.ts#L391">src/Client.ts:391</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>This is emitted whenever the server stops responding to the ping message. Note that the client will
+									attempt to reconnect when this occurs.</p>
+								</div>
+								<p>Example:</p>
+								<pre><code class="language-ts">
+  client.on(<span class="hljs-string">&quot;dead_ping&quot;</span>, <span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {
+    <span class="hljs-comment">// do something</span>
+  });</code></pre>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <span class="tsd-signature-type">"dead_ping"</span></h5>
+								</li>
+								<li>
+									<h5>callback: <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides EventEmitter.on</p>
+								<ul>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/3630016/src/Client.ts#L408">src/Client.ts:408</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -329,7 +409,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L380">src/Client.ts:380</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/3630016/src/Client.ts#L423">src/Client.ts:423</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -375,7 +455,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L395">src/Client.ts:395</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/3630016/src/Client.ts#L438">src/Client.ts:438</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -421,7 +501,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L412">src/Client.ts:412</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/3630016/src/Client.ts#L455">src/Client.ts:455</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -468,7 +548,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L429">src/Client.ts:429</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/3630016/src/Client.ts#L472">src/Client.ts:472</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -525,7 +605,7 @@
 					<div class="tsd-signature tsd-kind-icon">channels<span class="tsd-signature-symbol">:</span> <a href="../interfaces/ichannels.html" class="tsd-signature-type">IChannels</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L496">src/Client.ts:496</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/3630016/src/Client.ts#L539">src/Client.ts:539</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -535,7 +615,7 @@
 					<div class="tsd-signature tsd-kind-icon">files<span class="tsd-signature-symbol">:</span> <a href="../interfaces/ifiles.html" class="tsd-signature-type">IFiles</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L500">src/Client.ts:500</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/3630016/src/Client.ts#L543">src/Client.ts:543</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -545,7 +625,7 @@
 					<div class="tsd-signature tsd-kind-icon">messages<span class="tsd-signature-symbol">:</span> <a href="../interfaces/imessages.html" class="tsd-signature-type">IMessages</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L498">src/Client.ts:498</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/3630016/src/Client.ts#L541">src/Client.ts:541</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -555,7 +635,7 @@
 					<div class="tsd-signature tsd-kind-icon">permissions<span class="tsd-signature-symbol">:</span> <a href="../interfaces/ipermissions.html" class="tsd-signature-type">IPermissions</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L497">src/Client.ts:497</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/3630016/src/Client.ts#L540">src/Client.ts:540</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -565,7 +645,7 @@
 					<div class="tsd-signature tsd-kind-icon">users<span class="tsd-signature-symbol">:</span> <a href="../interfaces/iusers.html" class="tsd-signature-type">IUsers</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L499">src/Client.ts:499</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/3630016/src/Client.ts#L542">src/Client.ts:542</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -582,7 +662,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L650">src/Client.ts:650</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/3630016/src/Client.ts#L695">src/Client.ts:695</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -606,7 +686,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L634">src/Client.ts:634</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/3630016/src/Client.ts#L679">src/Client.ts:679</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -629,7 +709,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L611">src/Client.ts:611</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/3630016/src/Client.ts#L656">src/Client.ts:656</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -651,7 +731,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/dec4a47/src/Client.ts#L623">src/Client.ts:623</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/3630016/src/Client.ts#L668">src/Client.ts:668</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
