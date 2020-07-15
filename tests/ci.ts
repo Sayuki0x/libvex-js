@@ -5,6 +5,11 @@ import { Client, IChatMessage } from "../src/Client";
 import { KeyRing } from "../src/Keyring";
 import { Utils } from "../src/Utils";
 
+setTimeout(() => {
+  console.log("Timeout reached, tests failed.");
+  process.exit(1);
+}, 10000);
+
 const keyring = new KeyRing(":memory:");
 
 const file = fs.readFileSync("./LICENSE");
