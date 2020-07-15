@@ -1435,10 +1435,18 @@ export class Client extends EventEmitter {
     this.pingInterval = setInterval(async () => {
       if (this.serverAlive !== true) {
         failedCount++;
+        console.log(
+          "The server failed to respond, failedCount is now " +
+            failedCount.toString()
+        );
       } else {
         failedCount = 0;
+        console.log(
+          "The server responded, setting failedCount is now " +
+            failedCount.toString()
+        );
       }
-      if (failedCount > 3) {
+      if (failedCount > 1) {
         this.emit("dead_ping");
       }
       this.serverAlive = false;
