@@ -334,6 +334,63 @@ interface IPermissions {
 // tslint:disable-next-line: interface-name
 export declare interface Client {
   /**
+   * This is emitted whenever the connection is re-established after a dead ping
+   * or disconnect event.
+   *
+   * @param reconnectCount - The amount of times the client has reconnected.
+   *
+   * Example:
+   *
+   * ```ts
+   *
+   *   client.on("reconnect", () => {
+   *     // do something
+   *   });
+   * ```
+   * @event
+   */
+  on(event: "reconnect", callback: (reconnectCount: number) => void): this;
+
+  /**
+   * This is emitted whenever the connection is closed. Note that the client class will
+   * attempt to reconnect when this occurs.
+   *
+   * @param closeCode - The numerical close code for the websocket connection.
+   *
+   * Example:
+   *
+   * ```ts
+   *
+   *   client.on("disconnect", () => {
+   *     // do something
+   *   });
+   * ```
+   * @event
+   */
+  // tslint:disable-next-line: unified-signatures
+
+  on(event: "disconnect", callback: (closeCode: number) => void): this;
+
+  /**
+   * This is emitted whenever the server stops responding to the ping message. Note that the client will
+   * attempt to reconnect when this occurs.
+   *
+   * Example:
+   *
+   * ```ts
+   *
+   *   client.on("dead_ping", (error) => {
+   *     // do something
+   *   });
+   * ```
+   *
+   * @event
+   */
+  // tslint:disable-next-line: unified-signatures
+
+  on(event: "dead_ping", callback: () => void): this;
+
+  /**
    * This is emitted whenever the keyring is done initializing. You must wait
    * to perform any operaitons until this event.
    *
@@ -348,56 +405,7 @@ export declare interface Client {
    *
    * @event
    */
-  on(event: "authed", callback: (user: IUser) => void): this;
-  /**
-   * This is emitted whenever the connection is closed. Note that the client class will
-   * attempt to reconnect when this occurs.
-   *
-   * Example:
-   *
-   * ```ts
-   *
-   *   client.on("disconnect", () => {
-   *     // do something
-   *   });
-   * ```
-   * @event
-   */
-  on(event: "disconnect", callback: (closeCode: number) => void): this;
-  /**
-   * This is emitted whenever the keyring is done initializing. You must wait
-   * to perform any operaitons until this event.
-   *
-   * Example:
-   *
-   * ```ts
-   *
-   *   client.on("ready", () => {
-   *     await client.register()
-   *   });
-   * ```
-   *
-   * @event
-   */
-  on(event: "dead_ping", callback: () => void): this;
-  /**
-   * This is emitted whenever the server stops responding to the ping message. Note that the client will
-   * attempt to reconnect when this occurs.
-   *
-   * Example:
-   *
-   * ```ts
-   *
-   *   client.on("dead_ping", (error) => {
-   *     // reconnect
-   *   });
-   * ```
-   *
-   * @event
-   */
-  // tslint:disable-next-line: unified-signatures
   on(event: "ready", callback: () => void): this;
-
   /**
    * This is emitted whenever the client experiences an error initializing.
    *
@@ -1176,6 +1184,7 @@ export class Client extends EventEmitter {
       if (this.connectCount === 0) {
         this.emit("ready");
       } else {
+        this.emit("reconnect", this.connectCount);
         await this.auth();
         const oldSubscriptions = this.connectedChannelList.slice();
         this.connectedChannelList = [];
