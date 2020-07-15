@@ -349,7 +349,6 @@ export declare interface Client {
    * @event
    */
   on(event: "authed", callback: (user: IUser) => void): this;
-
   /**
    * This is emitted whenever the keyring is done initializing. You must wait
    * to perform any operaitons until this event.
@@ -365,6 +364,22 @@ export declare interface Client {
    *
    * @event
    */
+  on(event: "dead_ping", callback: () => void): this;
+  /**
+   * This is emitted whenever the server stops responding to the ping message.
+   *
+   * Example:
+   *
+   * ```ts
+   *
+   *   client.on("dead_ping", (error) => {
+   *     // reconnect
+   *   });
+   * ```
+   *
+   * @event
+   */
+
   on(event: "ready", callback: () => void): this;
 
   /**
@@ -1384,7 +1399,7 @@ export class Client extends EventEmitter {
         failedCount = 0;
       }
       if (failedCount > 2) {
-        console.log("connection might be down");
+        this.emit("ping_dead");
       }
       this.serverAlive = false;
       const pongID = uuidv4();
