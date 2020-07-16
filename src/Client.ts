@@ -348,7 +348,7 @@ export declare interface Client {
    *
    * ```ts
    *
-   *   client.on("peerInfo", (user) => {
+   *   client.on("peerChange", (user) => {
    *     await client.register()
    *   });
    * ```
