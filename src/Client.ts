@@ -117,6 +117,7 @@ export interface IChatMessage {
   method: string;
   message: string;
   channelID: string;
+  author: IUser;
 }
 
 /**
@@ -460,21 +461,21 @@ export declare interface Client {
   on(event: "message", callback: (message: IChatMessage) => void): this;
 
   /**
-   * This is emitted whenever the server sends you an updated channel
-   * list. It does this when changes are made to your available channels.
+   * This is emitted whenever the server sends you an updated copy of your
+   * user information.
    *
    * Example:
    *
    * ```ts
    *
-   *   client.on("clientInfo", (clientInfo) => {
+   *   client.on("clientInfo", (userInfo) => {
    *     // update your UI with the new client info
    *   });
    * ```
    *
    * @event
    */
-  on(event: "clientInfo", callback: (channelList: IClientInfo) => void): this;
+  on(event: "userInfo", callback: (channelList: IUser) => void): this;
 
   /**
    * This is emitted whenever the server sends you an updated channel
@@ -584,7 +585,7 @@ export class Client extends EventEmitter {
   private onlineLists: Record<string, IUser[]>;
   private authed: boolean;
   private channelList: IChannel[];
-  private clientInfo: IUser | null;
+  private userInfo: IUser | null;
   private ws: WebSocket | null;
   private host: string;
   private trxSubs: ITrxSub[];
@@ -615,7 +616,7 @@ export class Client extends EventEmitter {
     super();
     this.secure = secure;
     this.keyring = keyring;
-    this.clientInfo = null;
+    this.userInfo = null;
     this.connectCount = 0;
     this.ws = null;
     this.host = host;
@@ -733,7 +734,7 @@ export class Client extends EventEmitter {
   public info(): IClientInfo {
     return {
       authed: this.authed,
-      client: this.clientInfo,
+      client: this.userInfo,
       host: this.getHost(true),
       powerLevels: this.powerLevels,
       secure: this.secure,
@@ -1319,7 +1320,7 @@ export class Client extends EventEmitter {
         if (msg.type === "error") {
           reject(msg);
         } else {
-          this.clientInfo = msg.data;
+          this.userInfo = msg.data;
           resolve(msg.data);
         }
       });
@@ -1411,8 +1412,8 @@ export class Client extends EventEmitter {
           this.history.push(jsonMessage);
           break;
         case "clientInfo":
-          this.clientInfo = jsonMessage.client;
-          this.emit("clientInfo", this.clientInfo);
+          this.userInfo = jsonMessage.client;
+          this.emit("userInfo", this.userInfo);
           break;
         case "channelList":
           this.channelList = jsonMessage.data;
