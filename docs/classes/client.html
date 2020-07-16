@@ -184,7 +184,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/472d6c3/src/Client.ts#L603">src/Client.ts:603</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/ccf5ec4/src/Client.ts#L619">src/Client.ts:619</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -230,6 +230,7 @@
 					<a name="on" class="tsd-anchor"></a>
 					<h3>on</h3>
 					<ul class="tsd-signatures tsd-kind-event tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"peerInfo"</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>user<span class="tsd-signature-symbol">: </span><a href="../interfaces/iuser.html" class="tsd-signature-type">IUser</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"authed"</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>user<span class="tsd-signature-symbol">: </span><a href="../interfaces/iuser.html" class="tsd-signature-type">IUser</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"reconnect"</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>reconnectCount<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"disconnect"</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>closeCode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
@@ -246,18 +247,64 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/472d6c3/src/Client.ts#L358">src/Client.ts:358</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/ccf5ec4/src/Client.ts#L358">src/Client.ts:358</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>This is emitted whenever the keyring is done initializing. You must wait
-									to perform any operaitons until this event.</p>
+									<p>This is emitted whenever a change happens in a peer&#39;s user info.
+									You need to update your UI with the new information.</p>
 								</div>
 								<p>Example:</p>
 								<pre><code class="language-ts">
-  client.on(<span class="hljs-string">&quot;ready&quot;</span>, <span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {
+  client.on(<span class="hljs-string">&quot;peerInfo&quot;</span>, <span class="hljs-function">(<span class="hljs-params">user</span>) =&gt;</span> {
     <span class="hljs-keyword">await</span> client.register()
+  });</code></pre>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <span class="tsd-signature-type">"peerInfo"</span></h5>
+								</li>
+								<li>
+									<h5>callback: <span class="tsd-signature-symbol">(</span>user<span class="tsd-signature-symbol">: </span><a href="../interfaces/iuser.html" class="tsd-signature-type">IUser</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>user<span class="tsd-signature-symbol">: </span><a href="../interfaces/iuser.html" class="tsd-signature-type">IUser</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>user: <a href="../interfaces/iuser.html" class="tsd-signature-type">IUser</a></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides EventEmitter.on</p>
+								<ul>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/ccf5ec4/src/Client.ts#L374">src/Client.ts:374</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>This is emitted whenever the authorization process is complete.</p>
+								</div>
+								<p>Example:</p>
+								<pre><code class="language-ts">
+  client.on(<span class="hljs-string">&quot;authed&quot;</span>, <span class="hljs-function">(<span class="hljs-params">user</span>) =&gt;</span> {
+    <span class="hljs-comment">// do something</span>
   });</code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -293,7 +340,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/472d6c3/src/Client.ts#L375">src/Client.ts:375</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/ccf5ec4/src/Client.ts#L391">src/Client.ts:391</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -335,7 +382,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/472d6c3/src/Client.ts#L395">src/Client.ts:395</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/ccf5ec4/src/Client.ts#L411">src/Client.ts:411</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -377,7 +424,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/472d6c3/src/Client.ts#L414">src/Client.ts:414</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/ccf5ec4/src/Client.ts#L430">src/Client.ts:430</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -387,7 +434,7 @@
 								</div>
 								<p>Example:</p>
 								<pre><code class="language-ts">
-  client.on(<span class="hljs-string">&quot;dead_ping&quot;</span>, <span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {
+  client.on(<span class="hljs-string">&quot;dead_ping&quot;</span>, <span class="hljs-function">(<span class="hljs-params">closeCode</span>) =&gt;</span> {
     <span class="hljs-comment">// do something</span>
   });</code></pre>
 							</div>
@@ -418,7 +465,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/472d6c3/src/Client.ts#L432">src/Client.ts:432</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/ccf5ec4/src/Client.ts#L448">src/Client.ts:448</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -428,7 +475,7 @@
 								</div>
 								<p>Example:</p>
 								<pre><code class="language-ts">
-  client.on(<span class="hljs-string">&quot;ready&quot;</span>, <span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {
+  client.on(<span class="hljs-string">&quot;ready&quot;</span>, <span class="hljs-function">() =&gt;</span> {
     <span class="hljs-keyword">await</span> client.register()
   });</code></pre>
 							</div>
@@ -459,7 +506,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/472d6c3/src/Client.ts#L447">src/Client.ts:447</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/ccf5ec4/src/Client.ts#L463">src/Client.ts:463</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -505,7 +552,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/472d6c3/src/Client.ts#L462">src/Client.ts:462</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/ccf5ec4/src/Client.ts#L478">src/Client.ts:478</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -551,7 +598,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/472d6c3/src/Client.ts#L479">src/Client.ts:479</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/ccf5ec4/src/Client.ts#L495">src/Client.ts:495</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -598,7 +645,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/472d6c3/src/Client.ts#L496">src/Client.ts:496</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/ccf5ec4/src/Client.ts#L512">src/Client.ts:512</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -645,7 +692,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/472d6c3/src/Client.ts#L513">src/Client.ts:513</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/ccf5ec4/src/Client.ts#L529">src/Client.ts:529</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -702,7 +749,7 @@
 					<div class="tsd-signature tsd-kind-icon">channels<span class="tsd-signature-symbol">:</span> <a href="../interfaces/ichannels.html" class="tsd-signature-type">IChannels</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/472d6c3/src/Client.ts#L580">src/Client.ts:580</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/ccf5ec4/src/Client.ts#L596">src/Client.ts:596</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -712,7 +759,7 @@
 					<div class="tsd-signature tsd-kind-icon">files<span class="tsd-signature-symbol">:</span> <a href="../interfaces/ifiles.html" class="tsd-signature-type">IFiles</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/472d6c3/src/Client.ts#L584">src/Client.ts:584</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/ccf5ec4/src/Client.ts#L600">src/Client.ts:600</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -722,7 +769,7 @@
 					<div class="tsd-signature tsd-kind-icon">messages<span class="tsd-signature-symbol">:</span> <a href="../interfaces/imessages.html" class="tsd-signature-type">IMessages</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/472d6c3/src/Client.ts#L582">src/Client.ts:582</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/ccf5ec4/src/Client.ts#L598">src/Client.ts:598</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -732,7 +779,7 @@
 					<div class="tsd-signature tsd-kind-icon">permissions<span class="tsd-signature-symbol">:</span> <a href="../interfaces/ipermissions.html" class="tsd-signature-type">IPermissions</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/472d6c3/src/Client.ts#L581">src/Client.ts:581</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/ccf5ec4/src/Client.ts#L597">src/Client.ts:597</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -742,7 +789,7 @@
 					<div class="tsd-signature tsd-kind-icon">users<span class="tsd-signature-symbol">:</span> <a href="../interfaces/iusers.html" class="tsd-signature-type">IUsers</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/472d6c3/src/Client.ts#L583">src/Client.ts:583</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/ccf5ec4/src/Client.ts#L599">src/Client.ts:599</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -759,7 +806,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/472d6c3/src/Client.ts#L751">src/Client.ts:751</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/ccf5ec4/src/Client.ts#L767">src/Client.ts:767</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -783,7 +830,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/472d6c3/src/Client.ts#L722">src/Client.ts:722</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/ccf5ec4/src/Client.ts#L738">src/Client.ts:738</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -815,7 +862,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/472d6c3/src/Client.ts#L735">src/Client.ts:735</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/ccf5ec4/src/Client.ts#L751">src/Client.ts:751</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -838,7 +885,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/472d6c3/src/Client.ts#L697">src/Client.ts:697</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/ccf5ec4/src/Client.ts#L713">src/Client.ts:713</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -860,7 +907,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/472d6c3/src/Client.ts#L709">src/Client.ts:709</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/ccf5ec4/src/Client.ts#L725">src/Client.ts:725</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
