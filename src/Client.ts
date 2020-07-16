@@ -467,6 +467,23 @@ export declare interface Client {
    *
    * ```ts
    *
+   *   client.on("clientInfo", (clientInfo) => {
+   *     // update your UI with the new client info
+   *   });
+   * ```
+   *
+   * @event
+   */
+  on(event: "clientInfo", callback: (channelList: IClientInfo) => void): this;
+
+  /**
+   * This is emitted whenever the server sends you an updated channel
+   * list. It does this when changes are made to your available channels.
+   *
+   * Example:
+   *
+   * ```ts
+   *
    *   client.on("channelList", (channelList) => {
    *     // update your UI with the new channels
    *   });
