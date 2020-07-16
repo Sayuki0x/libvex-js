@@ -561,13 +561,21 @@
     },
     {
       "id": 70,
+      "kind": 1024,
+      "name": "author",
+      "url": "interfaces/ichatmessage.html#author",
+      "classes": "tsd-kind-property tsd-parent-kind-interface",
+      "parent": "IChatMessage"
+    },
+    {
+      "id": 71,
       "kind": 256,
       "name": "IPermission",
       "url": "interfaces/ipermission.html",
       "classes": "tsd-kind-interface"
     },
     {
-      "id": 71,
+      "id": 72,
       "kind": 1024,
       "name": "userID",
       "url": "interfaces/ipermission.html#userid",
@@ -575,7 +583,7 @@
       "parent": "IPermission"
     },
     {
-      "id": 72,
+      "id": 73,
       "kind": 1024,
       "name": "channelID",
       "url": "interfaces/ipermission.html#channelid",
@@ -583,7 +591,7 @@
       "parent": "IPermission"
     },
     {
-      "id": 73,
+      "id": 74,
       "kind": 1024,
       "name": "powerLevel",
       "url": "interfaces/ipermission.html#powerlevel",
@@ -591,14 +599,14 @@
       "parent": "IPermission"
     },
     {
-      "id": 74,
+      "id": 75,
       "kind": 256,
       "name": "IClientInfo",
       "url": "interfaces/iclientinfo.html",
       "classes": "tsd-kind-interface"
     },
     {
-      "id": 75,
+      "id": 76,
       "kind": 1024,
       "name": "authed",
       "url": "interfaces/iclientinfo.html#authed",
@@ -606,7 +614,7 @@
       "parent": "IClientInfo"
     },
     {
-      "id": 76,
+      "id": 77,
       "kind": 1024,
       "name": "client",
       "url": "interfaces/iclientinfo.html#client",
@@ -614,7 +622,7 @@
       "parent": "IClientInfo"
     },
     {
-      "id": 77,
+      "id": 78,
       "kind": 1024,
       "name": "host",
       "url": "interfaces/iclientinfo.html#host",
@@ -622,7 +630,7 @@
       "parent": "IClientInfo"
     },
     {
-      "id": 78,
+      "id": 79,
       "kind": 1024,
       "name": "secure",
       "url": "interfaces/iclientinfo.html#secure",
@@ -630,7 +638,7 @@
       "parent": "IClientInfo"
     },
     {
-      "id": 79,
+      "id": 80,
       "kind": 1024,
       "name": "powerLevels",
       "url": "interfaces/iclientinfo.html#powerlevels",
@@ -638,14 +646,14 @@
       "parent": "IClientInfo"
     },
     {
-      "id": 80,
+      "id": 81,
       "kind": 256,
       "name": "IPowerLevels",
       "url": "interfaces/ipowerlevels.html",
       "classes": "tsd-kind-interface"
     },
     {
-      "id": 81,
+      "id": 82,
       "kind": 1024,
       "name": "kick",
       "url": "interfaces/ipowerlevels.html#kick",
@@ -653,7 +661,7 @@
       "parent": "IPowerLevels"
     },
     {
-      "id": 82,
+      "id": 83,
       "kind": 1024,
       "name": "ban",
       "url": "interfaces/ipowerlevels.html#ban",
@@ -661,7 +669,7 @@
       "parent": "IPowerLevels"
     },
     {
-      "id": 83,
+      "id": 84,
       "kind": 1024,
       "name": "op",
       "url": "interfaces/ipowerlevels.html#op",
@@ -669,7 +677,7 @@
       "parent": "IPowerLevels"
     },
     {
-      "id": 84,
+      "id": 85,
       "kind": 1024,
       "name": "grant",
       "url": "interfaces/ipowerlevels.html#grant",
@@ -677,7 +685,7 @@
       "parent": "IPowerLevels"
     },
     {
-      "id": 85,
+      "id": 86,
       "kind": 1024,
       "name": "revoke",
       "url": "interfaces/ipowerlevels.html#revoke",
@@ -685,7 +693,7 @@
       "parent": "IPowerLevels"
     },
     {
-      "id": 86,
+      "id": 87,
       "kind": 1024,
       "name": "talk",
       "url": "interfaces/ipowerlevels.html#talk",
@@ -693,7 +701,7 @@
       "parent": "IPowerLevels"
     },
     {
-      "id": 87,
+      "id": 88,
       "kind": 1024,
       "name": "create",
       "url": "interfaces/ipowerlevels.html#create",
@@ -701,7 +709,7 @@
       "parent": "IPowerLevels"
     },
     {
-      "id": 88,
+      "id": 89,
       "kind": 1024,
       "name": "delete",
       "url": "interfaces/ipowerlevels.html#delete",
@@ -709,7 +717,7 @@
       "parent": "IPowerLevels"
     },
     {
-      "id": 89,
+      "id": 90,
       "kind": 1024,
       "name": "files",
       "url": "interfaces/ipowerlevels.html#files",
@@ -717,14 +725,14 @@
       "parent": "IPowerLevels"
     },
     {
-      "id": 90,
+      "id": 91,
       "kind": 256,
       "name": "IMessages",
       "url": "interfaces/imessages.html",
       "classes": "tsd-kind-interface"
     },
     {
-      "id": 91,
+      "id": 92,
       "kind": 1024,
       "name": "retrieve",
       "url": "interfaces/imessages.html#retrieve",
@@ -732,7 +740,7 @@
       "parent": "IMessages"
     },
     {
-      "id": 92,
+      "id": 93,
       "kind": 65536,
       "name": "__type",
       "url": "interfaces/imessages.html#retrieve.__type",
@@ -740,7 +748,7 @@
       "parent": "IMessages.retrieve"
     },
     {
-      "id": 93,
+      "id": 94,
       "kind": 1024,
       "name": "send",
       "url": "interfaces/imessages.html#send",
@@ -748,7 +756,7 @@
       "parent": "IMessages"
     },
     {
-      "id": 94,
+      "id": 95,
       "kind": 65536,
       "name": "__type",
       "url": "interfaces/imessages.html#send.__type-1",
@@ -756,14 +764,14 @@
       "parent": "IMessages.send"
     },
     {
-      "id": 95,
+      "id": 96,
       "kind": 256,
       "name": "IChannels",
       "url": "interfaces/ichannels.html",
       "classes": "tsd-kind-interface"
     },
     {
-      "id": 96,
+      "id": 97,
       "kind": 1024,
       "name": "active",
       "url": "interfaces/ichannels.html#active",
@@ -771,7 +779,7 @@
       "parent": "IChannels"
     },
     {
-      "id": 97,
+      "id": 98,
       "kind": 65536,
       "name": "__type",
       "url": "interfaces/ichannels.html#active.__type",
@@ -779,7 +787,7 @@
       "parent": "IChannels.active"
     },
     {
-      "id": 98,
+      "id": 99,
       "kind": 1024,
       "name": "retrieve",
       "url": "interfaces/ichannels.html#retrieve",
@@ -787,7 +795,7 @@
       "parent": "IChannels"
     },
     {
-      "id": 99,
+      "id": 100,
       "kind": 65536,
       "name": "__type",
       "url": "interfaces/ichannels.html#retrieve.__type-5",
@@ -795,7 +803,7 @@
       "parent": "IChannels.retrieve"
     },
     {
-      "id": 100,
+      "id": 101,
       "kind": 1024,
       "name": "create",
       "url": "interfaces/ichannels.html#create",
@@ -803,7 +811,7 @@
       "parent": "IChannels"
     },
     {
-      "id": 101,
+      "id": 102,
       "kind": 65536,
       "name": "__type",
       "url": "interfaces/ichannels.html#create.__type-1",
@@ -811,7 +819,7 @@
       "parent": "IChannels.create"
     },
     {
-      "id": 102,
+      "id": 103,
       "kind": 1024,
       "name": "join",
       "url": "interfaces/ichannels.html#join",
@@ -819,7 +827,7 @@
       "parent": "IChannels"
     },
     {
-      "id": 103,
+      "id": 104,
       "kind": 65536,
       "name": "__type",
       "url": "interfaces/ichannels.html#join.__type-3",
@@ -827,7 +835,7 @@
       "parent": "IChannels.join"
     },
     {
-      "id": 104,
+      "id": 105,
       "kind": 1024,
       "name": "leave",
       "url": "interfaces/ichannels.html#leave",
@@ -835,7 +843,7 @@
       "parent": "IChannels"
     },
     {
-      "id": 105,
+      "id": 106,
       "kind": 65536,
       "name": "__type",
       "url": "interfaces/ichannels.html#leave.__type-4",
@@ -843,7 +851,7 @@
       "parent": "IChannels.leave"
     },
     {
-      "id": 106,
+      "id": 107,
       "kind": 1024,
       "name": "delete",
       "url": "interfaces/ichannels.html#delete",
@@ -851,7 +859,7 @@
       "parent": "IChannels"
     },
     {
-      "id": 107,
+      "id": 108,
       "kind": 65536,
       "name": "__type",
       "url": "interfaces/ichannels.html#delete.__type-2",
@@ -859,14 +867,14 @@
       "parent": "IChannels.delete"
     },
     {
-      "id": 108,
+      "id": 109,
       "kind": 256,
       "name": "IFiles",
       "url": "interfaces/ifiles.html",
       "classes": "tsd-kind-interface"
     },
     {
-      "id": 109,
+      "id": 110,
       "kind": 1024,
       "name": "create",
       "url": "interfaces/ifiles.html#create",
@@ -874,7 +882,7 @@
       "parent": "IFiles"
     },
     {
-      "id": 110,
+      "id": 111,
       "kind": 65536,
       "name": "__type",
       "url": "interfaces/ifiles.html#create.__type",
@@ -882,7 +890,7 @@
       "parent": "IFiles.create"
     },
     {
-      "id": 111,
+      "id": 112,
       "kind": 1024,
       "name": "retrieve",
       "url": "interfaces/ifiles.html#retrieve",
@@ -890,7 +898,7 @@
       "parent": "IFiles"
     },
     {
-      "id": 112,
+      "id": 113,
       "kind": 65536,
       "name": "__type",
       "url": "interfaces/ifiles.html#retrieve.__type-2",
@@ -898,7 +906,7 @@
       "parent": "IFiles.retrieve"
     },
     {
-      "id": 113,
+      "id": 114,
       "kind": 1024,
       "name": "delete",
       "url": "interfaces/ifiles.html#delete",
@@ -906,7 +914,7 @@
       "parent": "IFiles"
     },
     {
-      "id": 114,
+      "id": 115,
       "kind": 65536,
       "name": "__type",
       "url": "interfaces/ifiles.html#delete.__type-1",
@@ -914,14 +922,14 @@
       "parent": "IFiles.delete"
     },
     {
-      "id": 115,
+      "id": 116,
       "kind": 256,
       "name": "IUsers",
       "url": "interfaces/iusers.html",
       "classes": "tsd-kind-interface"
     },
     {
-      "id": 116,
+      "id": 117,
       "kind": 1024,
       "name": "retrieve",
       "url": "interfaces/iusers.html#retrieve",
@@ -929,7 +937,7 @@
       "parent": "IUsers"
     },
     {
-      "id": 117,
+      "id": 118,
       "kind": 65536,
       "name": "__type",
       "url": "interfaces/iusers.html#retrieve.__type-3",
@@ -937,7 +945,7 @@
       "parent": "IUsers.retrieve"
     },
     {
-      "id": 118,
+      "id": 119,
       "kind": 1024,
       "name": "update",
       "url": "interfaces/iusers.html#update",
@@ -945,7 +953,7 @@
       "parent": "IUsers"
     },
     {
-      "id": 119,
+      "id": 120,
       "kind": 65536,
       "name": "__type",
       "url": "interfaces/iusers.html#update.__type-4",
@@ -953,7 +961,7 @@
       "parent": "IUsers.update"
     },
     {
-      "id": 120,
+      "id": 121,
       "kind": 1024,
       "name": "kick",
       "url": "interfaces/iusers.html#kick",
@@ -961,7 +969,7 @@
       "parent": "IUsers"
     },
     {
-      "id": 121,
+      "id": 122,
       "kind": 65536,
       "name": "__type",
       "url": "interfaces/iusers.html#kick.__type-1",
@@ -969,7 +977,7 @@
       "parent": "IUsers.kick"
     },
     {
-      "id": 122,
+      "id": 123,
       "kind": 1024,
       "name": "ban",
       "url": "interfaces/iusers.html#ban",
@@ -977,7 +985,7 @@
       "parent": "IUsers"
     },
     {
-      "id": 123,
+      "id": 124,
       "kind": 65536,
       "name": "__type",
       "url": "interfaces/iusers.html#ban.__type",
@@ -985,7 +993,7 @@
       "parent": "IUsers.ban"
     },
     {
-      "id": 124,
+      "id": 125,
       "kind": 1024,
       "name": "nick",
       "url": "interfaces/iusers.html#nick",
@@ -993,7 +1001,7 @@
       "parent": "IUsers"
     },
     {
-      "id": 125,
+      "id": 126,
       "kind": 65536,
       "name": "__type",
       "url": "interfaces/iusers.html#nick.__type-2",
@@ -1001,14 +1009,14 @@
       "parent": "IUsers.nick"
     },
     {
-      "id": 126,
+      "id": 127,
       "kind": 256,
       "name": "IPermissions",
       "url": "interfaces/ipermissions.html",
       "classes": "tsd-kind-interface"
     },
     {
-      "id": 127,
+      "id": 128,
       "kind": 1024,
       "name": "create",
       "url": "interfaces/ipermissions.html#create",
@@ -1016,7 +1024,7 @@
       "parent": "IPermissions"
     },
     {
-      "id": 128,
+      "id": 129,
       "kind": 65536,
       "name": "__type",
       "url": "interfaces/ipermissions.html#create.__type",
@@ -1024,7 +1032,7 @@
       "parent": "IPermissions.create"
     },
     {
-      "id": 129,
+      "id": 130,
       "kind": 1024,
       "name": "retrieve",
       "url": "interfaces/ipermissions.html#retrieve",
@@ -1032,7 +1040,7 @@
       "parent": "IPermissions"
     },
     {
-      "id": 130,
+      "id": 131,
       "kind": 65536,
       "name": "__type",
       "url": "interfaces/ipermissions.html#retrieve.__type-2",
@@ -1040,7 +1048,7 @@
       "parent": "IPermissions.retrieve"
     },
     {
-      "id": 131,
+      "id": 132,
       "kind": 1024,
       "name": "delete",
       "url": "interfaces/ipermissions.html#delete",
@@ -1048,7 +1056,7 @@
       "parent": "IPermissions"
     },
     {
-      "id": 132,
+      "id": 133,
       "kind": 65536,
       "name": "__type",
       "url": "interfaces/ipermissions.html#delete.__type-1",
@@ -1056,14 +1064,14 @@
       "parent": "IPermissions.delete"
     },
     {
-      "id": 133,
+      "id": 134,
       "kind": 128,
       "name": "Client",
       "url": "classes/client.html",
       "classes": "tsd-kind-class"
     },
     {
-      "id": 134,
+      "id": 135,
       "kind": 8388608,
       "name": "on",
       "url": "classes/client.html#on",
@@ -1071,7 +1079,7 @@
       "parent": "Client"
     },
     {
-      "id": 135,
+      "id": 136,
       "kind": 1024,
       "name": "channels",
       "url": "classes/client.html#channels",
@@ -1079,7 +1087,7 @@
       "parent": "Client"
     },
     {
-      "id": 136,
+      "id": 137,
       "kind": 1024,
       "name": "permissions",
       "url": "classes/client.html#permissions",
@@ -1087,7 +1095,7 @@
       "parent": "Client"
     },
     {
-      "id": 137,
+      "id": 138,
       "kind": 1024,
       "name": "messages",
       "url": "classes/client.html#messages",
@@ -1095,7 +1103,7 @@
       "parent": "Client"
     },
     {
-      "id": 138,
+      "id": 139,
       "kind": 1024,
       "name": "users",
       "url": "classes/client.html#users",
@@ -1103,7 +1111,7 @@
       "parent": "Client"
     },
     {
-      "id": 139,
+      "id": 140,
       "kind": 1024,
       "name": "files",
       "url": "classes/client.html#files",
@@ -1111,7 +1119,7 @@
       "parent": "Client"
     },
     {
-      "id": 140,
+      "id": 141,
       "kind": 512,
       "name": "constructor",
       "url": "classes/client.html#constructor",
@@ -1119,7 +1127,7 @@
       "parent": "Client"
     },
     {
-      "id": 141,
+      "id": 142,
       "kind": 2048,
       "name": "logout",
       "url": "classes/client.html#logout",
@@ -1127,7 +1135,7 @@
       "parent": "Client"
     },
     {
-      "id": 142,
+      "id": 143,
       "kind": 2048,
       "name": "register",
       "url": "classes/client.html#register",
@@ -1135,7 +1143,7 @@
       "parent": "Client"
     },
     {
-      "id": 143,
+      "id": 144,
       "kind": 2048,
       "name": "getHost",
       "url": "classes/client.html#gethost",
@@ -1143,7 +1151,7 @@
       "parent": "Client"
     },
     {
-      "id": 144,
+      "id": 145,
       "kind": 2048,
       "name": "info",
       "url": "classes/client.html#info",
@@ -1151,7 +1159,7 @@
       "parent": "Client"
     },
     {
-      "id": 145,
+      "id": 146,
       "kind": 2048,
       "name": "auth",
       "url": "classes/client.html#auth",
@@ -1159,7 +1167,7 @@
       "parent": "Client"
     },
     {
-      "id": 146,
+      "id": 147,
       "kind": 32,
       "name": "version",
       "url": "globals.html#version",
@@ -1170,349 +1178,351 @@
     "version": "2.3.8",
     "fields": ["name", "parent"],
     "fieldVectors": [
-      ["name/0", [0, 37.444]],
+      ["name/0", [0, 37.512]],
       ["parent/0", []],
-      ["name/1", [1, 45.917]],
-      ["parent/1", [0, 3.505]],
-      ["name/2", [2, 45.917]],
-      ["parent/2", [0, 3.505]],
-      ["name/3", [3, 27.459]],
+      ["name/1", [1, 45.985]],
+      ["parent/1", [0, 3.514]],
+      ["name/2", [2, 45.985]],
+      ["parent/2", [0, 3.514]],
+      ["name/3", [3, 27.527]],
       ["parent/3", []],
-      ["name/4", [4, 40.809]],
-      ["parent/4", [3, 2.571]],
-      ["name/5", [5, 40.809]],
-      ["parent/5", [3, 2.571]],
-      ["name/6", [6, 45.917]],
-      ["parent/6", [3, 2.571]],
-      ["name/7", [7, 45.917]],
-      ["parent/7", [3, 2.571]],
-      ["name/8", [8, 45.917]],
-      ["parent/8", [3, 2.571]],
-      ["name/9", [9, 45.917]],
-      ["parent/9", [3, 2.571]],
-      ["name/10", [10, 45.917]],
-      ["parent/10", [3, 2.571]],
-      ["name/11", [11, 45.917]],
-      ["parent/11", [3, 2.571]],
-      ["name/12", [12, 29.823]],
+      ["name/4", [4, 40.877]],
+      ["parent/4", [3, 2.578]],
+      ["name/5", [5, 40.877]],
+      ["parent/5", [3, 2.578]],
+      ["name/6", [6, 45.985]],
+      ["parent/6", [3, 2.578]],
+      ["name/7", [7, 45.985]],
+      ["parent/7", [3, 2.578]],
+      ["name/8", [8, 45.985]],
+      ["parent/8", [3, 2.578]],
+      ["name/9", [9, 45.985]],
+      ["parent/9", [3, 2.578]],
+      ["name/10", [10, 45.985]],
+      ["parent/10", [3, 2.578]],
+      ["name/11", [11, 45.985]],
+      ["parent/11", [3, 2.578]],
+      ["name/12", [12, 29.89]],
       ["parent/12", []],
-      ["name/13", [13, 34.931]],
-      ["parent/13", [12, 2.792]],
-      ["name/14", [14, 37.444]],
-      ["parent/14", [12, 2.792]],
-      ["name/15", [15, 40.809]],
-      ["parent/15", [12, 2.792]],
-      ["name/16", [16, 40.809]],
-      ["parent/16", [12, 2.792]],
-      ["name/17", [17, 37.444]],
-      ["parent/17", [12, 2.792]],
-      ["name/18", [18, 45.917]],
-      ["parent/18", [12, 2.792]],
-      ["name/19", [19, 31.254]],
+      ["name/13", [13, 34.999]],
+      ["parent/13", [12, 2.8]],
+      ["name/14", [14, 37.512]],
+      ["parent/14", [12, 2.8]],
+      ["name/15", [15, 40.877]],
+      ["parent/15", [12, 2.8]],
+      ["name/16", [16, 40.877]],
+      ["parent/16", [12, 2.8]],
+      ["name/17", [17, 37.512]],
+      ["parent/17", [12, 2.8]],
+      ["name/18", [18, 45.985]],
+      ["parent/18", [12, 2.8]],
+      ["name/19", [19, 31.321]],
       ["parent/19", []],
-      ["name/20", [13, 34.931]],
-      ["parent/20", [19, 2.926]],
-      ["name/21", [20, 37.444]],
-      ["parent/21", [19, 2.926]],
-      ["name/22", [21, 45.917]],
-      ["parent/22", [19, 2.926]],
-      ["name/23", [22, 45.917]],
-      ["parent/23", [19, 2.926]],
-      ["name/24", [23, 45.917]],
-      ["parent/24", [19, 2.926]],
-      ["name/25", [24, 31.254]],
+      ["name/20", [13, 34.999]],
+      ["parent/20", [19, 2.934]],
+      ["name/21", [20, 37.512]],
+      ["parent/21", [19, 2.934]],
+      ["name/22", [21, 45.985]],
+      ["parent/22", [19, 2.934]],
+      ["name/23", [22, 45.985]],
+      ["parent/23", [19, 2.934]],
+      ["name/24", [23, 45.985]],
+      ["parent/24", [19, 2.934]],
+      ["name/25", [24, 31.321]],
       ["parent/25", []],
-      ["name/26", [13, 34.931]],
-      ["parent/26", [24, 2.926]],
-      ["name/27", [25, 45.917]],
-      ["parent/27", [24, 2.926]],
-      ["name/28", [26, 45.917]],
-      ["parent/28", [24, 2.926]],
-      ["name/29", [27, 45.917]],
-      ["parent/29", [24, 2.926]],
-      ["name/30", [28, 45.917]],
-      ["parent/30", [24, 2.926]],
-      ["name/31", [29, 31.254]],
+      ["name/26", [13, 34.999]],
+      ["parent/26", [24, 2.934]],
+      ["name/27", [25, 45.985]],
+      ["parent/27", [24, 2.934]],
+      ["name/28", [26, 45.985]],
+      ["parent/28", [24, 2.934]],
+      ["name/29", [27, 45.985]],
+      ["parent/29", [24, 2.934]],
+      ["name/30", [28, 45.985]],
+      ["parent/30", [24, 2.934]],
+      ["name/31", [29, 31.321]],
       ["parent/31", []],
-      ["name/32", [30, 31.254]],
-      ["parent/32", [29, 2.926]],
-      ["name/33", [31, 31.254]],
-      ["parent/33", [29, 2.926]],
-      ["name/34", [32, 31.254]],
-      ["parent/34", [29, 2.926]],
-      ["name/35", [33, 45.917]],
-      ["parent/35", [29, 2.926]],
-      ["name/36", [14, 37.444]],
-      ["parent/36", [29, 2.926]],
-      ["name/37", [34, 31.254]],
+      ["name/32", [30, 31.321]],
+      ["parent/32", [29, 2.934]],
+      ["name/33", [31, 31.321]],
+      ["parent/33", [29, 2.934]],
+      ["name/34", [32, 31.321]],
+      ["parent/34", [29, 2.934]],
+      ["name/35", [33, 45.985]],
+      ["parent/35", [29, 2.934]],
+      ["name/36", [14, 37.512]],
+      ["parent/36", [29, 2.934]],
+      ["name/37", [34, 31.321]],
       ["parent/37", []],
-      ["name/38", [30, 31.254]],
-      ["parent/38", [34, 2.926]],
-      ["name/39", [31, 31.254]],
-      ["parent/39", [34, 2.926]],
-      ["name/40", [32, 31.254]],
-      ["parent/40", [34, 2.926]],
-      ["name/41", [35, 45.917]],
-      ["parent/41", [34, 2.926]],
-      ["name/42", [14, 37.444]],
-      ["parent/42", [34, 2.926]],
-      ["name/43", [36, 32.925]],
+      ["name/38", [30, 31.321]],
+      ["parent/38", [34, 2.934]],
+      ["name/39", [31, 31.321]],
+      ["parent/39", [34, 2.934]],
+      ["name/40", [32, 31.321]],
+      ["parent/40", [34, 2.934]],
+      ["name/41", [35, 45.985]],
+      ["parent/41", [34, 2.934]],
+      ["name/42", [14, 37.512]],
+      ["parent/42", [34, 2.934]],
+      ["name/43", [36, 32.992]],
       ["parent/43", []],
-      ["name/44", [30, 31.254]],
-      ["parent/44", [36, 3.082]],
-      ["name/45", [31, 31.254]],
-      ["parent/45", [36, 3.082]],
-      ["name/46", [32, 31.254]],
-      ["parent/46", [36, 3.082]],
-      ["name/47", [37, 45.917]],
-      ["parent/47", [36, 3.082]],
-      ["name/48", [38, 29.823]],
+      ["name/44", [30, 31.321]],
+      ["parent/44", [36, 3.09]],
+      ["name/45", [31, 31.321]],
+      ["parent/45", [36, 3.09]],
+      ["name/46", [32, 31.321]],
+      ["parent/46", [36, 3.09]],
+      ["name/47", [37, 45.985]],
+      ["parent/47", [36, 3.09]],
+      ["name/48", [38, 29.89]],
       ["parent/48", []],
-      ["name/49", [30, 31.254]],
-      ["parent/49", [38, 2.792]],
-      ["name/50", [31, 31.254]],
-      ["parent/50", [38, 2.792]],
-      ["name/51", [32, 31.254]],
-      ["parent/51", [38, 2.792]],
-      ["name/52", [39, 45.917]],
-      ["parent/52", [38, 2.792]],
-      ["name/53", [40, 40.809]],
-      ["parent/53", [38, 2.792]],
-      ["name/54", [41, 45.917]],
-      ["parent/54", [38, 2.792]],
-      ["name/55", [42, 34.931]],
+      ["name/49", [30, 31.321]],
+      ["parent/49", [38, 2.8]],
+      ["name/50", [31, 31.321]],
+      ["parent/50", [38, 2.8]],
+      ["name/51", [32, 31.321]],
+      ["parent/51", [38, 2.8]],
+      ["name/52", [39, 45.985]],
+      ["parent/52", [38, 2.8]],
+      ["name/53", [40, 40.877]],
+      ["parent/53", [38, 2.8]],
+      ["name/54", [41, 45.985]],
+      ["parent/54", [38, 2.8]],
+      ["name/55", [42, 34.999]],
       ["parent/55", []],
-      ["name/56", [30, 31.254]],
-      ["parent/56", [42, 3.27]],
-      ["name/57", [32, 31.254]],
-      ["parent/57", [42, 3.27]],
-      ["name/58", [31, 31.254]],
-      ["parent/58", [42, 3.27]],
-      ["name/59", [43, 25.549]],
+      ["name/56", [30, 31.321]],
+      ["parent/56", [42, 3.278]],
+      ["name/57", [32, 31.321]],
+      ["parent/57", [42, 3.278]],
+      ["name/58", [31, 31.321]],
+      ["parent/58", [42, 3.278]],
+      ["name/59", [43, 24.782]],
       ["parent/59", []],
-      ["name/60", [30, 31.254]],
-      ["parent/60", [43, 2.392]],
-      ["name/61", [44, 45.917]],
-      ["parent/61", [43, 2.392]],
-      ["name/62", [13, 34.931]],
-      ["parent/62", [43, 2.392]],
-      ["name/63", [15, 40.809]],
-      ["parent/63", [43, 2.392]],
-      ["name/64", [32, 31.254]],
-      ["parent/64", [43, 2.392]],
-      ["name/65", [17, 37.444]],
-      ["parent/65", [43, 2.392]],
-      ["name/66", [31, 31.254]],
-      ["parent/66", [43, 2.392]],
-      ["name/67", [45, 45.917]],
-      ["parent/67", [43, 2.392]],
-      ["name/68", [40, 40.809]],
-      ["parent/68", [43, 2.392]],
-      ["name/69", [20, 37.444]],
-      ["parent/69", [43, 2.392]],
-      ["name/70", [46, 34.931]],
-      ["parent/70", []],
-      ["name/71", [17, 37.444]],
-      ["parent/71", [46, 3.27]],
-      ["name/72", [20, 37.444]],
-      ["parent/72", [46, 3.27]],
-      ["name/73", [16, 40.809]],
-      ["parent/73", [46, 3.27]],
-      ["name/74", [47, 31.254]],
-      ["parent/74", []],
-      ["name/75", [48, 45.917]],
-      ["parent/75", [47, 2.926]],
-      ["name/76", [49, 23.231]],
-      ["parent/76", [47, 2.926]],
-      ["name/77", [50, 45.917]],
-      ["parent/77", [47, 2.926]],
-      ["name/78", [51, 45.917]],
-      ["parent/78", [47, 2.926]],
-      ["name/79", [52, 45.917]],
-      ["parent/79", [47, 2.926]],
-      ["name/80", [53, 26.458]],
-      ["parent/80", []],
-      ["name/81", [54, 40.809]],
-      ["parent/81", [53, 2.477]],
-      ["name/82", [55, 40.809]],
-      ["parent/82", [53, 2.477]],
-      ["name/83", [56, 45.917]],
-      ["parent/83", [53, 2.477]],
-      ["name/84", [57, 45.917]],
-      ["parent/84", [53, 2.477]],
-      ["name/85", [58, 45.917]],
-      ["parent/85", [53, 2.477]],
-      ["name/86", [59, 45.917]],
-      ["parent/86", [53, 2.477]],
-      ["name/87", [60, 34.931]],
-      ["parent/87", [53, 2.477]],
-      ["name/88", [61, 34.931]],
-      ["parent/88", [53, 2.477]],
-      ["name/89", [62, 40.809]],
-      ["parent/89", [53, 2.477]],
-      ["name/90", [63, 37.444]],
-      ["parent/90", []],
-      ["name/91", [64, 32.925]],
-      ["parent/91", [63, 3.505]],
-      ["name/92", [65, 20.268]],
-      ["parent/92", [66, 4.299]],
-      ["name/93", [67, 45.917]],
-      ["parent/93", [63, 3.505]],
-      ["name/94", [65, 20.268]],
-      ["parent/94", [68, 4.299]],
-      ["name/95", [69, 29.823]],
-      ["parent/95", []],
-      ["name/96", [70, 45.917]],
-      ["parent/96", [69, 2.792]],
-      ["name/97", [65, 20.268]],
-      ["parent/97", [71, 4.299]],
-      ["name/98", [64, 32.925]],
-      ["parent/98", [69, 2.792]],
-      ["name/99", [65, 20.268]],
-      ["parent/99", [72, 4.299]],
-      ["name/100", [60, 34.931]],
-      ["parent/100", [69, 2.792]],
-      ["name/101", [65, 20.268]],
-      ["parent/101", [73, 4.299]],
-      ["name/102", [74, 45.917]],
-      ["parent/102", [69, 2.792]],
-      ["name/103", [65, 20.268]],
-      ["parent/103", [75, 4.299]],
-      ["name/104", [76, 45.917]],
-      ["parent/104", [69, 2.792]],
-      ["name/105", [65, 20.268]],
-      ["parent/105", [77, 4.299]],
-      ["name/106", [61, 34.931]],
-      ["parent/106", [69, 2.792]],
-      ["name/107", [65, 20.268]],
-      ["parent/107", [78, 4.299]],
-      ["name/108", [79, 34.931]],
-      ["parent/108", []],
-      ["name/109", [60, 34.931]],
-      ["parent/109", [79, 3.27]],
-      ["name/110", [65, 20.268]],
-      ["parent/110", [80, 4.299]],
-      ["name/111", [64, 32.925]],
-      ["parent/111", [79, 3.27]],
-      ["name/112", [65, 20.268]],
-      ["parent/112", [81, 4.299]],
-      ["name/113", [61, 34.931]],
-      ["parent/113", [79, 3.27]],
-      ["name/114", [65, 20.268]],
-      ["parent/114", [82, 4.299]],
-      ["name/115", [83, 31.254]],
-      ["parent/115", []],
-      ["name/116", [64, 32.925]],
-      ["parent/116", [83, 2.926]],
-      ["name/117", [65, 20.268]],
-      ["parent/117", [84, 4.299]],
-      ["name/118", [85, 45.917]],
-      ["parent/118", [83, 2.926]],
-      ["name/119", [65, 20.268]],
-      ["parent/119", [86, 4.299]],
-      ["name/120", [54, 40.809]],
-      ["parent/120", [83, 2.926]],
-      ["name/121", [65, 20.268]],
-      ["parent/121", [87, 4.299]],
-      ["name/122", [55, 40.809]],
-      ["parent/122", [83, 2.926]],
-      ["name/123", [65, 20.268]],
-      ["parent/123", [88, 4.299]],
-      ["name/124", [89, 45.917]],
-      ["parent/124", [83, 2.926]],
-      ["name/125", [65, 20.268]],
-      ["parent/125", [90, 4.299]],
-      ["name/126", [91, 34.931]],
-      ["parent/126", []],
-      ["name/127", [60, 34.931]],
-      ["parent/127", [91, 3.27]],
-      ["name/128", [65, 20.268]],
-      ["parent/128", [92, 4.299]],
-      ["name/129", [64, 32.925]],
-      ["parent/129", [91, 3.27]],
-      ["name/130", [65, 20.268]],
-      ["parent/130", [93, 4.299]],
-      ["name/131", [61, 34.931]],
-      ["parent/131", [91, 3.27]],
-      ["name/132", [65, 20.268]],
-      ["parent/132", [94, 4.299]],
-      ["name/133", [49, 23.231]],
-      ["parent/133", []],
-      ["name/134", [4, 40.809]],
-      ["parent/134", [49, 2.175]],
-      ["name/135", [95, 45.917]],
-      ["parent/135", [49, 2.175]],
-      ["name/136", [96, 45.917]],
-      ["parent/136", [49, 2.175]],
-      ["name/137", [97, 45.917]],
-      ["parent/137", [49, 2.175]],
-      ["name/138", [98, 45.917]],
-      ["parent/138", [49, 2.175]],
-      ["name/139", [62, 40.809]],
-      ["parent/139", [49, 2.175]],
-      ["name/140", [5, 40.809]],
-      ["parent/140", [49, 2.175]],
-      ["name/141", [99, 45.917]],
-      ["parent/141", [49, 2.175]],
-      ["name/142", [100, 45.917]],
-      ["parent/142", [49, 2.175]],
-      ["name/143", [101, 45.917]],
-      ["parent/143", [49, 2.175]],
-      ["name/144", [102, 45.917]],
-      ["parent/144", [49, 2.175]],
-      ["name/145", [103, 45.917]],
-      ["parent/145", [49, 2.175]],
-      ["name/146", [104, 45.917]],
-      ["parent/146", []]
+      ["name/60", [30, 31.321]],
+      ["parent/60", [43, 2.321]],
+      ["name/61", [44, 45.985]],
+      ["parent/61", [43, 2.321]],
+      ["name/62", [13, 34.999]],
+      ["parent/62", [43, 2.321]],
+      ["name/63", [15, 40.877]],
+      ["parent/63", [43, 2.321]],
+      ["name/64", [32, 31.321]],
+      ["parent/64", [43, 2.321]],
+      ["name/65", [17, 37.512]],
+      ["parent/65", [43, 2.321]],
+      ["name/66", [31, 31.321]],
+      ["parent/66", [43, 2.321]],
+      ["name/67", [45, 45.985]],
+      ["parent/67", [43, 2.321]],
+      ["name/68", [40, 40.877]],
+      ["parent/68", [43, 2.321]],
+      ["name/69", [20, 37.512]],
+      ["parent/69", [43, 2.321]],
+      ["name/70", [46, 45.985]],
+      ["parent/70", [43, 2.321]],
+      ["name/71", [47, 34.999]],
+      ["parent/71", []],
+      ["name/72", [17, 37.512]],
+      ["parent/72", [47, 3.278]],
+      ["name/73", [20, 37.512]],
+      ["parent/73", [47, 3.278]],
+      ["name/74", [16, 40.877]],
+      ["parent/74", [47, 3.278]],
+      ["name/75", [48, 31.321]],
+      ["parent/75", []],
+      ["name/76", [49, 45.985]],
+      ["parent/76", [48, 2.934]],
+      ["name/77", [50, 23.298]],
+      ["parent/77", [48, 2.934]],
+      ["name/78", [51, 45.985]],
+      ["parent/78", [48, 2.934]],
+      ["name/79", [52, 45.985]],
+      ["parent/79", [48, 2.934]],
+      ["name/80", [53, 45.985]],
+      ["parent/80", [48, 2.934]],
+      ["name/81", [54, 26.526]],
+      ["parent/81", []],
+      ["name/82", [55, 40.877]],
+      ["parent/82", [54, 2.485]],
+      ["name/83", [56, 40.877]],
+      ["parent/83", [54, 2.485]],
+      ["name/84", [57, 45.985]],
+      ["parent/84", [54, 2.485]],
+      ["name/85", [58, 45.985]],
+      ["parent/85", [54, 2.485]],
+      ["name/86", [59, 45.985]],
+      ["parent/86", [54, 2.485]],
+      ["name/87", [60, 45.985]],
+      ["parent/87", [54, 2.485]],
+      ["name/88", [61, 34.999]],
+      ["parent/88", [54, 2.485]],
+      ["name/89", [62, 34.999]],
+      ["parent/89", [54, 2.485]],
+      ["name/90", [63, 40.877]],
+      ["parent/90", [54, 2.485]],
+      ["name/91", [64, 37.512]],
+      ["parent/91", []],
+      ["name/92", [65, 32.992]],
+      ["parent/92", [64, 3.514]],
+      ["name/93", [66, 20.335]],
+      ["parent/93", [67, 4.307]],
+      ["name/94", [68, 45.985]],
+      ["parent/94", [64, 3.514]],
+      ["name/95", [66, 20.335]],
+      ["parent/95", [69, 4.307]],
+      ["name/96", [70, 29.89]],
+      ["parent/96", []],
+      ["name/97", [71, 45.985]],
+      ["parent/97", [70, 2.8]],
+      ["name/98", [66, 20.335]],
+      ["parent/98", [72, 4.307]],
+      ["name/99", [65, 32.992]],
+      ["parent/99", [70, 2.8]],
+      ["name/100", [66, 20.335]],
+      ["parent/100", [73, 4.307]],
+      ["name/101", [61, 34.999]],
+      ["parent/101", [70, 2.8]],
+      ["name/102", [66, 20.335]],
+      ["parent/102", [74, 4.307]],
+      ["name/103", [75, 45.985]],
+      ["parent/103", [70, 2.8]],
+      ["name/104", [66, 20.335]],
+      ["parent/104", [76, 4.307]],
+      ["name/105", [77, 45.985]],
+      ["parent/105", [70, 2.8]],
+      ["name/106", [66, 20.335]],
+      ["parent/106", [78, 4.307]],
+      ["name/107", [62, 34.999]],
+      ["parent/107", [70, 2.8]],
+      ["name/108", [66, 20.335]],
+      ["parent/108", [79, 4.307]],
+      ["name/109", [80, 34.999]],
+      ["parent/109", []],
+      ["name/110", [61, 34.999]],
+      ["parent/110", [80, 3.278]],
+      ["name/111", [66, 20.335]],
+      ["parent/111", [81, 4.307]],
+      ["name/112", [65, 32.992]],
+      ["parent/112", [80, 3.278]],
+      ["name/113", [66, 20.335]],
+      ["parent/113", [82, 4.307]],
+      ["name/114", [62, 34.999]],
+      ["parent/114", [80, 3.278]],
+      ["name/115", [66, 20.335]],
+      ["parent/115", [83, 4.307]],
+      ["name/116", [84, 31.321]],
+      ["parent/116", []],
+      ["name/117", [65, 32.992]],
+      ["parent/117", [84, 2.934]],
+      ["name/118", [66, 20.335]],
+      ["parent/118", [85, 4.307]],
+      ["name/119", [86, 45.985]],
+      ["parent/119", [84, 2.934]],
+      ["name/120", [66, 20.335]],
+      ["parent/120", [87, 4.307]],
+      ["name/121", [55, 40.877]],
+      ["parent/121", [84, 2.934]],
+      ["name/122", [66, 20.335]],
+      ["parent/122", [88, 4.307]],
+      ["name/123", [56, 40.877]],
+      ["parent/123", [84, 2.934]],
+      ["name/124", [66, 20.335]],
+      ["parent/124", [89, 4.307]],
+      ["name/125", [90, 45.985]],
+      ["parent/125", [84, 2.934]],
+      ["name/126", [66, 20.335]],
+      ["parent/126", [91, 4.307]],
+      ["name/127", [92, 34.999]],
+      ["parent/127", []],
+      ["name/128", [61, 34.999]],
+      ["parent/128", [92, 3.278]],
+      ["name/129", [66, 20.335]],
+      ["parent/129", [93, 4.307]],
+      ["name/130", [65, 32.992]],
+      ["parent/130", [92, 3.278]],
+      ["name/131", [66, 20.335]],
+      ["parent/131", [94, 4.307]],
+      ["name/132", [62, 34.999]],
+      ["parent/132", [92, 3.278]],
+      ["name/133", [66, 20.335]],
+      ["parent/133", [95, 4.307]],
+      ["name/134", [50, 23.298]],
+      ["parent/134", []],
+      ["name/135", [4, 40.877]],
+      ["parent/135", [50, 2.182]],
+      ["name/136", [96, 45.985]],
+      ["parent/136", [50, 2.182]],
+      ["name/137", [97, 45.985]],
+      ["parent/137", [50, 2.182]],
+      ["name/138", [98, 45.985]],
+      ["parent/138", [50, 2.182]],
+      ["name/139", [99, 45.985]],
+      ["parent/139", [50, 2.182]],
+      ["name/140", [63, 40.877]],
+      ["parent/140", [50, 2.182]],
+      ["name/141", [5, 40.877]],
+      ["parent/141", [50, 2.182]],
+      ["name/142", [100, 45.985]],
+      ["parent/142", [50, 2.182]],
+      ["name/143", [101, 45.985]],
+      ["parent/143", [50, 2.182]],
+      ["name/144", [102, 45.985]],
+      ["parent/144", [50, 2.182]],
+      ["name/145", [103, 45.985]],
+      ["parent/145", [50, 2.182]],
+      ["name/146", [104, 45.985]],
+      ["parent/146", [50, 2.182]],
+      ["name/147", [105, 45.985]],
+      ["parent/147", []]
     ],
     "invertedIndex": [
       [
         "__type",
         {
-          "_index": 65,
+          "_index": 66,
           "name": {
-            "92": {},
-            "94": {},
-            "97": {},
-            "99": {},
-            "101": {},
-            "103": {},
-            "105": {},
-            "107": {},
-            "110": {},
-            "112": {},
-            "114": {},
-            "117": {},
-            "119": {},
-            "121": {},
-            "123": {},
-            "125": {},
-            "128": {},
-            "130": {},
-            "132": {}
+            "93": {},
+            "95": {},
+            "98": {},
+            "100": {},
+            "102": {},
+            "104": {},
+            "106": {},
+            "108": {},
+            "111": {},
+            "113": {},
+            "115": {},
+            "118": {},
+            "120": {},
+            "122": {},
+            "124": {},
+            "126": {},
+            "129": {},
+            "131": {},
+            "133": {}
           },
           "parent": {}
         }
       ],
-      ["active", { "_index": 70, "name": { "96": {} }, "parent": {} }],
+      ["active", { "_index": 71, "name": { "97": {} }, "parent": {} }],
       ["admin", { "_index": 21, "name": { "22": {} }, "parent": {} }],
-      ["auth", { "_index": 103, "name": { "145": {} }, "parent": {} }],
-      ["authed", { "_index": 48, "name": { "75": {} }, "parent": {} }],
-      ["ban", { "_index": 55, "name": { "82": {}, "122": {} }, "parent": {} }],
+      ["auth", { "_index": 104, "name": { "146": {} }, "parent": {} }],
+      ["authed", { "_index": 49, "name": { "76": {} }, "parent": {} }],
+      ["author", { "_index": 46, "name": { "70": {} }, "parent": {} }],
+      ["ban", { "_index": 56, "name": { "83": {}, "123": {} }, "parent": {} }],
       ["banned", { "_index": 18, "name": { "18": {} }, "parent": {} }],
       ["challenge", { "_index": 33, "name": { "35": {} }, "parent": {} }],
       [
         "channelid",
-        { "_index": 20, "name": { "21": {}, "69": {}, "72": {} }, "parent": {} }
+        { "_index": 20, "name": { "21": {}, "69": {}, "73": {} }, "parent": {} }
       ],
-      ["channels", { "_index": 95, "name": { "135": {} }, "parent": {} }],
+      ["channels", { "_index": 96, "name": { "136": {} }, "parent": {} }],
       [
         "client",
         {
-          "_index": 49,
-          "name": { "76": {}, "133": {} },
+          "_index": 50,
+          "name": { "77": {}, "134": {} },
           "parent": {
-            "134": {},
             "135": {},
             "136": {},
             "137": {},
@@ -1523,20 +1533,21 @@
             "142": {},
             "143": {},
             "144": {},
-            "145": {}
+            "145": {},
+            "146": {}
           }
         }
       ],
       ["code", { "_index": 39, "name": { "52": {} }, "parent": {} }],
       [
         "constructor",
-        { "_index": 5, "name": { "5": {}, "140": {} }, "parent": {} }
+        { "_index": 5, "name": { "5": {}, "141": {} }, "parent": {} }
       ],
       [
         "create",
         {
-          "_index": 60,
-          "name": { "87": {}, "100": {}, "109": {}, "127": {} },
+          "_index": 61,
+          "name": { "88": {}, "101": {}, "110": {}, "128": {} },
           "parent": {}
         }
       ],
@@ -1545,8 +1556,8 @@
       [
         "delete",
         {
-          "_index": 61,
-          "name": { "88": {}, "106": {}, "113": {}, "131": {} },
+          "_index": 62,
+          "name": { "89": {}, "107": {}, "114": {}, "132": {} },
           "parent": {}
         }
       ],
@@ -1555,15 +1566,15 @@
       ["filename", { "_index": 26, "name": { "28": {} }, "parent": {} }],
       [
         "files",
-        { "_index": 62, "name": { "89": {}, "139": {} }, "parent": {} }
+        { "_index": 63, "name": { "90": {}, "140": {} }, "parent": {} }
       ],
       ["fromhexstring", { "_index": 1, "name": { "1": {} }, "parent": {} }],
-      ["gethost", { "_index": 101, "name": { "143": {} }, "parent": {} }],
+      ["gethost", { "_index": 102, "name": { "144": {} }, "parent": {} }],
       ["getkeyfolder", { "_index": 9, "name": { "9": {} }, "parent": {} }],
       ["getpriv", { "_index": 11, "name": { "11": {} }, "parent": {} }],
       ["getpub", { "_index": 8, "name": { "8": {} }, "parent": {} }],
-      ["grant", { "_index": 57, "name": { "84": {} }, "parent": {} }],
-      ["host", { "_index": 50, "name": { "77": {} }, "parent": {} }],
+      ["grant", { "_index": 58, "name": { "85": {} }, "parent": {} }],
+      ["host", { "_index": 51, "name": { "78": {} }, "parent": {} }],
       [
         "iapierror",
         {
@@ -1614,38 +1625,38 @@
       [
         "ichannels",
         {
-          "_index": 69,
-          "name": { "95": {} },
+          "_index": 70,
+          "name": { "96": {} },
           "parent": {
-            "96": {},
-            "98": {},
-            "100": {},
-            "102": {},
-            "104": {},
-            "106": {}
+            "97": {},
+            "99": {},
+            "101": {},
+            "103": {},
+            "105": {},
+            "107": {}
           }
         }
       ],
       [
         "ichannels.active",
-        { "_index": 71, "name": {}, "parent": { "97": {} } }
+        { "_index": 72, "name": {}, "parent": { "98": {} } }
       ],
       [
         "ichannels.create",
-        { "_index": 73, "name": {}, "parent": { "101": {} } }
+        { "_index": 74, "name": {}, "parent": { "102": {} } }
       ],
       [
         "ichannels.delete",
-        { "_index": 78, "name": {}, "parent": { "107": {} } }
+        { "_index": 79, "name": {}, "parent": { "108": {} } }
       ],
-      ["ichannels.join", { "_index": 75, "name": {}, "parent": { "103": {} } }],
+      ["ichannels.join", { "_index": 76, "name": {}, "parent": { "104": {} } }],
       [
         "ichannels.leave",
-        { "_index": 77, "name": {}, "parent": { "105": {} } }
+        { "_index": 78, "name": {}, "parent": { "106": {} } }
       ],
       [
         "ichannels.retrieve",
-        { "_index": 72, "name": {}, "parent": { "99": {} } }
+        { "_index": 73, "name": {}, "parent": { "100": {} } }
       ],
       [
         "ichatmessage",
@@ -1662,16 +1673,17 @@
             "66": {},
             "67": {},
             "68": {},
-            "69": {}
+            "69": {},
+            "70": {}
           }
         }
       ],
       [
         "iclientinfo",
         {
-          "_index": 47,
-          "name": { "74": {} },
-          "parent": { "75": {}, "76": {}, "77": {}, "78": {}, "79": {} }
+          "_index": 48,
+          "name": { "75": {} },
+          "parent": { "76": {}, "77": {}, "78": {}, "79": {}, "80": {} }
         }
       ],
       [
@@ -1685,26 +1697,26 @@
       [
         "ifiles",
         {
-          "_index": 79,
-          "name": { "108": {} },
-          "parent": { "109": {}, "111": {}, "113": {} }
+          "_index": 80,
+          "name": { "109": {} },
+          "parent": { "110": {}, "112": {}, "114": {} }
         }
       ],
-      ["ifiles.create", { "_index": 80, "name": {}, "parent": { "110": {} } }],
-      ["ifiles.delete", { "_index": 82, "name": {}, "parent": { "114": {} } }],
+      ["ifiles.create", { "_index": 81, "name": {}, "parent": { "111": {} } }],
+      ["ifiles.delete", { "_index": 83, "name": {}, "parent": { "115": {} } }],
       [
         "ifiles.retrieve",
-        { "_index": 81, "name": {}, "parent": { "112": {} } }
+        { "_index": 82, "name": {}, "parent": { "113": {} } }
       ],
       [
         "imessages",
-        { "_index": 63, "name": { "90": {} }, "parent": { "91": {}, "93": {} } }
+        { "_index": 64, "name": { "91": {} }, "parent": { "92": {}, "94": {} } }
       ],
       [
         "imessages.retrieve",
-        { "_index": 66, "name": {}, "parent": { "92": {} } }
+        { "_index": 67, "name": {}, "parent": { "93": {} } }
       ],
-      ["imessages.send", { "_index": 68, "name": {}, "parent": { "94": {} } }],
+      ["imessages.send", { "_index": 69, "name": {}, "parent": { "95": {} } }],
       [
         "index",
         {
@@ -1713,43 +1725,42 @@
           "parent": {}
         }
       ],
-      ["info", { "_index": 102, "name": { "144": {} }, "parent": {} }],
+      ["info", { "_index": 103, "name": { "145": {} }, "parent": {} }],
       ["init", { "_index": 10, "name": { "10": {} }, "parent": {} }],
       [
         "ipermission",
         {
-          "_index": 46,
-          "name": { "70": {} },
-          "parent": { "71": {}, "72": {}, "73": {} }
+          "_index": 47,
+          "name": { "71": {} },
+          "parent": { "72": {}, "73": {}, "74": {} }
         }
       ],
       [
         "ipermissions",
         {
-          "_index": 91,
-          "name": { "126": {} },
-          "parent": { "127": {}, "129": {}, "131": {} }
+          "_index": 92,
+          "name": { "127": {} },
+          "parent": { "128": {}, "130": {}, "132": {} }
         }
       ],
       [
         "ipermissions.create",
-        { "_index": 92, "name": {}, "parent": { "128": {} } }
+        { "_index": 93, "name": {}, "parent": { "129": {} } }
       ],
       [
         "ipermissions.delete",
-        { "_index": 94, "name": {}, "parent": { "132": {} } }
+        { "_index": 95, "name": {}, "parent": { "133": {} } }
       ],
       [
         "ipermissions.retrieve",
-        { "_index": 93, "name": {}, "parent": { "130": {} } }
+        { "_index": 94, "name": {}, "parent": { "131": {} } }
       ],
       [
         "ipowerlevels",
         {
-          "_index": 53,
-          "name": { "80": {} },
+          "_index": 54,
+          "name": { "81": {} },
           "parent": {
-            "81": {},
             "82": {},
             "83": {},
             "84": {},
@@ -1757,7 +1768,8 @@
             "86": {},
             "87": {},
             "88": {},
-            "89": {}
+            "89": {},
+            "90": {}
           }
         }
       ],
@@ -1787,20 +1799,20 @@
       [
         "iusers",
         {
-          "_index": 83,
-          "name": { "115": {} },
-          "parent": { "116": {}, "118": {}, "120": {}, "122": {}, "124": {} }
+          "_index": 84,
+          "name": { "116": {} },
+          "parent": { "117": {}, "119": {}, "121": {}, "123": {}, "125": {} }
         }
       ],
-      ["iusers.ban", { "_index": 88, "name": {}, "parent": { "123": {} } }],
-      ["iusers.kick", { "_index": 87, "name": {}, "parent": { "121": {} } }],
-      ["iusers.nick", { "_index": 90, "name": {}, "parent": { "125": {} } }],
+      ["iusers.ban", { "_index": 89, "name": {}, "parent": { "124": {} } }],
+      ["iusers.kick", { "_index": 88, "name": {}, "parent": { "122": {} } }],
+      ["iusers.nick", { "_index": 91, "name": {}, "parent": { "126": {} } }],
       [
         "iusers.retrieve",
-        { "_index": 84, "name": {}, "parent": { "117": {} } }
+        { "_index": 85, "name": {}, "parent": { "118": {} } }
       ],
-      ["iusers.update", { "_index": 86, "name": {}, "parent": { "119": {} } }],
-      ["join", { "_index": 74, "name": { "102": {} }, "parent": {} }],
+      ["iusers.update", { "_index": 87, "name": {}, "parent": { "120": {} } }],
+      ["join", { "_index": 75, "name": { "103": {} }, "parent": {} }],
       [
         "keyring",
         {
@@ -1818,9 +1830,9 @@
           }
         }
       ],
-      ["kick", { "_index": 54, "name": { "81": {}, "120": {} }, "parent": {} }],
-      ["leave", { "_index": 76, "name": { "104": {} }, "parent": {} }],
-      ["logout", { "_index": 99, "name": { "141": {} }, "parent": {} }],
+      ["kick", { "_index": 55, "name": { "82": {}, "121": {} }, "parent": {} }],
+      ["leave", { "_index": 77, "name": { "105": {} }, "parent": {} }],
+      ["logout", { "_index": 100, "name": { "142": {} }, "parent": {} }],
       [
         "message",
         { "_index": 40, "name": { "53": {}, "68": {} }, "parent": {} }
@@ -1840,39 +1852,39 @@
           "parent": {}
         }
       ],
-      ["messages", { "_index": 97, "name": { "137": {} }, "parent": {} }],
+      ["messages", { "_index": 98, "name": { "138": {} }, "parent": {} }],
       ["method", { "_index": 45, "name": { "67": {} }, "parent": {} }],
       ["name", { "_index": 23, "name": { "24": {} }, "parent": {} }],
-      ["nick", { "_index": 89, "name": { "124": {} }, "parent": {} }],
-      ["on", { "_index": 4, "name": { "4": {}, "134": {} }, "parent": {} }],
-      ["op", { "_index": 56, "name": { "83": {} }, "parent": {} }],
+      ["nick", { "_index": 90, "name": { "125": {} }, "parent": {} }],
+      ["on", { "_index": 4, "name": { "4": {}, "135": {} }, "parent": {} }],
+      ["op", { "_index": 57, "name": { "84": {} }, "parent": {} }],
       ["ownerid", { "_index": 27, "name": { "29": {} }, "parent": {} }],
-      ["permissions", { "_index": 96, "name": { "136": {} }, "parent": {} }],
+      ["permissions", { "_index": 97, "name": { "137": {} }, "parent": {} }],
       [
         "powerlevel",
-        { "_index": 16, "name": { "16": {}, "73": {} }, "parent": {} }
+        { "_index": 16, "name": { "16": {}, "74": {} }, "parent": {} }
       ],
-      ["powerlevels", { "_index": 52, "name": { "79": {} }, "parent": {} }],
+      ["powerlevels", { "_index": 53, "name": { "80": {} }, "parent": {} }],
       [
         "pubkey",
         { "_index": 14, "name": { "14": {}, "36": {}, "42": {} }, "parent": {} }
       ],
       ["public", { "_index": 22, "name": { "23": {} }, "parent": {} }],
-      ["register", { "_index": 100, "name": { "142": {} }, "parent": {} }],
+      ["register", { "_index": 101, "name": { "143": {} }, "parent": {} }],
       ["response", { "_index": 35, "name": { "41": {} }, "parent": {} }],
       [
         "retrieve",
         {
-          "_index": 64,
-          "name": { "91": {}, "98": {}, "111": {}, "116": {}, "129": {} },
+          "_index": 65,
+          "name": { "92": {}, "99": {}, "112": {}, "117": {}, "130": {} },
           "parent": {}
         }
       ],
-      ["revoke", { "_index": 58, "name": { "85": {} }, "parent": {} }],
-      ["secure", { "_index": 51, "name": { "78": {} }, "parent": {} }],
-      ["send", { "_index": 67, "name": { "93": {} }, "parent": {} }],
+      ["revoke", { "_index": 59, "name": { "86": {} }, "parent": {} }],
+      ["secure", { "_index": 52, "name": { "79": {} }, "parent": {} }],
+      ["send", { "_index": 68, "name": { "94": {} }, "parent": {} }],
       ["sign", { "_index": 6, "name": { "6": {} }, "parent": {} }],
-      ["talk", { "_index": 59, "name": { "86": {} }, "parent": {} }],
+      ["talk", { "_index": 60, "name": { "87": {} }, "parent": {} }],
       ["tohexstring", { "_index": 2, "name": { "2": {} }, "parent": {} }],
       [
         "transmissionid",
@@ -1904,23 +1916,23 @@
           "parent": {}
         }
       ],
-      ["update", { "_index": 85, "name": { "118": {} }, "parent": {} }],
+      ["update", { "_index": 86, "name": { "119": {} }, "parent": {} }],
       ["url", { "_index": 28, "name": { "30": {} }, "parent": {} }],
       [
         "userid",
-        { "_index": 17, "name": { "17": {}, "65": {}, "71": {} }, "parent": {} }
+        { "_index": 17, "name": { "17": {}, "65": {}, "72": {} }, "parent": {} }
       ],
       [
         "username",
         { "_index": 15, "name": { "15": {}, "63": {} }, "parent": {} }
       ],
-      ["users", { "_index": 98, "name": { "138": {} }, "parent": {} }],
+      ["users", { "_index": 99, "name": { "139": {} }, "parent": {} }],
       [
         "utils",
         { "_index": 0, "name": { "0": {} }, "parent": { "1": {}, "2": {} } }
       ],
       ["verify", { "_index": 7, "name": { "7": {} }, "parent": {} }],
-      ["version", { "_index": 104, "name": { "146": {} }, "parent": {} }]
+      ["version", { "_index": 105, "name": { "147": {} }, "parent": {} }]
     ],
     "pipeline": []
   }
