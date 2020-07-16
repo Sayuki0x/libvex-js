@@ -281,11 +281,7 @@ interface IUsers {
    *
    * @returns - The modified IUser object.
    */
-  update: (
-    userID: string,
-    powerLevel?: number,
-    avatar?: string
-  ) => Promise<IUser>;
+  update: (user: Partial<IUser>) => Promise<IUser>;
   /**
    * Disconnects a user temporarily from the server.
    * @param userID - The user's unique id.
@@ -684,7 +680,7 @@ export class Client extends EventEmitter {
       kick: this.kickUser.bind(this),
       nick: this.changeNick.bind(this),
       retrieve: this.retrieveUser.bind(this),
-      update: this.opUser.bind(this),
+      update: this.updateUser.bind(this),
     };
 
     this.files = {
@@ -976,20 +972,18 @@ export class Client extends EventEmitter {
     });
   }
 
-  private async opUser(
-    userID: string,
-    powerLevel?: number,
-    avatar?: string
-  ): Promise<IUser> {
+  private async updateUser(user: Partial<IUser>): Promise<IUser> {
     return new Promise((resolve, reject) => {
       const transmissionID = uuidv4();
       const message = {
-        avatar: avatar || "00000000-0000-0000-0000-000000000000",
+        avatar: user.avatar || "00000000-0000-0000-0000-000000000000",
+        color: (user as any).color || (this.info().client! as any).color,
         method: "UPDATE",
-        powerLevel: powerLevel || 0,
+        powerLevel: user.powerLevel || 0,
         transmissionID,
         type: "user",
-        userID,
+        userID: user.userID,
+        username: user.username || this.info().client!.username,
       };
 
       this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
