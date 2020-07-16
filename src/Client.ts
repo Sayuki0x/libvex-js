@@ -19,6 +19,7 @@ interface ITrxSub {
  */
 export interface IUser {
   index: number;
+  avatar: string;
   pubkey: string;
   username: string;
   powerLevel: number;
