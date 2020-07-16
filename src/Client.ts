@@ -492,7 +492,7 @@ export declare interface Client {
    *
    * @event
    */
-  on(event: "userInfo", callback: (channelList: IUser) => void): this;
+  on(event: "userInfo", callback: (userInfo: IUser) => void): this;
 
   /**
    * This is emitted whenever the server sends you an updated channel
@@ -1433,7 +1433,7 @@ export class Client extends EventEmitter {
           this.emit("userInfo", this.userInfo);
           break;
         case "peerChange":
-          this.emit("peerInfo", jsonMessage.client);
+          this.emit("peerChange", jsonMessage.client);
         case "channelList":
           this.channelList = jsonMessage.data;
           this.emit("channelList", this.channelList);
