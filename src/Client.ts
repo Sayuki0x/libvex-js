@@ -355,7 +355,7 @@ export declare interface Client {
    *
    * @event
    */
-  on(event: "peerInfo", callback: (user: IUser) => void): this;
+  on(event: "peerChange", callback: (user: IUser) => void): this;
   /**
    * This is emitted whenever the authorization process is complete.
    *
@@ -1432,7 +1432,7 @@ export class Client extends EventEmitter {
           this.userInfo = jsonMessage.client;
           this.emit("userInfo", this.userInfo);
           break;
-        case "peerInfo":
+        case "peerChange":
           this.emit("peerInfo", jsonMessage.client);
         case "channelList":
           this.channelList = jsonMessage.data;
