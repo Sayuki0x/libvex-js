@@ -341,20 +341,36 @@ interface IPermissions {
 // tslint:disable-next-line: interface-name
 export declare interface Client {
   /**
-   * This is emitted whenever the keyring is done initializing. You must wait
-   * to perform any operaitons until this event.
+   * This is emitted whenever a change happens in a peer's user info.
+   * You need to update your UI with the new information.
    *
    * Example:
    *
    * ```ts
    *
-   *   client.on("ready", (error) => {
+   *   client.on("peerInfo", (user) => {
    *     await client.register()
    *   });
    * ```
    *
    * @event
    */
+  on(event: "peerInfo", callback: (user: IUser) => void): this;
+  /**
+   * This is emitted whenever the authorization process is complete.
+   *
+   * Example:
+   *
+   * ```ts
+   *
+   *   client.on("authed", (user) => {
+   *     // do something
+   *   });
+   * ```
+   *
+   * @event
+   */
+  // tslint:disable-next-line: unified-signatures
   on(event: "authed", callback: (user: IUser) => void): this;
   /**
    * This is emitted whenever the connection is re-established after a dead ping
@@ -366,7 +382,7 @@ export declare interface Client {
    *
    * ```ts
    *
-   *   client.on("reconnect", () => {
+   *   client.on("reconnect", (reconnectCount) => {
    *     // do something
    *   });
    * ```
@@ -384,7 +400,7 @@ export declare interface Client {
    *
    * ```ts
    *
-   *   client.on("disconnect", () => {
+   *   client.on("disconnect", (reconnectCount) => {
    *     // do something
    *   });
    * ```
@@ -402,7 +418,7 @@ export declare interface Client {
    *
    * ```ts
    *
-   *   client.on("dead_ping", (error) => {
+   *   client.on("dead_ping", (closeCode) => {
    *     // do something
    *   });
    * ```
@@ -421,7 +437,7 @@ export declare interface Client {
    *
    * ```ts
    *
-   *   client.on("ready", (error) => {
+   *   client.on("ready", () => {
    *     await client.register()
    *   });
    * ```
@@ -1416,6 +1432,8 @@ export class Client extends EventEmitter {
           this.userInfo = jsonMessage.client;
           this.emit("userInfo", this.userInfo);
           break;
+        case "peerInfo":
+          this.emit("peerInfo", jsonMessage.client);
         case "channelList":
           this.channelList = jsonMessage.data;
           this.emit("channelList", this.channelList);
