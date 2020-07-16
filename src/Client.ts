@@ -1434,6 +1434,7 @@ export class Client extends EventEmitter {
           break;
         case "peerChange":
           this.emit("peerChange", jsonMessage.client);
+          break;
         case "channelList":
           this.channelList = jsonMessage.data;
           this.emit("channelList", this.channelList);
