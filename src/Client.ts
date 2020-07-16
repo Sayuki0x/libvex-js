@@ -974,6 +974,10 @@ export class Client extends EventEmitter {
 
   private async updateUser(user: Partial<IUser>): Promise<IUser> {
     return new Promise((resolve, reject) => {
+      if (!user.userID) {
+        throw new Error("userID is required.");
+      }
+
       const transmissionID = uuidv4();
       const message = {
         avatar: user.avatar || "00000000-0000-0000-0000-000000000000",
