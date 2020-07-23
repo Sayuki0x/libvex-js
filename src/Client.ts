@@ -1,9 +1,11 @@
 import { EventEmitter } from "events";
 import WebSocket from "isomorphic-ws";
+import msgpack from "msgpack-lite";
 import { decodeUTF8 } from "tweetnacl-util";
 import { v4 as uuidv4 } from "uuid";
 import { KeyRing } from "./Keyring";
-import { Utils } from "./Utils";
+import { Utils } from "./utils/TypeUtils";
+import { uuidStringify } from "./utils/uuidStringify";
 
 /**
  * @ignore
@@ -775,7 +777,7 @@ export class Client extends EventEmitter {
             resolve(msg.data);
           }
         });
-        this.getWs()!.send(JSON.stringify(message));
+        this.sendWSMessage(message);
       }
     });
   }
@@ -798,7 +800,7 @@ export class Client extends EventEmitter {
         }
       });
 
-      this.getWs()?.send(JSON.stringify(message));
+      this.sendWSMessage(message);
     });
   }
 
@@ -820,7 +822,7 @@ export class Client extends EventEmitter {
         }
       });
 
-      this.getWs()?.send(JSON.stringify(message));
+      this.sendWSMessage(message);
     });
   }
 
@@ -842,7 +844,7 @@ export class Client extends EventEmitter {
         }
       });
 
-      this.getWs()?.send(JSON.stringify(message));
+      this.sendWSMessage(message);
     });
   }
 
@@ -868,7 +870,7 @@ export class Client extends EventEmitter {
         }
       });
 
-      this.getWs()?.send(JSON.stringify(message));
+      this.sendWSMessage(message);
     });
   }
 
@@ -898,7 +900,7 @@ export class Client extends EventEmitter {
         }
       });
 
-      this.getWs()?.send(JSON.stringify(message));
+      this.sendWSMessage(message);
     });
   }
 
@@ -916,6 +918,7 @@ export class Client extends EventEmitter {
       };
 
       this.subscribe(transmissionID, (msg: IResponse) => {
+        console.log(msg);
         if (
           this.keyring.verify(
             decodeUTF8(challenge),
@@ -933,7 +936,7 @@ export class Client extends EventEmitter {
         }
       });
 
-      this.getWs()!.send(JSON.stringify(challengeMessage));
+      this.sendWSMessage(challengeMessage);
     });
   }
 
@@ -954,7 +957,7 @@ export class Client extends EventEmitter {
           resolve();
         }
       });
-      this.getWs()?.send(JSON.stringify(chatMessage));
+      this.sendWSMessage(chatMessage);
     });
   }
 
@@ -984,7 +987,7 @@ export class Client extends EventEmitter {
         }
       });
 
-      this.getWs()?.send(JSON.stringify(message));
+      this.sendWSMessage(message);
     });
   }
 
@@ -1015,7 +1018,7 @@ export class Client extends EventEmitter {
         }
       });
 
-      this.getWs()?.send(JSON.stringify(message));
+      this.sendWSMessage(message);
     });
   }
 
@@ -1037,7 +1040,7 @@ export class Client extends EventEmitter {
         }
       });
 
-      this.getWs()?.send(JSON.stringify(message));
+      this.sendWSMessage(message);
     });
   }
 
@@ -1065,7 +1068,7 @@ export class Client extends EventEmitter {
         }
       });
 
-      this.getWs()?.send(JSON.stringify(message));
+      this.sendWSMessage(message);
     });
   }
 
@@ -1089,7 +1092,7 @@ export class Client extends EventEmitter {
         }
       });
 
-      this.getWs()?.send(JSON.stringify(message));
+      this.sendWSMessage(message);
     });
   }
 
@@ -1117,7 +1120,7 @@ export class Client extends EventEmitter {
         }
       });
 
-      this.getWs()?.send(JSON.stringify(message));
+      this.sendWSMessage(message);
     });
   }
 
@@ -1139,7 +1142,7 @@ export class Client extends EventEmitter {
         }
       });
 
-      this.getWs()?.send(JSON.stringify(message));
+      this.sendWSMessage(message);
     });
   }
 
@@ -1161,7 +1164,7 @@ export class Client extends EventEmitter {
         }
       });
 
-      this.getWs()?.send(JSON.stringify(message));
+      this.sendWSMessage(message);
     });
   }
 
@@ -1186,7 +1189,7 @@ export class Client extends EventEmitter {
           reject(msg);
         }
       });
-      this.ws?.send(JSON.stringify(historyReqMessage));
+      this.sendWSMessage(historyReqMessage);
     });
   }
 
@@ -1213,7 +1216,7 @@ export class Client extends EventEmitter {
         }
       });
 
-      this.getWs()?.send(JSON.stringify(joinMsg));
+      this.sendWSMessage(joinMsg);
     });
   }
   private resetState() {
@@ -1300,7 +1303,7 @@ export class Client extends EventEmitter {
         }
       });
 
-      this.getWs()?.send(JSON.stringify(joinMsg));
+      this.sendWSMessage(joinMsg);
     });
   }
 
@@ -1311,10 +1314,12 @@ export class Client extends EventEmitter {
       const message = {
         method: "REGISTER",
         pubkey: Utils.toHexString(this.keyring.getPub()),
-        signed: Utils.toHexString(this.keyring.sign(decodeUTF8(user.userID))),
+        signed: Utils.toHexString(
+          this.keyring.sign(decodeUTF8(uuidStringify(user.userID)))
+        ),
         transmissionID,
         type: "identity",
-        uuid: user.userID,
+        uuid: uuidStringify(user.userID),
       };
 
       this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
@@ -1326,7 +1331,7 @@ export class Client extends EventEmitter {
         }
       });
 
-      this.getWs()!.send(JSON.stringify(message));
+      this.sendWSMessage(message);
     });
   }
 
@@ -1350,7 +1355,7 @@ export class Client extends EventEmitter {
           }
         });
 
-        this.getWs()!.send(JSON.stringify(message));
+        this.sendWSMessage(message);
       }
     });
   }
@@ -1364,13 +1369,19 @@ export class Client extends EventEmitter {
     this.startPing();
   }
 
+  private async sendWSMessage(msg: any) {
+    // this.getWs()?.send(msgpack.encode(msg))
+    this.getWs()?.send(JSON.stringify(msg));
+  }
+
   private async respondToChallenge(jsonMessage: IChallenge): Promise<IUser> {
+    console.log(jsonMessage);
     return new Promise((resolve, reject) => {
       const transmissionID = uuidv4();
       const challengeResponse = {
         pubkey: Utils.toHexString(this.keyring.getPub()),
         response: Utils.toHexString(
-          this.keyring.sign(decodeUTF8(jsonMessage.challenge!))
+          this.keyring.sign(decodeUTF8(uuidStringify(jsonMessage.challenge!)))
         ),
         transmissionID,
         type: "response",
@@ -1389,16 +1400,17 @@ export class Client extends EventEmitter {
         }
       });
 
-      this.getWs()?.send(JSON.stringify(challengeResponse));
+      this.sendWSMessage(challengeResponse);
     });
   }
 
   private async handleMessage(msg: WebSocket.MessageEvent) {
     try {
-      const jsonMessage = JSON.parse(msg.data.toString());
+      const jsonMessage = msgpack.decode(msg.data as Buffer);
+      const uuidStr = uuidStringify(jsonMessage.transmissionID);
 
       for (const sub of this.trxSubs) {
-        if (sub.id === jsonMessage.transmissionID) {
+        if (sub.id === uuidStr) {
           await sub.callback(jsonMessage);
           this.trxSubs.splice(this.trxSubs.indexOf(sub), 1);
           return;
@@ -1432,6 +1444,7 @@ export class Client extends EventEmitter {
           );
           break;
         case "challenge":
+          console.log("reached");
           this.respondToChallenge(jsonMessage);
           break;
         case "chat":
@@ -1464,7 +1477,7 @@ export class Client extends EventEmitter {
         }
       });
 
-      this.getWs()!.send(JSON.stringify(registerMessage));
+      this.sendWSMessage(registerMessage);
     });
   }
 
@@ -1494,9 +1507,7 @@ export class Client extends EventEmitter {
         this.serverAlive = true;
       });
       console.log("Sending ping message " + pongID);
-      this.getWs()?.send(
-        JSON.stringify({ type: "ping", transmissionID: pongID })
-      );
+      this.sendWSMessage({ type: "ping", transmissionID: pongID });
     }, 10000);
   }
 }

@@ -13,7 +13,7 @@ import {
   IUser,
 } from "./Client";
 import { KeyRing } from "./Keyring";
-import { Utils } from "./Utils";
+import { Utils } from "./utils/TypeUtils";
 
 export { Client, KeyRing, Utils };
 

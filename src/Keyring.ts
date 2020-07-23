@@ -3,7 +3,7 @@
 import { EventEmitter } from "events";
 import fs from "fs";
 import { sign, SignKeyPair } from "tweetnacl";
-import { Utils } from "./Utils";
+import { Utils } from "./utils/TypeUtils";
 
 /**
  * @ignore

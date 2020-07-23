@@ -3,7 +3,7 @@ import fs, { createReadStream } from "fs";
 import { v4 as uuidv4 } from "uuid";
 import { Client, IChatMessage } from "../src/Client";
 import { KeyRing } from "../src/Keyring";
-import { Utils } from "../src/Utils";
+import { Utils } from "../src/utils/TypeUtils";
 
 setTimeout(() => {
   console.log("Timeout reached, tests failed.");
