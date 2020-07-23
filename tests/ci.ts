@@ -52,7 +52,7 @@ vexClient.on("ready", async () => {
     const serverPubkey = await vexClient.auth();
     diagPrint("SERVER INFO", { serverPubkey });
 
-    diagPrint("CLIENT INFO", vexClient.info());
+    diagPrint("CLIENT INFO", vexClient.user!);
 
     const channelList = await vexClient.channels.retrieve();
 
@@ -98,7 +98,7 @@ vexClient.on("ready", async () => {
 });
 
 vexClient.on("message", async (message: IChatMessage) => {
-  if (message.userID === vexClient.info().client!.userID) {
+  if (message.userID === vexClient.user!.userID) {
     console.log("All tests passed.");
     process.exit(0);
   }
