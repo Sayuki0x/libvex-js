@@ -25,6 +25,7 @@ export interface IUser {
   powerLevel: number;
   userID: string;
   banned: boolean;
+  color: string;
 }
 
 /**
@@ -594,11 +595,11 @@ export class Client extends EventEmitter {
   public messages: IMessages;
   public users: IUsers;
   public files: IFiles;
-  private powerLevels: IPowerLevels;
+  public user: IUser | null;
+  public authed: boolean;
+  public powerLevels: IPowerLevels;
   private onlineLists: Record<string, IUser[]>;
-  private authed: boolean;
   private channelList: IChannel[];
-  private userInfo: IUser | null;
   private ws: WebSocket | null;
   private host: string;
   private trxSubs: ITrxSub[];
@@ -629,7 +630,7 @@ export class Client extends EventEmitter {
     super();
     this.secure = secure;
     this.keyring = keyring;
-    this.userInfo = null;
+    this.user = null;
     this.connectCount = 0;
     this.ws = null;
     this.host = host;
@@ -737,21 +738,6 @@ export class Client extends EventEmitter {
     } else {
       return this.httpPrefix + this.host;
     }
-  }
-
-  /**
-   * Returns info about the current connection.
-   *
-   * @returns The IClientInfo object.
-   */
-  public info(): IClientInfo {
-    return {
-      authed: this.authed,
-      client: this.userInfo,
-      host: this.getHost(true),
-      powerLevels: this.powerLevels,
-      secure: this.secure,
-    };
   }
 
   /**
@@ -981,13 +967,13 @@ export class Client extends EventEmitter {
       const transmissionID = uuidv4();
       const message = {
         avatar: user.avatar || "00000000-0000-0000-0000-000000000000",
-        color: (user as any).color || (this.info().client! as any).color,
+        color: user.color || this.user?.color || "rgb(181, 181, 181)",
         method: "UPDATE",
         powerLevel: user.powerLevel || 0,
         transmissionID,
         type: "user",
         userID: user.userID,
-        username: user.username || this.info().client!.username,
+        username: user.username || this.user?.username || "Anonymous",
       };
 
       this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
@@ -1335,7 +1321,7 @@ export class Client extends EventEmitter {
         if (msg.type === "error") {
           reject(msg);
         } else {
-          this.userInfo = msg.data;
+          this.user = msg.data;
           resolve(msg.data);
         }
       });
@@ -1427,8 +1413,8 @@ export class Client extends EventEmitter {
           this.history.push(jsonMessage);
           break;
         case "clientInfo":
-          this.userInfo = jsonMessage.client;
-          this.emit("userInfo", this.userInfo);
+          this.user = jsonMessage.client;
+          this.emit("userInfo", this.user);
           break;
         case "peerChange":
           this.emit("peerChange", jsonMessage.client);
