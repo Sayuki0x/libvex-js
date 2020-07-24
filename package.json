@@ -43,6 +43,7 @@
     "@types/ws": "^7.2.5",
     "isomorphic-ws": "^4.0.1",
     "knex": "^0.21.1",
+    "libvex-keyring": "^1.0.1",
     "moment": "^2.27.0",
     "tweetnacl": "^1.0.3",
     "tweetnacl-util": "^0.15.1",

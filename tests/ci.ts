@@ -1,9 +1,7 @@
 import { execSync } from "child_process";
-import fs, { createReadStream } from "fs";
+import { KeyRing, KeyRingUtils } from "libvex-keyring";
 import { v4 as uuidv4 } from "uuid";
 import { Client, IChatMessage } from "../src/Client";
-import { KeyRing } from "../src/Keyring";
-import { Utils } from "../src/Utils";
 
 setTimeout(() => {
   console.log("Timeout reached, tests failed.");
@@ -11,8 +9,6 @@ setTimeout(() => {
 }, 10000);
 
 const keyring = new KeyRing(":memory:");
-
-const file = fs.readFileSync("./LICENSE");
 
 let output = "";
 
@@ -30,8 +26,8 @@ console.log(output);
 
 keyring.on("ready", () => {
   const keys = {
-    privkey: Utils.toHexString(keyring.getPriv()),
-    pubkey: Utils.toHexString(keyring.getPub()),
+    privkey: KeyRingUtils.encodeHex(keyring.getPriv()),
+    pubkey: KeyRingUtils.encodeHex(keyring.getPub()),
   };
   diagPrint("KEYS", keys);
 });

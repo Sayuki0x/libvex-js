@@ -1,8 +1,7 @@
 import fs from "fs";
+import { KeyRing, KeyRingUtils } from "libvex-keyring";
 import { v4 as uuidv4 } from "uuid";
 import { Client, IChatMessage } from "../src/Client";
-import { KeyRing } from "../src/Keyring";
-import { Utils } from "../src/Utils";
 
 const keyring = new KeyRing("./keys");
 
@@ -10,9 +9,9 @@ const file = fs.readFileSync("./LICENSE");
 
 keyring.on("ready", () => {
   console.log("--------keys---------");
-  console.log("PUBLIC KEY", Utils.toHexString(keyring.getPub()));
+  console.log("PUBLIC KEY", KeyRingUtils.encodeHex(keyring.getPub()));
   // make sure you save your private key somewhere
-  console.log("PRIVATE KEY", Utils.toHexString(keyring.getPriv()));
+  console.log("PRIVATE KEY", KeyRingUtils.encodeHex(keyring.getPriv()));
 });
 
 const vexClient = new Client("localhost:8080", keyring, null, false);

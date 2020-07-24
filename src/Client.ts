@@ -1,9 +1,9 @@
 import { EventEmitter } from "events";
 import WebSocket from "isomorphic-ws";
+import { KeyRing, KeyRingUtils } from "libvex-keyring";
 import { decodeUTF8 } from "tweetnacl-util";
 import { v4 as uuidv4 } from "uuid";
-import { KeyRing } from "./Keyring";
-import { Utils } from "./Utils";
+import { sleep } from "./utils/sleep";
 
 /**
  * @ignore
@@ -544,9 +544,9 @@ export declare interface Client {
  *   const keyring = new KeyRing("./keys");
  *
  *   keyring.on("ready", () => {
- *    console.log("PUBLIC KEY", Utils.toHexString(keyring.getPub()));
+ *    console.log("PUBLIC KEY", KeyRingUtils.encodeHex(keyring.getPub()));
  *    // make sure you save your private key somewhere
- *    console.log("PRIVATE KEY", Utils.toHexString(keyring.getPriv()));
+ *    console.log("PRIVATE KEY", KeyRingUtils.encodeHex(keyring.getPriv()));
  *   });
  *
  *   const vexClient = new Client(
@@ -750,7 +750,7 @@ export class Client extends EventEmitter {
     const serverPubkey = await this.sendChallenge();
     let timeout = 1;
     while (!this.authed) {
-      await Utils.sleep(timeout);
+      await sleep(timeout);
       timeout *= 2;
     }
     return serverPubkey;
@@ -910,7 +910,7 @@ export class Client extends EventEmitter {
       const challenge = uuidv4();
       const challengeMessage = {
         challenge,
-        pubkey: Utils.toHexString(this.keyring.getPub()),
+        pubkey: KeyRingUtils.encodeHex(this.keyring.getPub()),
         transmissionID,
         type: "challenge",
       };
@@ -919,8 +919,8 @@ export class Client extends EventEmitter {
         if (
           this.keyring.verify(
             decodeUTF8(challenge),
-            Utils.fromHexString(msg.response!),
-            Utils.fromHexString(this.serverPubkey || msg.pubkey)
+            KeyRingUtils.decodeHex(msg.response!),
+            KeyRingUtils.decodeHex(this.serverPubkey || msg.pubkey)
           )
         ) {
           if (!this.serverPubkey) {
@@ -1251,7 +1251,7 @@ export class Client extends EventEmitter {
         clearInterval(this.pingInterval);
       }
       this.getWs()!.close();
-      await Utils.sleep(5000);
+      await sleep(5000);
       this.init();
     };
 
@@ -1307,11 +1307,12 @@ export class Client extends EventEmitter {
   private async registerUser(user: IUser): Promise<IUser> {
     return new Promise((resolve, reject) => {
       const transmissionID = uuidv4();
-
       const message = {
         method: "REGISTER",
-        pubkey: Utils.toHexString(this.keyring.getPub()),
-        signed: Utils.toHexString(this.keyring.sign(decodeUTF8(user.userID))),
+        pubkey: KeyRingUtils.encodeHex(this.keyring.getPub()),
+        signed: KeyRingUtils.encodeHex(
+          this.keyring.sign(decodeUTF8(user.userID))
+        ),
         transmissionID,
         type: "identity",
         uuid: user.userID,
@@ -1358,7 +1359,7 @@ export class Client extends EventEmitter {
   private async initPing() {
     let timeout = 1;
     while (!this.authed) {
-      await Utils.sleep(timeout);
+      await sleep(timeout);
       timeout *= 2;
     }
     this.startPing();
@@ -1368,8 +1369,8 @@ export class Client extends EventEmitter {
     return new Promise((resolve, reject) => {
       const transmissionID = uuidv4();
       const challengeResponse = {
-        pubkey: Utils.toHexString(this.keyring.getPub()),
-        response: Utils.toHexString(
+        pubkey: KeyRingUtils.encodeHex(this.keyring.getPub()),
+        response: KeyRingUtils.encodeHex(
           this.keyring.sign(decodeUTF8(jsonMessage.challenge!))
         ),
         transmissionID,
