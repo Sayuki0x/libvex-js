@@ -1,4 +1,4 @@
-import { KeyRing } from "libvex-keyring";
+import { KeyRing, KeyRingUtils } from "libvex-keyring";
 import {
   Client,
   IApiError,
@@ -13,9 +13,8 @@ import {
   IResponse,
   IUser,
 } from "./Client";
-import { Utils } from "./Utils";
 
-export { Client, KeyRing, Utils };
+export { Client, KeyRing, KeyRingUtils as Utils };
 
 export {
   IApiError,
