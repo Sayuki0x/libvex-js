@@ -15,7 +15,7 @@ keyring.on("ready", () => {
   console.log("PRIVATE KEY", Utils.toHexString(keyring.getPriv()));
 });
 
-const vexClient = new Client("localhost:8000", keyring, null, false);
+const vexClient = new Client("localhost:8080", keyring, null, false);
 
 const testID = uuidv4();
 console.log("TEST ID", testID);
@@ -27,7 +27,7 @@ vexClient.on("ready", async () => {
     const serverPubkey = await vexClient.auth();
     console.log("SERVER PUBKEY", serverPubkey);
 
-    diagPrint("CLIENT INFO", vexClient.info());
+    diagPrint("CLIENT INFO", vexClient.user!);
 
     const channelList = await vexClient.channels.retrieve();
     console.log(channelList);
