@@ -51,6 +51,16 @@ export interface IFile {
 }
 
 /**
+ * The IEmoji interface represents emoji info returned from the server.
+ */
+export interface IEmoji {
+  index: number;
+  fileID: string;
+  emojiID: string;
+  name: string;
+}
+
+/**
  * The IChallenge interface represents a challenge message.
  */
 export interface IChallenge {
@@ -228,6 +238,30 @@ interface IChannels {
    * @returns - The deleted IChannel object.
    */
   delete: (channelID: string) => Promise<IChannel>;
+}
+
+/**
+ * The IFiles interface contains methods for dealing with files.
+ */
+interface IEmojis {
+  /**
+   * Creates a new emoji. You must upload the emoji image as a file first and
+   * retrieve the file ID.
+   *
+   * @param name - The text name of the emoji to create..
+   * @param fileID - The unique ID of the file, which is returned in the IFile object.
+   *
+   * @returns - The created IEmoji object.
+   */
+  create: (name: string, fileID: string) => Promise<IEmoji>;
+  /**
+   * Retrieves a list of emojis on the server that have a name starting with the query.
+   *
+   * @param name - The partial or full name to search.
+   *
+   * @returns - An array of IEmoji objects that match the query.
+   */
+  retrieve: (name: string) => Promise<IEmoji[]>;
 }
 
 /**
@@ -595,6 +629,7 @@ export class Client extends EventEmitter {
   public messages: IMessages;
   public users: IUsers;
   public files: IFiles;
+  public emojis: IEmojis;
   public user: IUser | null;
   public authed: boolean;
   public powerLevels: IPowerLevels;
@@ -690,6 +725,11 @@ export class Client extends EventEmitter {
       retrieve: this.retrieveFiles.bind(this),
     };
 
+    this.emojis = {
+      create: this.createEmoji.bind(this),
+      retrieve: this.retrieveEmoji.bind(this),
+    };
+
     if (!this.secure) {
       console.warn(
         "Warning! Insecure connections are dangerous. You should only use them for development."
@@ -777,6 +817,51 @@ export class Client extends EventEmitter {
         });
         this.getWs()!.send(JSON.stringify(message));
       }
+    });
+  }
+
+  private createEmoji(name: string, fileID: string): Promise<IEmoji> {
+    return new Promise((resolve, reject) => {
+      const transmissionID = uuidv4();
+      const message = {
+        fileID,
+        method: "CREATE",
+        name,
+        transmissionID,
+        type: "emoji",
+      };
+
+      this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
+        if (msg.type === "error") {
+          reject(msg);
+        } else {
+          resolve(msg.data);
+        }
+      });
+
+      this.getWs()?.send(JSON.stringify(message));
+    });
+  }
+
+  private retrieveEmoji(name: string): Promise<IEmoji[]> {
+    return new Promise((resolve, reject) => {
+      const transmissionID = uuidv4();
+      const message = {
+        method: "RETRIEVE",
+        name,
+        transmissionID,
+        type: "emoji",
+      };
+
+      this.subscribe(transmissionID, (msg: IApiSuccess | IApiError) => {
+        if (msg.type === "error") {
+          reject(msg);
+        } else {
+          resolve(msg.data);
+        }
+      });
+
+      this.getWs()?.send(JSON.stringify(message));
     });
   }
 
