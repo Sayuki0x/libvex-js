@@ -77,9 +77,9 @@
   <span class="hljs-keyword">const</span> keyring = <span class="hljs-keyword">new</span> KeyRing(<span class="hljs-string">&quot;./keys&quot;</span>);
 
   keyring.on(<span class="hljs-string">&quot;ready&quot;</span>, <span class="hljs-function">() =&gt;</span> {
-   <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;PUBLIC KEY&quot;</span>, Utils.toHexString(keyring.getPub()));
+   <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;PUBLIC KEY&quot;</span>, KeyRingUtils.encodeHex(keyring.getPub()));
    <span class="hljs-comment">// make sure you save your private key somewhere</span>
-   <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;PRIVATE KEY&quot;</span>, Utils.toHexString(keyring.getPriv()));
+   <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;PRIVATE KEY&quot;</span>, KeyRingUtils.encodeHex(keyring.getPriv()));
   });
 
   <span class="hljs-keyword">const</span> vexClient = <span class="hljs-keyword">new</span> Client(
@@ -151,10 +151,13 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="client.html#authed" class="tsd-kind-icon">authed</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="client.html#channels" class="tsd-kind-icon">channels</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="client.html#files" class="tsd-kind-icon">files</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="client.html#messages" class="tsd-kind-icon">messages</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="client.html#permissions" class="tsd-kind-icon">permissions</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="client.html#powerlevels" class="tsd-kind-icon">power<wbr>Levels</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="client.html#user" class="tsd-kind-icon">user</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="client.html#users" class="tsd-kind-icon">users</a></li>
 							</ul>
 						</section>
@@ -163,7 +166,6 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="client.html#auth" class="tsd-kind-icon">auth</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="client.html#gethost" class="tsd-kind-icon">get<wbr>Host</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="client.html#info" class="tsd-kind-icon">info</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="client.html#logout" class="tsd-kind-icon">logout</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="client.html#register" class="tsd-kind-icon">register</a></li>
 							</ul>
@@ -177,14 +179,14 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Client<span class="tsd-signature-symbol">(</span>host<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, keyring<span class="tsd-signature-symbol">: </span><a href="keyring.html" class="tsd-signature-type">KeyRing</a>, serverPubkey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span>, secure<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="client.html" class="tsd-signature-type">Client</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Client<span class="tsd-signature-symbol">(</span>host<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, keyring<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">KeyRing</span>, serverPubkey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span>, secure<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="client.html" class="tsd-signature-type">Client</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/bda4a33/src/Client.ts#L619">src/Client.ts:619</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/28186fa/src/Client.ts#L616">src/Client.ts:616</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -200,7 +202,7 @@
 									</div>
 								</li>
 								<li>
-									<h5>keyring: <a href="keyring.html" class="tsd-signature-type">KeyRing</a></h5>
+									<h5>keyring: <span class="tsd-signature-type">KeyRing</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
 											<p>The keyring object to use to login.</p>
@@ -247,7 +249,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/bda4a33/src/Client.ts#L358">src/Client.ts:358</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/28186fa/src/Client.ts#L355">src/Client.ts:355</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -294,7 +296,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/bda4a33/src/Client.ts#L374">src/Client.ts:374</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/28186fa/src/Client.ts#L371">src/Client.ts:371</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -340,7 +342,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/bda4a33/src/Client.ts#L391">src/Client.ts:391</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/28186fa/src/Client.ts#L388">src/Client.ts:388</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -382,7 +384,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/bda4a33/src/Client.ts#L411">src/Client.ts:411</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/28186fa/src/Client.ts#L408">src/Client.ts:408</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -424,7 +426,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/bda4a33/src/Client.ts#L430">src/Client.ts:430</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/28186fa/src/Client.ts#L427">src/Client.ts:427</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -465,7 +467,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/bda4a33/src/Client.ts#L448">src/Client.ts:448</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/28186fa/src/Client.ts#L445">src/Client.ts:445</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -506,7 +508,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/bda4a33/src/Client.ts#L463">src/Client.ts:463</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/28186fa/src/Client.ts#L460">src/Client.ts:460</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -552,7 +554,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/bda4a33/src/Client.ts#L478">src/Client.ts:478</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/28186fa/src/Client.ts#L475">src/Client.ts:475</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -598,7 +600,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/bda4a33/src/Client.ts#L495">src/Client.ts:495</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/28186fa/src/Client.ts#L492">src/Client.ts:492</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -645,7 +647,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/bda4a33/src/Client.ts#L512">src/Client.ts:512</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/28186fa/src/Client.ts#L509">src/Client.ts:509</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -692,7 +694,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides EventEmitter.on</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/bda4a33/src/Client.ts#L529">src/Client.ts:529</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/28186fa/src/Client.ts#L526">src/Client.ts:526</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -744,12 +746,22 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="authed" class="tsd-anchor"></a>
+					<h3>authed</h3>
+					<div class="tsd-signature tsd-kind-icon">authed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/28186fa/src/Client.ts#L599">src/Client.ts:599</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="channels" class="tsd-anchor"></a>
 					<h3>channels</h3>
 					<div class="tsd-signature tsd-kind-icon">channels<span class="tsd-signature-symbol">:</span> <a href="../interfaces/ichannels.html" class="tsd-signature-type">IChannels</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/bda4a33/src/Client.ts#L596">src/Client.ts:596</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/28186fa/src/Client.ts#L593">src/Client.ts:593</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -759,7 +771,7 @@
 					<div class="tsd-signature tsd-kind-icon">files<span class="tsd-signature-symbol">:</span> <a href="../interfaces/ifiles.html" class="tsd-signature-type">IFiles</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/bda4a33/src/Client.ts#L600">src/Client.ts:600</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/28186fa/src/Client.ts#L597">src/Client.ts:597</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -769,7 +781,7 @@
 					<div class="tsd-signature tsd-kind-icon">messages<span class="tsd-signature-symbol">:</span> <a href="../interfaces/imessages.html" class="tsd-signature-type">IMessages</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/bda4a33/src/Client.ts#L598">src/Client.ts:598</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/28186fa/src/Client.ts#L595">src/Client.ts:595</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -779,7 +791,27 @@
 					<div class="tsd-signature tsd-kind-icon">permissions<span class="tsd-signature-symbol">:</span> <a href="../interfaces/ipermissions.html" class="tsd-signature-type">IPermissions</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/bda4a33/src/Client.ts#L597">src/Client.ts:597</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/28186fa/src/Client.ts#L594">src/Client.ts:594</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="powerlevels" class="tsd-anchor"></a>
+					<h3>power<wbr>Levels</h3>
+					<div class="tsd-signature tsd-kind-icon">power<wbr>Levels<span class="tsd-signature-symbol">:</span> <a href="../interfaces/ipowerlevels.html" class="tsd-signature-type">IPowerLevels</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/28186fa/src/Client.ts#L600">src/Client.ts:600</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="user" class="tsd-anchor"></a>
+					<h3>user</h3>
+					<div class="tsd-signature tsd-kind-icon">user<span class="tsd-signature-symbol">:</span> <a href="../interfaces/iuser.html" class="tsd-signature-type">IUser</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/28186fa/src/Client.ts#L598">src/Client.ts:598</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -789,7 +821,7 @@
 					<div class="tsd-signature tsd-kind-icon">users<span class="tsd-signature-symbol">:</span> <a href="../interfaces/iusers.html" class="tsd-signature-type">IUsers</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/bda4a33/src/Client.ts#L599">src/Client.ts:599</a></li>
+							<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/28186fa/src/Client.ts#L596">src/Client.ts:596</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -806,7 +838,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/bda4a33/src/Client.ts#L767">src/Client.ts:767</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/28186fa/src/Client.ts#L749">src/Client.ts:749</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -830,7 +862,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/bda4a33/src/Client.ts#L738">src/Client.ts:738</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/28186fa/src/Client.ts#L735">src/Client.ts:735</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -853,29 +885,6 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="info" class="tsd-anchor"></a>
-					<h3>info</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">info<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/iclientinfo.html" class="tsd-signature-type">IClientInfo</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/bda4a33/src/Client.ts#L751">src/Client.ts:751</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Returns info about the current connection.</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/iclientinfo.html" class="tsd-signature-type">IClientInfo</a></h4>
-							<p>The IClientInfo object.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="logout" class="tsd-anchor"></a>
 					<h3>logout</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -885,7 +894,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/bda4a33/src/Client.ts#L713">src/Client.ts:713</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/28186fa/src/Client.ts#L710">src/Client.ts:710</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -907,7 +916,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/bda4a33/src/Client.ts#L725">src/Client.ts:725</a></li>
+									<li>Defined in <a href="https://github.com/vex-chat/libvex-js/blob/28186fa/src/Client.ts#L722">src/Client.ts:722</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -944,6 +953,9 @@
 								<a href="client.html#on" class="tsd-kind-icon">on</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="client.html#authed" class="tsd-kind-icon">authed</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="client.html#channels" class="tsd-kind-icon">channels</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
@@ -956,6 +968,12 @@
 								<a href="client.html#permissions" class="tsd-kind-icon">permissions</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="client.html#powerlevels" class="tsd-kind-icon">power<wbr>Levels</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="client.html#user" class="tsd-kind-icon">user</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="client.html#users" class="tsd-kind-icon">users</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -963,9 +981,6 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="client.html#gethost" class="tsd-kind-icon">get<wbr>Host</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="client.html#info" class="tsd-kind-icon">info</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="client.html#logout" class="tsd-kind-icon">logout</a>
@@ -977,12 +992,6 @@
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class">
-						<a href="keyring.html" class="tsd-kind-icon">Key<wbr>Ring</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="utils.html" class="tsd-kind-icon">Utils</a>
-					</li>
 					<li class=" tsd-kind-interface">
 						<a href="../interfaces/iapierror.html" class="tsd-kind-icon">IApi<wbr>Error</a>
 					</li>
@@ -1053,9 +1062,6 @@
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
 			</ul>
 		</div>
 	</div>
